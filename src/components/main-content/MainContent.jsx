@@ -3,40 +3,58 @@ import Hero from "../hero/Hero";
 import { Navigate, Route, Routes } from "react-router-dom";
 import CardsList from "../cards-list/Cards";
 import PostLayout from "../post-layout/PostLayout";
-import useData from "../../hooks/useDate";
 import db from "../../firebase/firebase";
+import { useEffect, useState } from "react";
+import { getDocs, collection } from "firebase/firestore";
+import Loader from "../loader/Loader";
 
 export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
+  const [isLoader, setIsLoader] = useState(true);
   const reviews = useData(db, "reviews");
   const news = useData(db, "news");
+
+  function useData(db, collectionType) {
+    const [data, setData] = useState([]);
+    const newsCollectionRef = collection(db, collectionType);
+
+    useEffect(() => {
+      setIsLoader(true);
+      const getArr = async () => {
+        const data = await getDocs(newsCollectionRef);
+        setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setIsLoader(false);
+      };
+
+      getArr();
+    }, []);
+
+    return data;
+  }
+
   return (
-    <>
-      <main className="main-content">
-        <SideBar
-          isSitenavOpen={isSitenavOpen}
-          handleSitenavToggle={handleSitenavToggle}
+    <main className="main-content">
+      {isLoader && <Loader />}
+      <SideBar
+        isSitenavOpen={isSitenavOpen}
+        handleSitenavToggle={handleSitenavToggle}
+      />
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        <Route
+          path="/reviews"
+          element={<CardsList data={reviews} state={true} />}
         />
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route
-            path="/reviews"
-            element={<CardsList data={reviews} state={true} />}
-          />
-          <Route
-            path="/reviews/:id"
-            element={<PostLayout arr={reviews} state={true} />}
-          />
-          <Route
-            path="/news"
-            element={<CardsList data={news} state={false} />}
-          />
-          <Route
-            path="/news/:id"
-            element={<PostLayout arr={news} state={false} />}
-          />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </main>
-    </>
+        <Route
+          path="/reviews/:id"
+          element={<PostLayout arr={reviews} state={true} />}
+        />
+        <Route path="/news" element={<CardsList data={news} state={false} />} />
+        <Route
+          path="/news/:id"
+          element={<PostLayout arr={news} state={false} />}
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </main>
   );
 }
