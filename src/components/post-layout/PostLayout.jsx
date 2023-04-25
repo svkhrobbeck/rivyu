@@ -1,12 +1,12 @@
+import { useEffect } from "react";
 import "./PostLayout.scss";
 import { Link, useParams } from "react-router-dom";
 
 export default function PostLayout({ arr, state = false }) {
-  const id = +useParams().id;
-  const data = arr.find((item) => item.id === id);
-  const filteredData = arr.filter((item) => item.id !== id);
-  document.title = data.title
-
+  const id = useParams().id;
+  const data = arr.find((item) => item.id === id)
+    ? arr.find((item) => item.id === id)
+    : {};
   return (
     <section className="post-layout" data-post-layout>
       <div className="post-layout__inner container">
@@ -15,7 +15,7 @@ export default function PostLayout({ arr, state = false }) {
             <span className="post__badge">{state ? "Tahlil" : "Xabar"}</span>
             <img
               className="post__image"
-              src={`/${data.image}`}
+              src={`${data.image}`}
               alt={data.title}
             />
             <time className="post__time" dateTime={data.createdAt}>
@@ -25,11 +25,11 @@ export default function PostLayout({ arr, state = false }) {
               {data.title}
             </h2>
             <p className="post__description" data-post-layout-desc>
-              {data.post.description}
+              {data.description}
             </p>
             <ul className="post__tags" data-post-layout-tags>
-              {data &&
-                data.post.tags.map((item) => (
+              {data.tags &&
+                data.tags.map((item) => (
                   <li key={item} className="post__tag">
                     <a className="post__tag-link" href="">
                       {item}
@@ -44,10 +44,12 @@ export default function PostLayout({ arr, state = false }) {
             So'nggi {state ? "tahlillar" : "yangiliklar"}
           </h3>
           <ul className="mini-sidebar__list" data-post-layout-list>
-            {filteredData &&
-              filteredData.map((item) => (
+            {arr &&
+              arr.map((item) => (
                 <li key={item.id} className="mini-sidebar__item">
-                  <Link to={`/${state ? "reviews": "news"}/post/${item.id}`}>{item.title}</Link>
+                  <Link to={`/${state ? "reviews" : "news"}/${item.id}`}>
+                    {item.title}
+                  </Link>
                 </li>
               ))}
           </ul>

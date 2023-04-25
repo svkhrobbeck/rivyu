@@ -1,13 +1,14 @@
-import React from "react";
 import SideBar from "../side-bar/SideBar";
 import Hero from "../hero/Hero";
 import { Navigate, Route, Routes } from "react-router-dom";
 import CardsList from "../cards-list/Cards";
-import reviews from "../../data/reviews.json";
-import news from "../../data/news.json";
 import PostLayout from "../post-layout/PostLayout";
+import useData from "../../hooks/useDate";
+import db from "../../firebase/firebase";
 
 export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
+  const reviews = useData(db, "reviews");
+  const news = useData(db, "news");
   return (
     <>
       <main className="main-content">
@@ -22,7 +23,7 @@ export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
             element={<CardsList data={reviews} state={true} />}
           />
           <Route
-            path="/reviews/post/:id"
+            path="/reviews/:id"
             element={<PostLayout arr={reviews} state={true} />}
           />
           <Route
@@ -30,7 +31,7 @@ export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
             element={<CardsList data={news} state={false} />}
           />
           <Route
-            path="/news/post/:id"
+            path="/news/:id"
             element={<PostLayout arr={news} state={false} />}
           />
           <Route path="*" element={<Navigate to="/" />} />

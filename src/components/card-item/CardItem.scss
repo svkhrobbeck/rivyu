@@ -10,7 +10,6 @@
   }
 
   @media only screen and (max-width: 840px) {
-    align-items: stretch;
   }
 
   @media only screen and (max-width: 680px) {
@@ -29,10 +28,6 @@
   height: auto;
   margin-right: 20px;
   border-radius: 8px;
-
-  @media only screen and (max-width: 840px) {
-    object-fit: cover;
-  }
 
   @media only screen and (max-width: 680px) {
     max-width: none;
@@ -95,7 +90,7 @@
 
 .card-item__desc {
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-size: 18px;
   font-weight: 300;
   color: #6c757d;
@@ -112,7 +107,7 @@
 
   @media only screen and (max-width: 840px) {
     font-size: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
   }
 
   @media only screen and (max-width: 680px) {

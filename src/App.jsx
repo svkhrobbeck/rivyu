@@ -6,9 +6,11 @@ import MainContent from "./components/main-content/MainContent";
 
 function App() {
   const [isSitenavOpen, setIsSitenavOpen] = useState(false);
+
   const handleSitenavToggle = () => {
     setIsSitenavOpen((prev) => !prev);
   };
+
   return (
     <>
       <Header handleSitenavToggle={handleSitenavToggle} />

@@ -13,9 +13,9 @@ export default function CardItem(props) {
       />
       <div className="card-item__content">
         <h3 className="card-item__title">
-          <Link to={`/${state}/post/${props.id}`}>{props.title}</Link>
+          <Link to={`/${state}/${props.id}`}>{props.title}</Link>
         </h3>
-        <p className="card-item__desc">{props.description}</p>
+        <p className="card-item__desc">{props.shortDesc}</p>
         <time className="card-item__time" dateTime={props.createdAt}>
           {props.createdAt}
         </time>

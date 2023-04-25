@@ -62,7 +62,7 @@
 
 .post__image {
   width: 100%;
-  min-height: 130px;
+  object-fit: contain;
   height: auto;
   border-radius: 6px;
   margin-bottom: 10px;
