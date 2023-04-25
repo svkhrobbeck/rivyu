@@ -1,6 +1,7 @@
 import "./Header.scss";
 import SitenavToggler from "../sitenav-toggler/SitenavToggler";
 import ThemeToggler from "../theme-toggler/ThemeToggler";
+import { Link } from "react-router-dom";
 
 export default function Header({ handleSitenavToggle }) {
   return (
@@ -9,7 +10,7 @@ export default function Header({ handleSitenavToggle }) {
         <div className="site-header__left">
           <SitenavToggler handleSitenavToggle={handleSitenavToggle} />
 
-          <a className="site-header__logo logo" href="/">
+          <Link to={"/"}>
             <img
               className="logo__img"
               src="/images/logo.svg"
@@ -17,7 +18,7 @@ export default function Header({ handleSitenavToggle }) {
               width={45}
               height={45}
             />
-          </a>
+          </Link>
         </div>
         <div className="site-header__actions">
           <ThemeToggler />
