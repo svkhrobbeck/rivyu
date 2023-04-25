@@ -1,6 +1,7 @@
 import "./Hero.scss";
 
 export default function Hero() {
+  document.title = `Kino Blog | Bosh sahifa`;
   return (
     <section className="hero">
       <div className="container">

@@ -5,6 +5,7 @@ export default function PostLayout({ arr, state = false }) {
   const id = +useParams().id;
   const data = arr.find((item) => item.id === id);
   const filteredData = arr.filter((item) => item.id !== id);
+  document.title = data.title
 
   return (
     <section className="post-layout" data-post-layout>

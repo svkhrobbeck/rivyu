@@ -1,7 +1,7 @@
 import React from "react";
 import SideBar from "../side-bar/SideBar";
 import Hero from "../hero/Hero";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import CardsList from "../cards-list/Cards";
 import reviews from "../../data/reviews.json";
 import news from "../../data/news.json";
@@ -33,6 +33,7 @@ export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
             path="/news/post/:id"
             element={<PostLayout arr={news} state={false} />}
           />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
     </>
