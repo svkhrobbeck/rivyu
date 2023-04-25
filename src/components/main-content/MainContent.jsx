@@ -7,13 +7,14 @@ import db from "../../firebase/firebase";
 import { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import Loader from "../loader/Loader";
+import Page404 from "../404/404";
 
 export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
   const [isLoader, setIsLoader] = useState(true);
-  const reviews = useData(db, "reviews");
-  const news = useData(db, "news");
+  const reviews = getData(db, "reviews");
+  const news = getData(db, "news");
 
-  function useData(db, collectionType) {
+  function getData(db, collectionType) {
     const [data, setData] = useState([]);
     const newsCollectionRef = collection(db, collectionType);
 
@@ -53,7 +54,8 @@ export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
           path="/news/:id"
           element={<PostLayout arr={news} state={false} />}
         />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/404" element={<Page404 />} />
+        <Route path="*" element={<Navigate to={"/404"} />} />
       </Routes>
     </main>
   );

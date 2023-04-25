@@ -13,12 +13,13 @@ function App() {
 
   return (
     <>
-      <Header handleSitenavToggle={handleSitenavToggle} />
+      <Header exact handleSitenavToggle={handleSitenavToggle} />
       <MainContent
+        exact
         isSitenavOpen={isSitenavOpen}
         handleSitenavToggle={handleSitenavToggle}
       />
-      <Footer />
+      <Footer exact />
     </>
   );
 }
