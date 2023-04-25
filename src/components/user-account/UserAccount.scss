@@ -1,0 +1,13 @@
+.user-account {
+  display: flex;
+}
+
+.user-account__img {
+  max-width: 44px;
+  width: 100%;
+  height: auto;
+
+  @media only screen and (max-width: 1140px) {
+    max-width: 42px;
+  }
+}

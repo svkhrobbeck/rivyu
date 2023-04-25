@@ -1,7 +1,7 @@
 import "./Header.scss";
 import SitenavToggler from "../sitenav-toggler/SitenavToggler";
-import ThemeToggler from "../theme-toggler/ThemeToggler";
 import { Link } from "react-router-dom";
+import UserAccount from "../user-account/UserAccount";
 
 export default function Header({ handleSitenavToggle }) {
   return (
@@ -21,7 +21,7 @@ export default function Header({ handleSitenavToggle }) {
           </Link>
         </div>
         <div className="site-header__actions">
-          <ThemeToggler />
+          <UserAccount />
         </div>
       </div>
     </header>

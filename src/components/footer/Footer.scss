@@ -1,10 +1,10 @@
 /* FOOTER */
 .site-footer {
   background-color: var(--component-color);
-  padding: 0 0 45px 300px;
+  padding-left: 300px;
 
   @media only screen and (max-width: 1140px) {
-    padding: 0 0 45px;
+    padding-left: 0;
   }
 }
 

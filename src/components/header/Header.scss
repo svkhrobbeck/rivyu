@@ -4,12 +4,16 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 110;
   width: 100%;
   background-color: var(--component-color);
 
   @media only screen and (max-width: 1140px) {
     padding: 14px 0;
+  }
+
+  @media only screen and (max-width: 840px) {
+    padding: 10px 0;
   }
 }
 
@@ -43,7 +47,7 @@
   }
 
   @media only screen and (max-width: 840px) {
-    max-width: 30px;
+    max-width: 38px;
   }
 }
 

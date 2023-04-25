@@ -9,6 +9,10 @@
   width: 100%;
   height: auto;
   margin-bottom: 25px;
+
+  @media only screen and (max-width: 840px) {
+    max-width: 95%;
+  }
 }
 
 .page-404__content {
@@ -47,7 +51,7 @@
   @media only screen and (max-width: 840px) {
     font-size: 20px;
   }
-  
+
   @media only screen and (max-width: 600px) {
     font-size: 18px;
     font-weight: 300;

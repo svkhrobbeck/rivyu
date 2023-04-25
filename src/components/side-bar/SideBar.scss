@@ -10,13 +10,16 @@
   @media only screen and (max-width: 1140px) {
     display: flex;
     left: -100%;
-    top: 64px;
+    top: 71.5px;
     transition: left 0.6s ease;
     
     &.side-bar--show {
       transition: left 0.4s ease;
       left: 0;
     }
+  }
+  @media only screen and (max-width: 840px) {
+    top: 63.9px;
   }
 }
 

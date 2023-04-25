@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import Loader from "../loader/Loader";
 import Page404 from "../404/404";
+import AdminDashboard from "../admin-dashboard/AdminDashboard";
 
 export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
   const [isLoader, setIsLoader] = useState(true);
@@ -54,8 +55,8 @@ export default function MainContent({ isSitenavOpen, handleSitenavToggle }) {
           path="/news/:id"
           element={<PostLayout arr={news} state={false} />}
         />
-        <Route path="/404" element={<Page404 />} />
-        <Route path="*" element={<Navigate to={"/404"} />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </main>
   );

@@ -1,0 +1,127 @@
+/* ADMIN DASHBOARD */
+.form-admin {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+
+  @media only screen and (max-width: 840px) {
+    row-gap: 20px;
+  }
+}
+
+.form-admin__title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 32px;
+  margin: 0;
+
+  @media only screen and (max-width: 1140px) {
+    font-size: 28px;
+  }
+
+  @media only screen and (max-width: 840px) {
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  @media only screen and (max-width: 600px) {
+    font-size: 25px;
+  }
+}
+
+.form-admin__fields {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+  @media only screen and (max-width: 840px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}
+
+.form-admin__label {
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.form-admin__checkbox:checked + .form-admin__fake-checkbox {
+  background: var(--accent-green) url("../images/icon-check.svg") no-repeat
+    center / contain;
+}
+
+.form-admin__checkbox:focus + .form-admin__fake-checkbox {
+  outline: 2px dashed var(--accent-green);
+  outline-offset: 3px;
+}
+
+.form-admin__fake-checkbox {
+  background-color: #374151;
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  margin-right: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  transition: background 0.5s ease;
+}
+
+.form-admin__field,
+.form-admin__image,
+.form-admin__textarea {
+  font-family: inherit;
+  font-size: 20px;
+  width: 45%;
+  padding: 14px 16px;
+  border-radius: 5px;
+  background-color: var(--component-color);
+  color: var(--text-color);
+  border: 1px solid var(--accent-color);
+
+  @media only screen and (max-width: 840px) {
+    width: 100%;
+  }
+}
+
+.form-admin__textarea {
+  resize: vertical;
+  min-height: 300px;
+  width: 55%;
+
+  @media only screen and (max-width: 840px) {
+    width: 100%;
+  }
+}
+
+.form-admin__img {
+  width: 35%;
+  height: auto;
+  object-fit: cover;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+
+  @media only screen and (max-width: 840px) {
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+.form-admin__image {
+  padding-left: 60px;
+  background-image: url("../images/icon-file.svg");
+  background-repeat: no-repeat;
+  background-position: 24px center;
+
+  @media only screen and (max-width: 840px) {
+    width: 100%;
+  }
+}
+
+.form-admin__buttons {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}

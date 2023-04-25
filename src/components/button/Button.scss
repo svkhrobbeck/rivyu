@@ -1,7 +1,6 @@
 .button {
   border: none;
   cursor: pointer;
-  background-color: var(--accent-green);
   padding: 9px 17px;
   border-radius: 6px;
   font-family: inherit;
@@ -14,5 +13,13 @@
 
   @media only screen and (max-width: 600px) {
     font-size: 15px;
+  }
+  &--green {
+    background-color: var(--accent-green);
+  }
+
+  &--blue {
+    background-color: var(--text-color);
+    color: #1c64f2;
   }
 }

@@ -1,5 +1,12 @@
 import "./Button.scss";
 
-export default function Button({ children }) {
-  return <button className="button">{children}</button>;
+export default function Button({ children, state = true, type = "button" }) {
+  return (
+    <button
+      className={`button ${state ? "button--green" : "button--blue"}`}
+      type={type}
+    >
+      {children}
+    </button>
+  );
 }
