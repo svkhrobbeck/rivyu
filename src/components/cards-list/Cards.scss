@@ -1,0 +1,40 @@
+/* CARDS-LIST */
+.cards__inner {
+  background-color: var(--component-color);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding-top: 25px;
+
+  @media only screen and (max-width: 840px) {
+    padding-top: 15px;
+  }
+}
+
+.cards__title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  margin-left: 15px;
+  margin-bottom: 25px;
+
+  @media only screen and (max-width: 920px) {
+    font-size: 26px;
+  }
+
+  @media only screen and (max-width: 840px) {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    margin-left: 15px;
+    font-size: 22px;
+    font-weight: 500;
+  }
+}
+
+.cards-list {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
