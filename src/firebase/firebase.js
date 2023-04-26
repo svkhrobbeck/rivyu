@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC5lLl2Ah18jjF2mohPBhk-HaYVQVwPh3g",
@@ -13,5 +14,33 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+const provider = new GoogleAuthProvider();
 
-export default db;
+export { db, auth, provider };
+
+/*  async function registerUser({ email, password }) {
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setUser(user);
+        setIsAuth(true);
+        localStorage.setItem("$U$I$D$", user?.uid);
+        localStorage.setItem("$ISAUTH$", "true");
+        localStorage.setItem("$T$O$K$E$N$", user?.accessToken);
+        addUserDb(email, password, user?.uid);
+      })
+  }
+
+  async function addUserDb(email, password, uid) {
+    try {
+      await addDoc(collection(db, "users"), {
+        email,
+        password,
+        liked: "",
+        id: v4(),
+        uid,
+      });
+    }
+  } */

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../button/Button";
+import Button from "../../components/button/Button";
 import "./404.scss";
 
 export default function Page404() {

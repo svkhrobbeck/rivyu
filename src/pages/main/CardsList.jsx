@@ -1,5 +1,5 @@
 import "./Cards.scss";
-import CardItem from "../card-item/CardItem";
+import CardItem from "../../components/card-item/CardItem";
 
 export default function CardsList({ data, state = false }) {
   const text = state ? "Tahlillar / Maqolalar" : "Yangiliklar";

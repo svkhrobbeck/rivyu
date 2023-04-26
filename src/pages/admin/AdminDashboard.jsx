@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Button from "../button/Button";
+import Button from "../../components/button/Button";
 import "./AdminDashboard.scss";
-import TagBadge from "../tag-badge/TagBadge";
+import TagBadge from "../../components/tag-badge/TagBadge";
 
 export default function AdminDashboard() {
   const [image, setImage] = useState(null);

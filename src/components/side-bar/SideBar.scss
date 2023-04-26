@@ -12,7 +12,7 @@
     left: -100%;
     top: 71.5px;
     transition: left 0.6s ease;
-    
+
     &.side-bar--show {
       transition: left 0.4s ease;
       left: 0;
@@ -47,6 +47,11 @@
   color: var(--text-color);
   padding: 10px 20px;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(30, 41, 65, 0.498);
+  }
 
   &.side-bar__link--active {
     background-color: var(--primary-bg-color);

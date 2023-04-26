@@ -1,27 +1,8 @@
-import { useState } from "react";
 import "./App.scss";
-import Footer from "./components/footer/Footer";
-import Header from "./components/header/Header";
-import MainContent from "./components/main-content/MainContent";
+import MainLayout from "./layout/MainLayout";
 
 function App() {
-  const [isSitenavOpen, setIsSitenavOpen] = useState(false);
-
-  const handleSitenavToggle = () => {
-    setIsSitenavOpen((prev) => !prev);
-  };
-
-  return (
-    <>
-      <Header exact handleSitenavToggle={handleSitenavToggle} />
-      <MainContent
-        exact
-        isSitenavOpen={isSitenavOpen}
-        handleSitenavToggle={handleSitenavToggle}
-      />
-      <Footer exact />
-    </>
-  );
+  return <MainLayout />;
 }
 
 export default App;

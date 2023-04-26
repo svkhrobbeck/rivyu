@@ -8,7 +8,7 @@ export default function SideBar({ isSitenavOpen, handleSitenavToggle }) {
     { name: "Tahlillar", route: "/reviews", image: "/images/icon-pencil.svg" },
     { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
     { name: "Admin", route: "/admin", image: "/images/icon-admin.svg" },
-    { name: "About", route: "/about", image: "/images/icon-faq.svg" },
+    { name: "Biz haqimizda", route: "/about", image: "/images/icon-faq.svg" },
   ];
 
   const location = useLocation().pathname;
