@@ -46,7 +46,11 @@ export default function PostLayout({ arr, state = false }) {
           <ul className="mini-sidebar__list" data-post-layout-list>
             {arr &&
               arr.map((item) => (
-                <li key={item.id} className="mini-sidebar__item">
+                <li
+                  key={item.id}
+                  className="mini-sidebar__item"
+                  onClick={(e) => (document.documentElement.scrollTop = 0)}
+                >
                   <Link to={`/${state ? "reviews" : "news"}/${item.id}`}>
                     {item.title}
                   </Link>

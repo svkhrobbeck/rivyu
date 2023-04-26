@@ -12,7 +12,10 @@ export default function CardItem(props) {
         width="246"
       />
       <div className="card-item__content">
-        <h3 className="card-item__title">
+        <h3
+          className="card-item__title"
+          onClick={(e) => (document.documentElement.scrollTop = 0)}
+        >
           <Link to={`/${state}/${props.id}`}>{props.title}</Link>
         </h3>
         <p className="card-item__desc">{props.shortDesc}</p>
