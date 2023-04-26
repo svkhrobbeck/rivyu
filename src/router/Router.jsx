@@ -56,7 +56,7 @@ export default function Router({
       />
       {!isAuth && (
         <Route>
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Navigate to={"/"} />} />
           <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
         </Route>
       )}
