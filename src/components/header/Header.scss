@@ -118,14 +118,18 @@
   font-size: 18px;
   position: relative;
 
+  &:hover {
+    background-color: #1b253a;
+  }
+
   &:not(:last-child) {
     border-bottom: 1px solid var(--border-color);
   }
-  
+
   &-img {
     margin-right: 10px;
   }
-  
+
   &-btn {
     font-family: inherit;
     font-size: inherit;

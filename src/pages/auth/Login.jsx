@@ -48,7 +48,7 @@ export default function Login({ setIsAuth }) {
           placeholder="Emailingizni kiriting"
           id="login-register-email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value.toLowerCase())}
         />
 
         <label
@@ -64,7 +64,7 @@ export default function Login({ setIsAuth }) {
           placeholder="Parolingizni kiriting"
           id="login-register-password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value.toLowerCase())}
         />
         <button className="button button--green" type="submit">
           Kirish
