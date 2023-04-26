@@ -23,7 +23,6 @@ export default function MainLayout() {
       const newData = dataBack.docs.map((doc) => ({ ...doc.data() }));
 
       newData.forEach((item) => {
-        console.log(localStorage.getItem("$U$I$D$"));
         if (localStorage.getItem("$U$I$D$") === item.adminToken) {
           setIsAdmin(true);
         } else {
