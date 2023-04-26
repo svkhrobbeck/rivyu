@@ -48,12 +48,12 @@
 }
 
 .form-admin__checkbox:checked + .form-admin__fake-checkbox {
-  background: var(--accent-green) url("../images/icon-check.svg") no-repeat
+  background: var(--accent-color) url("../images/icon-check.svg") no-repeat
     center / contain;
 }
 
 .form-admin__checkbox:focus + .form-admin__fake-checkbox {
-  outline: 2px dashed var(--accent-green);
+  outline: 2px dashed var(--accent-color);
   outline-offset: 3px;
 }
 
@@ -68,21 +68,73 @@
   transition: background 0.5s ease;
 }
 
+.form-admin__tags {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style-type: none;
+  gap: 5px;
+}
+
+.form-admin__field--title,
+.form-admin__field--short-desc {
+  @media only screen and (max-width: 840px) {
+    width: 100%;
+  }
+}
+
 .form-admin__field,
-.form-admin__image,
 .form-admin__textarea {
   font-family: inherit;
-  font-size: 20px;
-  width: 45%;
+  font-size: 18px;
   padding: 14px 16px;
   border-radius: 5px;
   background-color: var(--component-color);
   color: var(--text-color);
   border: 1px solid var(--accent-color);
+  flex-grow: 1;
+
+  &--tag {
+    border-radius: 5px 0 0 5px;
+    flex-grow: 1;
+  }
+
+  &--image:focus + &--image-label {
+    outline: 2px dashed var(--accent-color);
+    outline-offset: 3px;
+  }
+
+  &--image-label {
+    padding-left: 60px;
+    background-image: url("../images/icon-file.svg");
+    background-repeat: no-repeat;
+    background-position: 24px center;
+    max-width: 320px;
+
+    @media only screen and (max-width: 840px) {
+      max-width: none;
+      width: 100%;
+    }
+  }
+}
+
+.form-admin__field-wrapper {
+  display: flex;
+  flex-grow: 1;
 
   @media only screen and (max-width: 840px) {
     width: 100%;
   }
+}
+
+.admin-form__tag-button {
+  background-color: var(--accent-color);
+  border-radius: 0 6px 6px 0;
+  border: none;
+  font-family: inherit;
+  font-size: 18px;
 }
 
 .form-admin__textarea {
@@ -105,17 +157,6 @@
   @media only screen and (max-width: 840px) {
     width: 100%;
     object-fit: contain;
-  }
-}
-
-.form-admin__image {
-  padding-left: 60px;
-  background-image: url("../images/icon-file.svg");
-  background-repeat: no-repeat;
-  background-position: 24px center;
-
-  @media only screen and (max-width: 840px) {
-    width: 100%;
   }
 }
 

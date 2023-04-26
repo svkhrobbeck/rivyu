@@ -1,0 +1,26 @@
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 2px 4px 10px;
+  background-color: var(--component-color);
+  border-radius: 6px;
+  border: 1px solid var(--accent-color);
+}
+
+.tag-badge__btn {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  display: inline-flex;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.tag-badge__img {
+  max-width: 24px;
+  width: 100%;
+  height: auto;
+}

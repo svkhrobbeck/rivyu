@@ -1,7 +1,27 @@
+import { useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Button from "../button/Button";
 import "./AdminDashboard.scss";
+import TagBadge from "../tag-badge/TagBadge";
 
 export default function AdminDashboard() {
+  const [image, setImage] = useState(null);
+  const [tags, setTags] = useState([]);
+  const elTagInput = useRef(null);
+
+  const handleAddTags = () => {
+    if (!elTagInput.current.value || tags.length >= 6) return;
+    const val = elTagInput.current.value.split(" ").join("").trim(" ");
+    const newTags = [...tags, { value: val, id: uuidv4() }];
+    setTags(newTags);
+    elTagInput.current.value = "";
+  };
+
+  const handleDeleteTags = (id) => {
+    const filteredTags = tags.filter((item) => item.id !== id);
+    setTags(filteredTags);
+  };
+
   return (
     <section className="admin-dashboard">
       <div className="container">
@@ -22,37 +42,66 @@ export default function AdminDashboard() {
               <span className="form-admin__label-inner">yangilik</span>
             </label>
           </div>
+          {tags.length ? (
+            <>
+              <ul className="form-admin__tags">
+                {tags &&
+                  tags.map((item) => (
+                    <li key={item.id} className="form-admin__tag">
+                      <TagBadge
+                        id={item.id}
+                        handleDeleteTags={handleDeleteTags}
+                      >
+                        {item.value}
+                      </TagBadge>
+                    </li>
+                  ))}
+              </ul>
+            </>
+          ) : (
+            ""
+          )}
           <div className="form-admin__fields">
             <input
-              className="form-admin__field"
+              className="form-admin__field form-admin__field--title"
               type="text"
               name="title"
               placeholder="sarlavha"
             />
             <input
-              className="form-admin__field"
+              className="form-admin__field form-admin__field--short-desc"
               type="text"
               name="short_description"
               placeholder="qisqa izoh"
             />
           </div>
           <div className="form-admin__fields">
-            <input
-              className="form-admin__field"
-              type="text"
-              name="tags"
-              placeholder="teglar"
-            />
-            <label className="form-admin__image" htmlFor="image-admin-post">
+            <div className="form-admin__field-wrapper">
+              <input
+                className="form-admin__field form-admin__field--tag"
+                type="text"
+                name="tags"
+                placeholder="teglar"
+                ref={elTagInput}
+              />
+              <button
+                onClick={handleAddTags}
+                className="admin-form__tag-button"
+                type="button"
+              >
+                Teg qo'shish
+              </button>
+            </div>
+            <label className="form-admin__field form-admin__field--image-label">
               rasmni tanlang
+              <input
+                className="form-admin__field form-admin__field--image visually-hidden"
+                type="file"
+                name="image"
+                placeholder="post rasmi"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
             </label>
-            <input
-              className="form-admin__field visually-hidden"
-              type="file"
-              name="image"
-              placeholder="post rasmi"
-              id="image-admin-post"
-            />
           </div>
           <div className="form-admin__fields">
             <textarea
@@ -62,7 +111,9 @@ export default function AdminDashboard() {
             ></textarea>
             <img
               className="form-admin__img"
-              src="/images/temp-image.svg"
+              src={
+                image ? URL.createObjectURL(image) : "/images/temp-image.svg"
+              }
               alt=""
             />
           </div>
