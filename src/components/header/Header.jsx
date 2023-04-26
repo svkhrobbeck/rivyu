@@ -1,7 +1,14 @@
 import "./Header.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
 
-export default function Header({ handleSitenavToggle }) {
+export default function Header({
+  isAdmin,
+  isAuth,
+  setIsAuth,
+  handleSitenavToggle,
+}) {
   const list = [
     {
       name: "Profil",
@@ -13,9 +20,18 @@ export default function Header({ handleSitenavToggle }) {
       icon: "/images/icon-settings.svg",
       route: "/settings",
     },
-    { name: "Chiqish", icon: "/images/icon-sign-out.svg", route: "" },
   ];
-  
+
+  const navigate = useNavigate();
+
+  const signOutUser = () => {
+    signOut(auth).then(() => {
+      localStorage.clear();
+      setIsAuth(false);
+      navigate("/login");
+    });
+  };
+
   return (
     <header className="site-header">
       <div className="site-header__container">
@@ -69,9 +85,35 @@ export default function Header({ handleSitenavToggle }) {
                     <span className="user-account__item-inner">
                       {item.name}
                     </span>
-                    <Link to={item.route} />
+                    {isAuth && <Link to={item.route} />}
                   </li>
                 ))}
+              {!isAuth && (
+                <li className="user-account__item">
+                  <img
+                    className="user-account__item-img"
+                    src="/images/icon-login.svg"
+                    alt=""
+                  />
+                  <span className="user-account__item-inner">kirish</span>
+                  <Link to={"/login"} />
+                </li>
+              )}
+              {isAuth && (
+                <li className="user-account__item">
+                  <img
+                    className="user-account__item-img"
+                    src="/images/icon-sign-out.svg"
+                    alt=""
+                  />
+                  <button
+                    className="user-account__item-btn"
+                    onClick={signOutUser}
+                  >
+                    chiqish
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>

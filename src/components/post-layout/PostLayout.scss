@@ -28,7 +28,7 @@
 
 .post__inner {
   background-color: var(--component-color);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 15px;
   position: relative;
@@ -46,7 +46,7 @@
   top: 30px;
   padding: 5px 10px;
   border-radius: 20px 0 0 20px;
-  background-color: var(--title-hover);
+  background-color: var(--accent-color);
   user-select: none;
 
   @media only screen and (max-width: 840px) {
@@ -69,7 +69,7 @@
 }
 
 .post__time {
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--border-color);
   padding-top: 5px;
   display: block;
   width: 100%;
@@ -121,7 +121,7 @@
     border: none;
     margin: 10px 0;
     display: block;
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-top: 1px solid var(--border-color);
   }
 
   @media only screen and (max-width: 920px) {
@@ -146,7 +146,7 @@
   margin: 0;
   padding: 0;
   padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--border-color);
 }
 
 .post__tag {
@@ -154,7 +154,7 @@
 }
 
 .post__tag-link {
-  color: var(--title-hover);
+  color: var(--accent-color);
 
   &::before {
     content: "#";
@@ -180,7 +180,7 @@
   max-width: 320px;
   width: 100%;
   background-color: var(--component-color);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   padding-top: 16px;
 
@@ -206,7 +206,7 @@
 .mini-sidebar__list {
   padding: 0;
   margin: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--border-color);
 }
 
 .mini-sidebar__item {
@@ -216,7 +216,7 @@
   position: relative;
 
   &:not(:last-child) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid var(--border-color);
   }
 
   a {
@@ -239,7 +239,7 @@
     }
 
     &:hover {
-      color: var(--title-hover);
+      color: var(--accent-color);
     }
 
     @media only screen and (max-width: 840px) {

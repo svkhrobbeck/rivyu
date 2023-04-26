@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Button from "../../components/button/Button";
 import "./LoginRegister.scss";
 
 export default function Register() {
@@ -34,7 +33,7 @@ export default function Register() {
           placeholder="Parolingizni kiriting"
           id="login-register-password"
         />
-        <Button type="button">Hisob yaratish</Button>
+        <button className="button button--green" type="button">Hisob yaratish</button>
         <p className="form-login-resgister__text">
           <span className="form-login-resgister__text-inner">
             Ro'yxatdan o'tgansizmi?

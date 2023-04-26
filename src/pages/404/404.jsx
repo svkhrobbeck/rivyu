@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Button from "../../components/button/Button";
 import "./404.scss";
 
 export default function Page404() {
@@ -14,7 +13,9 @@ export default function Page404() {
           bering."
         </p>
         <Link to={"/"}>
-          <Button>Bosh sahifaga qaytish</Button>
+          <button className="button button--green">
+            Bosh sahifaga qaytish
+          </button>
         </Link>
       </div>
     </section>

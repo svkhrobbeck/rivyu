@@ -1,7 +1,7 @@
 /* CARDS-LIST */
 .cards__inner {
   background-color: var(--component-color);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   padding-top: 25px;
 
@@ -36,5 +36,5 @@
 .cards-list {
   margin: 0;
   padding: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--border-color);
 }

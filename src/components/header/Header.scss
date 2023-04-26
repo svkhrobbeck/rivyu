@@ -1,6 +1,6 @@
 .site-header {
   padding: 20px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid var(--border-color);
   position: fixed;
   top: 0;
   left: 0;
@@ -98,7 +98,7 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   overflow: hidden;
   width: 240px;
@@ -117,10 +117,26 @@
   align-items: center;
   font-size: 18px;
   position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+  }
+  
   &-img {
     margin-right: 10px;
+  }
+  
+  &-btn {
+    font-family: inherit;
+    font-size: inherit;
+    color: #f05252;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   a {
@@ -132,10 +148,4 @@
       outline: none;
     }
   }
-}
-
-.user-account__item:last-child {
-  border: none;
-  inset: 0;
-  color: #f05252;
 }

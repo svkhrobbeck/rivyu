@@ -19,28 +19,39 @@ const provider = new GoogleAuthProvider();
 
 export { db, auth, provider };
 
-/*  async function registerUser({ email, password }) {
+  // const signInWithGoogle = () => {
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       localStorage.setItem("isAuth", true);
+  //       setIsAuth(true);
+  //       navigate("/");
+  //     })
+  //     .catch((err) => setErr(true));
+  // };
 
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-        setIsAuth(true);
-        localStorage.setItem("$U$I$D$", user?.uid);
-        localStorage.setItem("$ISAUTH$", "true");
-        localStorage.setItem("$T$O$K$E$N$", user?.accessToken);
-        addUserDb(email, password, user?.uid);
-      })
-  }
 
-  async function addUserDb(email, password, uid) {
-    try {
-      await addDoc(collection(db, "users"), {
-        email,
-        password,
-        liked: "",
-        id: v4(),
-        uid,
-      });
-    }
-  } */
+// async function registerUser({ email, password }) {
+//   await createUserWithEmailAndPassword(auth, email, password).then(
+//     (userCredential) => {
+//       const user = userCredential.user;
+//       setUser(user);
+//       setIsAuth(true);
+//       localStorage.setItem("$U$I$D$", user?.uid);
+//       localStorage.setItem("$ISAUTH$", "true");
+//       localStorage.setItem("$T$O$K$E$N$", user?.accessToken);
+//       addUserDb(email, password, user?.uid);
+//     }
+//   );
+// }
+
+// async function addUserDb(email, password, uid) {
+//   try {
+//     await addDoc(collection(db, "users"), {
+//       email,
+//       password,
+//       liked: "",
+//       id: v4(),
+//       uid,
+//     });
+//   } catch {}
+// }

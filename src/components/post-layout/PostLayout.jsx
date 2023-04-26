@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./PostLayout.scss";
 import { Link, useParams } from "react-router-dom";
 
@@ -7,6 +7,11 @@ export default function PostLayout({ arr, state = false }) {
   const data = arr.find((item) => item.id === id)
     ? arr.find((item) => item.id === id)
     : {};
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <section className="post-layout" data-post-layout>
       <div className="post-layout__inner container">
@@ -47,9 +52,9 @@ export default function PostLayout({ arr, state = false }) {
             {arr &&
               arr.map((item) => (
                 <li
+                  onClick={() => (document.documentElement.scrollTop = 0)}
                   key={item.id}
                   className="mini-sidebar__item"
-                  onClick={(e) => (document.documentElement.scrollTop = 0)}
                 >
                   <Link to={`/${state ? "reviews" : "news"}/${item.id}`}>
                     {item.title}

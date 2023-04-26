@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
@@ -12,7 +12,12 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import Page404 from "../pages/404/404";
 import CardsList from "../pages/main/CardsList";
 
-export default function Router({ loader }) {
+export default function Router({
+  isAdmin,
+  isAuth,
+  setIsAuth,
+  loader,
+}) {
   const getData = (db, collectionType) => {
     const [data, setData] = useState([]);
     const newsCollectionRef = collection(db, collectionType);
@@ -33,7 +38,6 @@ export default function Router({ loader }) {
 
   const reviews = getData(db, "reviews");
   const news = getData(db, "news");
-
   return (
     <Routes>
       <Route path="/" element={<Hero />} />
@@ -50,9 +54,13 @@ export default function Router({ loader }) {
         path="/news/:id"
         element={<PostLayout arr={news} state={false} />}
       />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/admin" element={<AdminDashboard />} />
+      {!isAuth && (
+        <Route>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
+        </Route>
+      )}
+      {isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
       <Route path="*" element={<Page404 />} />
     </Routes>
   );

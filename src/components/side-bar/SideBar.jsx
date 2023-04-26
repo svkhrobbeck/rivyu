@@ -1,13 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
 import "./SideBar.scss";
-import { useState } from "react";
 
-export default function SideBar({ isSitenavOpen, handleSitenavToggle }) {
+export default function SideBar({
+  isAdmin,
+  isSitenavOpen,
+  handleSitenavToggle,
+}) {
   const links = [
     { name: "Bosh Sahifa", route: "/", image: "/images/icon-home.svg" },
     { name: "Tahlillar", route: "/reviews", image: "/images/icon-pencil.svg" },
     { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
-    { name: "Admin", route: "/admin", image: "/images/icon-admin.svg" },
     { name: "Biz haqimizda", route: "/about", image: "/images/icon-faq.svg" },
   ];
 
@@ -37,6 +39,26 @@ export default function SideBar({ isSitenavOpen, handleSitenavToggle }) {
                 </Link>
               </li>
             ))}
+          {isAdmin && (
+            <li className="side-bar__item">
+              <Link to={"/admin"}>
+                <button
+                  onClick={handleSitenavToggle}
+                  className={`side-bar__link ${
+                    "/admin" === location && "side-bar__link--active"
+                  }`}
+                >
+                  <img
+                    className="side-bar__link-icon"
+                    src="/images/icon-admin.svg"
+                    alt="icon"
+                    aria-hidden="true"
+                  />
+                  <span className="side-bar__link-text">Admin</span>
+                </button>
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     </section>
