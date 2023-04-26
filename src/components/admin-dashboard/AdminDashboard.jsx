@@ -93,7 +93,7 @@ export default function AdminDashboard() {
               </button>
             </div>
             <label className="form-admin__field form-admin__field--image-label">
-              rasmni tanlang
+              {image ? "rasm tanlandi" : "rasmni tanlang"}
               <input
                 className="form-admin__field form-admin__field--image visually-hidden"
                 type="file"
