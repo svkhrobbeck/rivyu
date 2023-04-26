@@ -141,6 +141,13 @@
   flex-shrink: 0;
 }
 
+.form-admin textarea::-webkit-resizer {
+  background: url("../images/icon-arrow-corner.svg") no-repeat center / contain;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 2px;
+}
+
 .form-admin__textarea {
   resize: vertical;
   min-height: 300px;
