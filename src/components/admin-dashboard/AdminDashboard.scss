@@ -98,7 +98,10 @@
 
   &--tag {
     border-radius: 5px 0 0 5px;
-    flex-grow: 1;
+
+    @media only screen and (max-width: 840px) {
+      width: 70%;
+    }
   }
 
   &--image:focus + &--image-label {
@@ -135,6 +138,7 @@
   border: none;
   font-family: inherit;
   font-size: 18px;
+  flex-shrink: 0;
 }
 
 .form-admin__textarea {
