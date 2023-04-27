@@ -1,4 +1,25 @@
 .side-bar {
+  position: relative;
+  @media only screen and (max-width: 1140px) {
+    &.side-bar--show .side-bar__nav {
+      transition: left 0.4s ease;
+      left: 0;
+    }
+
+    &.side-bar--show .side-bar__overflow {
+      width: 100%;
+      position: fixed;
+      z-index: 80;
+      inset: 0;
+    }
+  }
+
+  @media only screen and (max-width: 840px) {
+    top: 63.9px;
+  }
+}
+
+.side-bar__nav {
   position: fixed;
   width: 300px;
   height: 100vh;
@@ -12,12 +33,8 @@
     left: -100%;
     top: 71.5px;
     transition: left 0.6s ease;
-
-    &.side-bar--show {
-      transition: left 0.4s ease;
-      left: 0;
-    }
   }
+
   @media only screen and (max-width: 840px) {
     top: 63.9px;
   }

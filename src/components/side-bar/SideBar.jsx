@@ -14,10 +14,10 @@ export default function SideBar({
   ];
 
   const location = useLocation().pathname;
-  
+
   return (
     <section className={`side-bar ${isSitenavOpen ? "side-bar--show" : ""}`}>
-      <nav>
+      <nav className="side-bar__nav">
         <ul className="side-bar__list">
           {links &&
             links.map((link) => (
@@ -62,6 +62,7 @@ export default function SideBar({
           )}
         </ul>
       </nav>
+      <div className="side-bar__overflow" onClick={handleSitenavToggle} />
     </section>
   );
 }
