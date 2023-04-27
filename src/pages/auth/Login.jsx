@@ -7,10 +7,12 @@ import { useState } from "react";
 export default function Login({ setIsAuth }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPassword, setIsPassword] = useState(true);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
   const signInWithEmail = () => {
+    if (email === "" || password === "") return;
     let currentUser = "";
 
     signInWithEmailAndPassword(auth, email, password)
@@ -41,31 +43,49 @@ export default function Login({ setIsAuth }) {
         >
           Emailingiz
         </label>
-        <input
-          className="form-login-resgister__input"
-          type="text"
-          name="email"
-          placeholder="Emailingizni kiriting"
-          id="login-register-email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value.toLowerCase())}
-        />
-
+        <div className="form-login-register__field">
+          <input
+            className="form-login-resgister__input form-login-resgister__input--email"
+            type="text"
+            name="email"
+            placeholder="Emailingizni kiriting"
+            id="login-register-email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+          />
+        </div>
         <label
           className="form-login-resgister__label"
           htmlFor="login-register-password"
         >
           Parolingiz
         </label>
-        <input
-          className="form-login-resgister__input"
-          type="text"
-          name="password"
-          placeholder="Parolingizni kiriting"
-          id="login-register-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value.toLowerCase())}
-        />
+        <div className="form-login-register__field">
+          <input
+            className="form-login-resgister__input form-login-resgister__input--password"
+            type={isPassword ? "password" : "text"}
+            name="password"
+            placeholder="Parolingizni kiriting"
+            id="login-register-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value.toLowerCase())}
+          />
+          <button
+            className="form-login-register__password-toggle"
+            type="button"
+            onClick={() => setIsPassword((prev) => !prev)}
+          >
+            <img
+              className="form-login-register__password-toggle-img"
+              src={
+                isPassword
+                  ? "/images/icon-eye.svg"
+                  : "/images/icon-eye-slash.svg"
+              }
+              alt="eye icon"
+            />
+          </button>
+        </div>
         <button className="button button--green" type="submit">
           Kirish
         </button>
@@ -84,15 +104,6 @@ export default function Login({ setIsAuth }) {
             </span>
           </Link>
         </p>
-        {/* <p className="form-login-resgister__text">Google orqali kirish</p>
-        <button
-          className="button form-login-register__google"
-          type="button"
-          onClick={signInWithGoogle}
-        >
-          <span>Google</span>
-          <img src="/images/icon-google-plus.svg" alt="" />
-        </button> */}
       </form>
     </section>
   );

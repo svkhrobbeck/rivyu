@@ -12,12 +12,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import Page404 from "../pages/404/404";
 import CardsList from "../pages/main/CardsList";
 
-export default function Router({
-  isAdmin,
-  isAuth,
-  setIsAuth,
-  loader,
-}) {
+export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const getData = (db, collectionType) => {
     const [data, setData] = useState([]);
     const newsCollectionRef = collection(db, collectionType);
@@ -54,12 +49,21 @@ export default function Router({
         path="/news/:id"
         element={<PostLayout arr={news} state={false} />}
       />
-      {!isAuth && (
-        <Route>
-          <Route path="/register" element={<Navigate to={"/"} />} />
-          <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-        </Route>
-      )}
+      <Route>
+        <Route
+          path="/register"
+          element={
+            isAuth ? <Navigate to={"/"} /> : <Register setIsAuth={setIsAuth} />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            isAuth ? <Navigate to={"/"} /> : <Login setIsAuth={setIsAuth} />
+          }
+        />
+      </Route>
+
       {isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
       <Route path="*" element={<Page404 />} />
     </Routes>

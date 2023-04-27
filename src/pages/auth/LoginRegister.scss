@@ -36,16 +36,44 @@
   margin-bottom: 10px;
 }
 
+.form-login-register__field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-login-register__password-toggle {
+  display: flex;
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .form-login-resgister__input {
   font-family: inherit;
   font-size: 18px;
-  padding: 14px 16px;
+  padding: 14px 40px;
   border-radius: 5px;
-  background-color: var(--component-color);
+  background: var(--component-color) no-repeat 10px center / 24px;
   color: var(--text-color);
   border: 1px solid var(--accent-color);
-  margin-bottom: 25px;
   text-transform: lowercase;
+
+  &--email {
+    background-image: url("../images/icon-mail.svg");
+  }
+
+  &--password {
+    background-image: url("../images/icon-key.svg");
+  }
 }
 
 .form-login-resgister__text {
