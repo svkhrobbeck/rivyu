@@ -18,11 +18,21 @@ export default function PostLayout({ arr, state = false }) {
         <div className="post">
           <div className="post__inner">
             <span className="post__badge">{state ? "Tahlil" : "Xabar"}</span>
-            <img
-              className="post__image"
-              src={`${data.image}`}
-              alt={data.title}
-            />
+            {!data.isVideo && (
+              <img
+                className="post__image"
+                src={`${data.image}`}
+                alt={data.title}
+              />
+            )}
+            {data.isVideo && (
+              <video
+                className="post__video"
+                controls
+                src={`${data.video}`}
+                alt={data.title}
+              />
+            )}
             <time className="post__time" dateTime={data.createdAt}>
               {data.createdAt}
             </time>

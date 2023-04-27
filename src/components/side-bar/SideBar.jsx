@@ -14,6 +14,7 @@ export default function SideBar({
   ];
 
   const location = useLocation().pathname;
+  
   return (
     <section className={`side-bar ${isSitenavOpen ? "side-bar--show" : ""}`}>
       <nav>

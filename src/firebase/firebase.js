@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC5lLl2Ah18jjF2mohPBhk-HaYVQVwPh3g",
@@ -16,42 +17,6 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const provider = new GoogleAuthProvider();
+const storage = getStorage(firebaseApp);
 
-export { db, auth, provider };
-
-  // const signInWithGoogle = () => {
-  //   signInWithPopup(auth, provider)
-  //     .then((result) => {
-  //       localStorage.setItem("isAuth", true);
-  //       setIsAuth(true);
-  //       navigate("/");
-  //     })
-  //     .catch((err) => setErr(true));
-  // };
-
-
-// async function registerUser({ email, password }) {
-//   await createUserWithEmailAndPassword(auth, email, password).then(
-//     (userCredential) => {
-//       const user = userCredential.user;
-//       setUser(user);
-//       setIsAuth(true);
-//       localStorage.setItem("$U$I$D$", user?.uid);
-//       localStorage.setItem("$ISAUTH$", "true");
-//       localStorage.setItem("$T$O$K$E$N$", user?.accessToken);
-//       addUserDb(email, password, user?.uid);
-//     }
-//   );
-// }
-
-// async function addUserDb(email, password, uid) {
-//   try {
-//     await addDoc(collection(db, "users"), {
-//       email,
-//       password,
-//       liked: "",
-//       id: v4(),
-//       uid,
-//     });
-//   } catch {}
-// }
+export { db, auth, provider, storage };
