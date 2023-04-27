@@ -12,6 +12,8 @@ import Page404 from "../pages/404/404";
 import CardsList from "../pages/main/CardsList";
 import PostPage from "../pages/post-page/PostPage";
 import About from "../pages/about/About";
+import Create from "../pages/create-edit/Create";
+import Edit from "../pages/create-edit/Edit";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
@@ -40,7 +42,6 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   };
 
   const deleteDataItem = (id, state) => {
-    console.log(id);
     if (state) {
       setReviews(reviews.filter((item) => item.id !== id));
     } else {
@@ -97,6 +98,13 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       </Route>
 
       {isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
+      {isAdmin && <Route path="/admin/create-post" element={<Create />} />}
+      {isAdmin && (
+        <Route
+          path="/admin/edit-post/:type/:id"
+          element={<Edit news={news} reviews={reviews} />}
+        />
+      )}
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
