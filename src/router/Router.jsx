@@ -5,12 +5,12 @@ import { db } from "../firebase/firebase";
 
 // COMPONENTS
 import Hero from "../components/hero/Hero";
-import PostLayout from "../components/post-layout/PostLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import Page404 from "../pages/404/404";
 import CardsList from "../pages/main/CardsList";
+import PostPage from "../pages/post-page/PostPage";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const getData = (db, collectionType) => {
@@ -43,12 +43,9 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       <Route path="/news" element={<CardsList data={news} state={false} />} />
       <Route
         path="/reviews/:id"
-        element={<PostLayout arr={reviews} state={true} />}
+        element={<PostPage arr={reviews} state={true} />}
       />
-      <Route
-        path="/news/:id"
-        element={<PostLayout arr={news} state={false} />}
-      />
+      <Route path="/news/:id" element={<PostPage arr={news} state={false} />} />
       <Route>
         <Route
           path="/register"

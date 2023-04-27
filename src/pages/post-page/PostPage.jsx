@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "./PostLayout.scss";
+import "./PostPage.scss";
 import { Link, useParams } from "react-router-dom";
 
-export default function PostLayout({ arr, state = false }) {
+export default function PostPage({ arr, state = false }) {
   const id = useParams().id;
   const data = arr.find((item) => item.id === id)
     ? arr.find((item) => item.id === id)
@@ -13,8 +13,8 @@ export default function PostLayout({ arr, state = false }) {
   }, []);
 
   return (
-    <section className="post-layout" data-post-layout>
-      <div className="post-layout__inner container">
+    <section className="post-page">
+      <div className="post-page__inner container">
         <div className="post">
           <div className="post__inner">
             <span className="post__badge">{state ? "Tahlil" : "Xabar"}</span>
