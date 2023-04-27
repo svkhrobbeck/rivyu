@@ -38,9 +38,11 @@ export default function AdminDashboard() {
 
   const date = new Date();
 
-  const createdAt = `${date.getHours()}:${date.getMinutes()} / ${getZero(
-    date.getDate()
-  )}.${getZero(date.getMonth() + 1)}.${date.getFullYear()}`;
+  const createdAt = `${getZero(date.getHours())}:${getZero(
+    date.getMinutes()
+  )} / ${getZero(date.getDate())}.${getZero(
+    date.getMonth() + 1
+  )}.${date.getFullYear()}`;
 
   const postsCollectionRef = collection(db, `${isNews ? "news" : "reviews"}`);
 
