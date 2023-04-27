@@ -7,7 +7,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
 import TagBadge from "../../components/tag-badge/TagBadge";
 
-export default function Create() {
+export default function Create({}) {
   const [media, setMedia] = useState(null);
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
@@ -36,12 +36,13 @@ export default function Create() {
   const getZero = (num) => (num >= 10 ? num : `0${num}`);
 
   const date = new Date();
+  const time = date.getTime();
 
-  const createdAt = `${getZero(date.getHours())}:${getZero(
-    date.getMinutes()
-  )} / ${getZero(date.getDate())}.${getZero(
+  const createdAt = `${getZero(date.getDate())}.${getZero(
     date.getMonth() + 1
-  )}.${date.getFullYear()}`;
+  )}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
+    date.getMinutes()
+  )}`;
 
   const postsCollectionRef = collection(db, `${isNews ? "news" : "reviews"}`);
 
@@ -79,8 +80,10 @@ export default function Create() {
               description,
               tags,
               createdAt,
+              time,
               image: downloadURL,
             });
+
             navigate("/");
           });
         }

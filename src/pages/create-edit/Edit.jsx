@@ -70,6 +70,7 @@ export default function Edit({ news, reviews }) {
                 description,
                 image: downloadURL,
               });
+              console.log("added");
             });
           }
         );
@@ -161,11 +162,20 @@ export default function Edit({ news, reviews }) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <img
-          className="create-edit__img"
-          src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
-          alt=""
-        />
+        {!media && (
+          <img
+            className="create-edit__img"
+            src={image ? image : "/images/temp-image.svg"}
+            alt=""
+          />
+        )}
+        {media && (
+          <img
+            className="create-edit__img"
+            src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
+            alt=""
+          />
+        )}
       </div>
       <div className="create-edit__buttons">
         <Link to={"/"}>

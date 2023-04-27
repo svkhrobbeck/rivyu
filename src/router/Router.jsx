@@ -19,26 +19,26 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  const getData = (db, state = true) => {
+  const getData = async (db, state = true) => {
     const stateText = state ? "news" : "reviews";
     const newsCollectionRef = collection(db, stateText);
+    loader(true);
+    const data = await getDocs(newsCollectionRef);
+    const newData = data.docs
+      .map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }))
+      .sort((a, b) => b.time - a.time);
 
-    useEffect(() => {
-      loader(true);
-      const getArr = async () => {
-        const data = await getDocs(newsCollectionRef);
-        const newData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    console.log(newData);
 
-        if (state) {
-          setNews(newData);
-        } else {
-          setReviews(newData);
-        }
-        loader(false);
-      };
-
-      getArr();
-    }, []);
+    if (state) {
+      setNews(newData);
+    } else {
+      setReviews(newData);
+    }
+    loader(false);
   };
 
   const deleteDataItem = (id, state) => {
@@ -49,8 +49,11 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
     }
   };
 
-  getData(db);
-  getData(db, false);
+  useEffect(() => {
+    getData(db);
+    getData(db, false);
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Hero />} />
