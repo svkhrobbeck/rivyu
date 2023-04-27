@@ -1,8 +1,21 @@
 import { useEffect, useState } from "react";
 import "./PostPage.scss";
 import { Link, useParams } from "react-router-dom";
+import { db } from "../../firebase/firebase";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+  startAt,
+} from "firebase/firestore";
 
 export default function PostPage({ arr, state = false }) {
+  const [pagination, setPagination] = useState(1);
   const id = useParams().id;
   const data = arr.find((item) => item.id === id)
     ? arr.find((item) => item.id === id)

@@ -31,8 +31,6 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       }))
       .sort((a, b) => b.time - a.time);
 
-    console.log(newData);
-
     if (state) {
       setNews(newData);
     } else {
