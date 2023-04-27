@@ -83,6 +83,7 @@ export default function Login({ setIsAuth }) {
             className="form-login-resgister__input form-login-resgister__input--email"
             type="text"
             name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             placeholder="Emailingizni kiriting"
             id="login-register-email"
             value={email}

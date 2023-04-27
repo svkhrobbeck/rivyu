@@ -1,8 +1,17 @@
 import { Link } from "react-router-dom";
 import "./CardItem.scss";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 export default function CardItem(props) {
   const state = props.state ? "reviews" : "news";
+
+  const deletePost = async () => {
+    const postDoc = doc(db, state, props.id);
+    await deleteDoc(postDoc);
+    props.deleteDataItem(props.id, props.state);
+  };
+
   return (
     <li className="card-item">
       <img
@@ -20,6 +29,16 @@ export default function CardItem(props) {
           {props.createdAt}
         </time>
       </div>
+      {props.isAdmin && (
+        <div className="card-item__crud-buttons">
+          <button className="card-item__delete-button" onClick={deletePost}>
+            <img src="/images/icon-trash.svg" alt="" />
+          </button>
+          <button className="card-item__edit-button">
+            <img src="/images/icon-edit.svg" alt="" />
+          </button>
+        </div>
+      )}
     </li>
   );
 }

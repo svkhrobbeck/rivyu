@@ -14,35 +14,67 @@ import PostPage from "../pages/post-page/PostPage";
 import About from "../pages/about/About";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
-  const getData = (db, collectionType) => {
-    const [data, setData] = useState([]);
-    const newsCollectionRef = collection(db, collectionType);
+  const [news, setNews] = useState([]);
+  const [reviews, setReviews] = useState([]);
+
+  const getData = (db, state = true) => {
+    const stateText = state ? "news" : "reviews";
+    const newsCollectionRef = collection(db, stateText);
 
     useEffect(() => {
       loader(true);
       const getArr = async () => {
         const data = await getDocs(newsCollectionRef);
-        setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        const newData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+        if (state) {
+          setNews(newData);
+        } else {
+          setReviews(newData);
+        }
         loader(false);
       };
 
       getArr();
     }, []);
-
-    return data;
   };
 
+  const deleteDataItem = (id, state) => {
+    console.log(id);
+    if (state) {
+      setReviews(reviews.filter((item) => item.id !== id));
+    } else {
+      setNews(news.filter((item) => item.id !== id));
+    }
+  };
 
-  const reviews = getData(db, "reviews");
-  const news = getData(db, "news");
+  getData(db);
+  getData(db, false);
   return (
     <Routes>
       <Route path="/" element={<Hero />} />
       <Route
         path="/reviews"
-        element={<CardsList data={reviews} state={true} />}
+        element={
+          <CardsList
+            deleteDataItem={deleteDataItem}
+            isAdmin={isAdmin}
+            data={reviews}
+            state={true}
+          />
+        }
       />
-      <Route path="/news" element={<CardsList data={news} state={false} />} />
+      <Route
+        path="/news"
+        element={
+          <CardsList
+            deleteDataItem={deleteDataItem}
+            isAdmin={isAdmin}
+            data={news}
+            state={false}
+          />
+        }
+      />
       <Route
         path="/reviews/:id"
         element={<PostPage arr={reviews} state={true} />}
