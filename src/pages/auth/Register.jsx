@@ -52,6 +52,7 @@ export default function Register({ setIsAuth }) {
       .then((userCredential) => {
         // Signed in
         const currentUser = userCredential.user;
+        currentUser.displayName = email.split("@")[0];
         localStorage.setItem("$#SA$UTH$", true);
         localStorage.setItem("$U$I$D$", currentUser?.uid);
         localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);

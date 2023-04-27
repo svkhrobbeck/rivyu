@@ -5,19 +5,17 @@ import Router from "../router/Router";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function MainLayout() {
   const [isLoader, setIsLoader] = useState(true);
   const [isSitenavOpen, setIsSitenavOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isAuth, setIsAuth] = useState(
-    JSON.parse(localStorage.getItem("$#SA$UTH$")) || false
-  );
+  const [isAuth, setIsAuth] = useState(false);
 
   const getAdminData = (db, collectionType) => {
     const newsCollectionRef = collection(db, collectionType);
-    setIsLoader(true);
     const getArr = async () => {
       const dataBack = await getDocs(newsCollectionRef);
       const newData = dataBack.docs.map((doc) => ({ ...doc.data() }));
@@ -29,13 +27,25 @@ export default function MainLayout() {
           setIsAdmin(false);
         }
       });
-      setIsLoader(false);
     };
-
     getArr();
   };
 
   useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        const token = user.accessToken;
+        if (
+          uid === localStorage.getItem("$U$I$D$") &&
+          localStorage.getItem("$T$O$K$E$N$") === token
+        ) {
+          setIsAuth(true);
+        }
+      } else {
+        //
+      }
+    });
     getAdminData(db, "admin");
   }, [isAuth]);
 

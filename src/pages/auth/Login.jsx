@@ -52,6 +52,7 @@ export default function Login({ setIsAuth }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         currentUser = result.user;
+        currentUser.displayName = email.split("@")[0];
         localStorage.setItem("$#SA$UTH$", true);
         localStorage.setItem("$U$I$D$", currentUser?.uid);
         localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);
