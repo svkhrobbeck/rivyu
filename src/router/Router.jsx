@@ -11,6 +11,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import Page404 from "../pages/404/404";
 import CardsList from "../pages/main/CardsList";
 import PostPage from "../pages/post-page/PostPage";
+import About from "../pages/about/About";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const getData = (db, collectionType) => {
@@ -31,6 +32,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
     return data;
   };
 
+
   const reviews = getData(db, "reviews");
   const news = getData(db, "news");
   return (
@@ -46,6 +48,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
         element={<PostPage arr={reviews} state={true} />}
       />
       <Route path="/news/:id" element={<PostPage arr={news} state={false} />} />
+      <Route path="/about" element={<About />} />
       <Route>
         <Route
           path="/register"

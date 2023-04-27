@@ -7,12 +7,47 @@ import { useState } from "react";
 export default function Register({ setIsAuth }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [isPassword, setIsPassword] = useState(true);
 
+  const validatePassword = (e) => {
+    const val = e.target.value.toLowerCase();
+
+    setPassword(val);
+    if (val.length === 0) {
+      setErr("Parolingizni kiriting");
+    } else if (val.length >= 8) {
+      setErr("");
+    } else if (val.length < 8) {
+      setErr("Parol kamida 8 ta belgidan iborat bo'lishi kerak");
+    }
+  };
+
+  const validateEmail = (e) => {
+    const val = e.target.value.toLowerCase();
+
+    setEmail(val);
+
+    if (val.length === 0) {
+      setErr("Emailingizni kiriting");
+    } else if (val.length > 0) {
+      setErr("");
+    }
+  };
+
   const signUpWithEmail = () => {
-    if (email === "" || password === "") return;
+    if (email === "" && password === "") {
+      setErr("Email va parolni kiriting!");
+      return;
+    } else if (email === "") {
+      setErr("Emailni kiriting!");
+      return;
+    } else if (password === "") {
+      setErr("Parolni kiriting!");
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
@@ -25,7 +60,7 @@ export default function Register({ setIsAuth }) {
         return;
       })
       .catch(() => {
-        setErr(true);
+        setErr("Bunday hisob allaqachon yaratilgan");
       });
   };
 
@@ -47,7 +82,7 @@ export default function Register({ setIsAuth }) {
             placeholder="Emailingizni kiriting"
             id="login-register-email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={validateEmail}
           />
         </div>
         <label
@@ -64,7 +99,7 @@ export default function Register({ setIsAuth }) {
             placeholder="Parolingizni kiriting"
             id="login-register-password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={validatePassword}
           />
           <button
             className="form-login-register__password-toggle"
@@ -91,7 +126,7 @@ export default function Register({ setIsAuth }) {
         </button>
         {err && (
           <p className="form-login-resgister__text form-login-resgister__text--error">
-            Bunday hisob allaqachon yaratilgan
+            {err}
           </p>
         )}
         <p className="form-login-resgister__text">
