@@ -18,6 +18,7 @@ import Edit from "../pages/create-edit/Edit";
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [data, setData] = useState([]);
 
   const getData = async (db, state = true) => {
     const stateText = state ? "news" : "reviews";
@@ -39,18 +40,10 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
     loader(false);
   };
 
-  const deleteDataItem = (id, state) => {
-    if (state) {
-      setReviews(reviews.filter((item) => item.id !== id));
-    } else {
-      setNews(news.filter((item) => item.id !== id));
-    }
-  };
-
   useEffect(() => {
     getData(db);
     getData(db, false);
-  }, []);
+  }, [data]);
 
   return (
     <Routes>
@@ -59,7 +52,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
         path="/reviews"
         element={
           <CardsList
-            deleteDataItem={deleteDataItem}
+            setData={setData}
             isAdmin={isAdmin}
             data={reviews}
             state={true}
@@ -70,7 +63,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
         path="/news"
         element={
           <CardsList
-            deleteDataItem={deleteDataItem}
+            setData={setData}
             isAdmin={isAdmin}
             data={news}
             state={false}
@@ -79,9 +72,26 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       />
       <Route
         path="/reviews/:id"
-        element={<PostPage arr={reviews} state={true} />}
+        element={
+          <PostPage
+            setData={setData}
+            isAuth={isAuth}
+            arr={reviews}
+            state={true}
+          />
+        }
       />
-      <Route path="/news/:id" element={<PostPage arr={news} state={false} />} />
+      <Route
+        path="/news/:id"
+        element={
+          <PostPage
+            setData={setData}
+            isAuth={isAuth}
+            arr={news}
+            state={false}
+          />
+        }
+      />
       <Route path="/about" element={<About />} />
       <Route>
         <Route
@@ -99,11 +109,16 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       </Route>
 
       {isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
-      {isAdmin && <Route path="/admin/create-post" element={<Create />} />}
+      {isAdmin && (
+        <Route
+          path="/admin/create-post"
+          element={<Create setData={setData} />}
+        />
+      )}
       {isAdmin && (
         <Route
           path="/admin/edit-post/:type/:id"
-          element={<Edit news={news} reviews={reviews} />}
+          element={<Edit setData={setData} news={news} reviews={reviews} />}
         />
       )}
       <Route path="*" element={<Page404 />} />

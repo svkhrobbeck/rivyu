@@ -7,7 +7,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
 import TagBadge from "../../components/tag-badge/TagBadge";
 
-export default function Create({}) {
+export default function Create({ setData }) {
   const [media, setMedia] = useState(null);
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
@@ -75,6 +75,7 @@ export default function Create({}) {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             addDoc(postsCollectionRef, {
+              lastEdited: "",
               title,
               shortDesc,
               description,
@@ -85,6 +86,7 @@ export default function Create({}) {
             });
 
             navigate("/");
+            setData({ createdAt });
           });
         }
       );
@@ -163,16 +165,20 @@ export default function Create({}) {
           </button>
         </div>
         <div className="create-edit__fields">
-          <label className="create-edit__field create-edit__field--image-label">
+          <input
+            className="create-edit__field create-edit__field--image visually-hidden"
+            type="file"
+            name="image"
+            accept="image/*"
+            id="image-input-create"
+            placeholder="post rasmi"
+            onChange={(e) => setMedia(e.target.files[0])}
+          />
+          <label
+            htmlFor="image-input-create"
+            className="create-edit__field create-edit__field--image-label"
+          >
             {media ? "rasm tanlandi" : "rasmni tanlang"}
-            <input
-              className="create-edit__field create-edit__field--image visually-hidden"
-              type="file"
-              name="image"
-              accept="image/*"
-              placeholder="post rasmi"
-              onChange={(e) => setMedia(e.target.files[0])}
-            />
           </label>
         </div>
       </div>

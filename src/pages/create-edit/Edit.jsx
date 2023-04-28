@@ -7,13 +7,13 @@ import { db, storage } from "../../firebase/firebase";
 import TagBadge from "../../components/tag-badge/TagBadge";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
-export default function Edit({ news, reviews }) {
+export default function Edit({ setData, news, reviews }) {
   const navigate = useNavigate();
   const { type: paramType, id: paramId } = useParams();
   const arr = paramType === "news" ? news : reviews;
   const data = arr.find((item) => item.id === paramId);
   const [media, setMedia] = useState(null);
-  const [image, setImage] = useState(data.image);
+  const [image, _] = useState(data.image);
   const [title, setTitle] = useState(data.title);
   const [shortDesc, setShortDesc] = useState(data.shortDesc);
   const [description, setDescription] = useState(data.description);
@@ -22,6 +22,14 @@ export default function Edit({ news, reviews }) {
   );
   const tags = mytags.map((item) => item.value);
   const elTagInput = useRef(null);
+  const date = new Date();
+  const getZero = (num) => (num >= 10 ? num : `0${num}`);
+
+  const lastEdited = `${getZero(date.getDate())}.${getZero(
+    date.getMonth() + 1
+  )}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
+    date.getMinutes()
+  )}`;
 
   const handleAddTags = () => {
     if (!elTagInput.current.value || tags.length >= 6) return;
@@ -64,13 +72,13 @@ export default function Edit({ news, reviews }) {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               updateDoc(postRef, {
                 ...data,
+                lastEdited,
                 title,
                 shortDesc,
                 tags,
                 description,
                 image: downloadURL,
               });
-              console.log("added");
             });
           }
         );
@@ -86,11 +94,16 @@ export default function Edit({ news, reviews }) {
         shortDesc,
         tags,
         description,
+        likesList: [],
+        lastEdited,
         image: image,
       });
     }
-    navigate("/");
+    setData(arr);
+    navigate(`/${paramType}`);
   };
+
+  console.log(paramType);
 
   return (
     <div className="create-edit container">
@@ -143,16 +156,20 @@ export default function Edit({ news, reviews }) {
           Teg qo'shish
         </button>
       </div>
-      <label className="create-edit__field create-edit__field--image-label create-edit__field--image-label-block">
+      <input
+        className="create-edit__field create-edit__field--image visually-hidden"
+        type="file"
+        name="image"
+        accept="image/*"
+        placeholder="post rasmi"
+        id="image-input-edit"
+        onChange={(e) => setMedia(e.target.files[0])}
+      />
+      <label
+        htmlFor="image-input-edit"
+        className="create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
+      >
         {media ? "rasm tanlandi" : "rasmni tanlang"}
-        <input
-          className="create-edit__field create-edit__field--image visually-hidden"
-          type="file"
-          name="image"
-          accept="image/*"
-          placeholder="post rasmi"
-          onChange={(e) => setMedia(e.target.files[0])}
-        />
       </label>
       <div className="create-edit__fields">
         <textarea
@@ -178,7 +195,7 @@ export default function Edit({ news, reviews }) {
         )}
       </div>
       <div className="create-edit__buttons">
-        <Link to={"/"}>
+        <Link to={`/${paramType}`}>
           <button className="button button--blue">Bekor Qilish</button>
         </Link>
         <button

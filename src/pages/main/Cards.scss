@@ -163,17 +163,38 @@
   }
 }
 
+.card-item__times {
+  display: flex;
+  align-items: center;
+  gap: 0 25px;
+}
+
 .card-item__time {
   color: #6c757d;
   font-weight: 300;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    background: url("../images/icon-time.svg") no-repeat center / contain;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+  &--edited::before {
+    background-image: url("../images/icon-mini-pencil.svg");
+  }
 
   @media only screen and (max-width: 576px) {
     font-size: 13px;
   }
 }
 
-.card-item__crud-buttons {
+.card-item__buttons {
   position: absolute;
   top: 15px;
   right: 10px;
@@ -189,8 +210,7 @@
   }
 }
 
-.card-item__delete-button,
-.card-item__edit-button {
+.card-item__button {
   border: none;
   background-color: transparent;
   cursor: pointer;
