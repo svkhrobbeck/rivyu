@@ -33,6 +33,7 @@
   padding: 15px;
   position: relative;
   min-height: 100px;
+  overflow: hidden;
 
   @media only screen and (max-width: 600px) {
     padding: 10px;
@@ -42,28 +43,27 @@
 .post__badge {
   display: inline-block;
   position: absolute;
-  right: 0;
-  top: 30px;
-  padding: 5px 10px;
-  border-radius: 20px 0 0 20px;
+  left: 0;
+  top: 0;
+  padding: 3px 8px;
+  border-radius: 0 0 20px 0;
   background-color: var(--accent-color);
   user-select: none;
 
   @media only screen and (max-width: 840px) {
     font-size: 18px;
-    top: 25px;
+    top: 15px;
   }
 
   @media only screen and (max-width: 600px) {
     font-size: 16px;
-    top: 20px;
+    top: 10px;
   }
 }
 
 .post__image {
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
-  min-height: 50px;
   height: auto;
   border-radius: 6px;
   margin-bottom: 10px;
