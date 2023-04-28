@@ -14,21 +14,24 @@ export default function MainLayout() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
 
-  const getAdminData = (db, collectionType) => {
+  const getAdminData = (db, collectionType, uid) => {
     const newsCollectionRef = collection(db, collectionType);
     const getArr = async () => {
-      const dataBack = await getDocs(newsCollectionRef);
-      const newData = dataBack.docs.map((doc) => ({ ...doc.data() }));
+      const data = await getDocs(newsCollectionRef);
+      const newData = data.docs.map((doc) => ({ ...doc.data() }));
 
       newData.forEach((item) => {
-        if (localStorage.getItem("$U$I$D$") === item.adminToken) {
+        if (
+          localStorage.getItem("$U$I$D$") === item.adminToken &&
+          item.adminToken === uid
+        ) {
           setIsAdmin(true);
         } else {
           setIsAdmin(false);
         }
       });
+      getArr();
     };
-    getArr();
   };
 
   useEffect(() => {
@@ -42,11 +45,9 @@ export default function MainLayout() {
         ) {
           setIsAuth(true);
         }
-      } else {
-        //
       }
     });
-    getAdminData(db, "admin");
+    getAdminData(db, "admin", uid);
   }, [isAuth]);
 
   const handleSitenavToggle = () => {
