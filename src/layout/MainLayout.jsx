@@ -59,7 +59,6 @@ export default function MainLayout() {
   const handleSitenavToggle = () => {
     setIsSitenavOpen((prev) => !prev);
   };
-  console.log(isAuth);
 
   return (
     <>
