@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/side-bar/SideBar";
-import Loader from "../components/loader/Loader";
 import Router from "../router/Router";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
@@ -9,7 +8,6 @@ import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function MainLayout() {
-  const [isLoader, setIsLoader] = useState(true);
   const [isSitenavOpen, setIsSitenavOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
@@ -46,6 +44,8 @@ export default function MainLayout() {
           localStorage.getItem("$T$O$K$E$N$") === token
         ) {
           setIsAuth(true);
+        } else {
+          setIsAuth(false);
         }
       } else {
         console.log("user signed out");
@@ -67,7 +67,6 @@ export default function MainLayout() {
         handleSitenavToggle={handleSitenavToggle}
       />
       <main className="main-content">
-        {isLoader && <Loader />}
         <SideBar
           isAdmin={isAdmin}
           isAuth={isAuth}
@@ -79,7 +78,6 @@ export default function MainLayout() {
           setIsAdmin={setIsAdmin}
           isAuth={isAuth}
           setIsAuth={setIsAuth}
-          loader={setIsLoader}
         />
       </main>
       <Footer />

@@ -6,6 +6,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
 import TagBadge from "../../components/tag-badge/TagBadge";
+import Loader from "../../components/loader/Loader";
 
 export default function Create({ setData }) {
   const [media, setMedia] = useState(null);
@@ -44,6 +45,7 @@ export default function Create({ setData }) {
     date.getMinutes()
   )}`;
 
+  const [isLoading, setIsLoading] = useState(false);
   const postsCollectionRef = collection(db, `${isNews ? "news" : "reviews"}`);
 
   const createPost = async () => {
@@ -53,6 +55,7 @@ export default function Create({ setData }) {
     const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
 
     try {
+      setIsLoading(true);
       const uploadTask = uploadBytesResumable(mediaRef, media);
       uploadTask.on(
         "state_changed",
@@ -84,9 +87,9 @@ export default function Create({ setData }) {
               time,
               image: downloadURL,
             });
-
-            navigate("/");
+            setIsLoading(false);
             setData({ createdAt });
+            navigate("/");
           });
         }
       );
@@ -99,6 +102,7 @@ export default function Create({ setData }) {
 
   return (
     <div className="create-edit container">
+      {isLoading && <Loader />}
       <h2 className="create-edit__title">Yangi Post Yaratish</h2>
       <div className="create-edit__fields">
         <label className="create-edit__label">

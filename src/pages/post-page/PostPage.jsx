@@ -56,7 +56,10 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
                 {data.createdAt}
               </time>
               <button onClick={updateLike} className="post__like-button">
-                <span>{data?.likesList?.length}</span>
+                {data?.likesList && <span>{data?.likesList?.length}</span>}
+                {!data?.likesList && (
+                  <img src="/images/rolling-spinner.svg" alt="" />
+                )}
                 <img
                   src={`/images/icon-${
                     data.likesList?.includes(localStorage.getItem("$U$I$D$"))
@@ -89,7 +92,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
           <h3 className="mini-sidebar__title">
             So'nggi {state ? "tahlillar" : "yangiliklar"}
           </h3>
-          <ul className="mini-sidebar__list" data-post-layout-list>
+          <ul className="mini-sidebar__list">
             {arr &&
               arr.map((item) => (
                 <li

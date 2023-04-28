@@ -1,11 +1,11 @@
 import "./Cards.scss";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { auth, db, storage } from "../../firebase/firebase";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db, storage } from "../../firebase/firebase";
 import { Link } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
-import { onAuthStateChanged } from "firebase/auth";
 import Modal from "../../components/modal/Modal";
 import { useState } from "react";
+import Loader from "../../components/loader/Loader";
 
 export default function CardsList({ setData, isAdmin, data, state = false }) {
   const text = state ? "Tahlillar / Maqolalar" : "Yangiliklar";
@@ -16,8 +16,10 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
   const [isOpen, setIsOpen] = useState(false);
   const handleModalClose = () => setIsOpen(false);
   const handleModalOpen = () => setIsOpen(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const deletePost = async (id, state) => {
+    setIsLoading(true);
     const itemObj = data.find((item) => item.id === id);
     const desertRef = ref(storage, itemObj.image);
     deleteObject(desertRef)
@@ -30,12 +32,16 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
       })
       .catch((error) => {
         console.log("Uh-oh, an error occurred!");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
     <section className="cards">
       <div className="container">
+        {isLoading && <Loader />}
         <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
           <div className="modal-inner">
             <h3 className="modal-inner__title">

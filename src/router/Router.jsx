@@ -23,7 +23,6 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const getData = async (db, state = true) => {
     const stateText = state ? "news" : "reviews";
     const newsCollectionRef = collection(db, stateText);
-    loader(true);
     const data = await getDocs(newsCollectionRef);
     const newData = data.docs
       .map((doc) => ({
@@ -37,7 +36,6 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
     } else {
       setReviews(newData);
     }
-    loader(false);
   };
 
   useEffect(() => {
