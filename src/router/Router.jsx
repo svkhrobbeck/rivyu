@@ -14,6 +14,7 @@ import PostPage from "../pages/post-page/PostPage";
 import About from "../pages/about/About";
 import Create from "../pages/create-edit/Create";
 import Edit from "../pages/create-edit/Edit";
+import Tags from "../pages/tags/Tags";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
@@ -78,6 +79,10 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
             state={true}
           />
         }
+      />
+      <Route
+        path={"/tags/:tag"}
+        element={<Tags news={news} reviews={reviews} />}
       />
       <Route
         path="/news/:id"

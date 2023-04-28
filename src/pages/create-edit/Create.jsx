@@ -86,6 +86,7 @@ export default function Create({ setData }) {
               createdAt,
               likesList: "",
               time,
+              isNews,
               image: downloadURL,
             });
             setIsLoading(false);

@@ -93,9 +93,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
               {data.tags &&
                 data.tags.map((item) => (
                   <li key={item} className="post__tag">
-                    <a className="post__tag-link" href="">
-                      {item}
-                    </a>
+                    <Link to={`/tags/${item}`}>{item}</Link>
                   </li>
                 ))}
             </ul>
