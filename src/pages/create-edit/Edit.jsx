@@ -103,8 +103,6 @@ export default function Edit({ setData, news, reviews }) {
     navigate(`/${paramType}`);
   };
 
-  console.log(paramType);
-
   return (
     <div className="create-edit container">
       <h2 className="create-edit__title">Postni Yangilash</h2>

@@ -27,8 +27,8 @@ export default function Tags({ news, reviews }) {
               <li className="tags__item" key={item.id}>
                 <span className="tags__item-badge">{getZero(++i)}</span>
                 <span className="tags__item-inner">{item.title}</span>
-                <span className="tags__item-time">{item.createdAt}</span>
                 <Link to={`/${item.isNews ? "news" : "reviews"}/${item.id}`} />
+                <span className="tags__item-time">{item.createdAt}</span>
               </li>
             ))}
         </ul>

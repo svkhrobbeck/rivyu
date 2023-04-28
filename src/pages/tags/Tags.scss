@@ -4,9 +4,8 @@
   margin: 0;
   margin-left: 15px;
   margin-bottom: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  
 
   &-inner {
     color: var(--accent-color);

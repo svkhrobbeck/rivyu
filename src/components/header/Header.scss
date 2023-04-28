@@ -1,5 +1,5 @@
 .site-header {
-  padding: 20px 0;
+  padding: 20px 120px;
   border-bottom: 1px solid var(--border-color);
   position: fixed;
   top: 0;
@@ -9,18 +9,15 @@
   background-color: var(--component-color);
 
   @media only screen and (max-width: 1140px) {
-    padding: 14px 0;
+    padding: 14px 20px;
   }
-
+  
   @media only screen and (max-width: 840px) {
-    padding: 10px 0;
+    padding: 10px 20px;
   }
 }
 
 .site-header__container {
-  max-width: 1320px;
-  padding: 0 20px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,7 +33,7 @@
   }
 
   @media only screen and (max-width: 840px) {
-    gap: 10px;
+    gap: 15px;
   }
 }
 
@@ -103,7 +100,7 @@
   }
 }
 
-.logo__img {
+.logo {
   max-width: 175px;
   width: 100%;
   height: auto;
@@ -130,6 +127,14 @@
   &:hover .user-account__list {
     transform: scale(1);
   }
+}
+
+.user-account__img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-color);
+  object-fit: cover;
 }
 
 .user-account__btn {

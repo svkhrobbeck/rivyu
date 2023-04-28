@@ -15,7 +15,7 @@
   font-weight: 600;
   margin: 0;
   margin-left: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 
   @media only screen and (max-width: 920px) {
     font-size: 26px;
@@ -23,7 +23,6 @@
 
   @media only screen and (max-width: 840px) {
     font-size: 24px;
-    margin-bottom: 15px;
   }
 
   @media only screen and (max-width: 600px) {
@@ -167,6 +166,11 @@
   display: flex;
   align-items: center;
   gap: 0 25px;
+
+  @media only screen and (max-width: 576px) {
+    gap: 0 10px;
+    margin-bottom: 22px;
+  }
 }
 
 .card-item__time {
@@ -207,6 +211,13 @@
     flex-direction: row;
     top: auto;
     bottom: 10px;
+  }
+
+  @media only screen and (max-width: 576px) {
+    bottom: 0;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
   }
 }
 

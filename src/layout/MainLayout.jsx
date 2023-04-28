@@ -63,6 +63,7 @@ export default function MainLayout() {
   return (
     <>
       <Header
+        isAdmin={isAdmin}
         isSitenavOpen={isSitenavOpen}
         isAuth={isAuth}
         setIsAuth={setIsAuth}

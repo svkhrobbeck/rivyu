@@ -3,18 +3,11 @@
   padding: 35px 15px;
   background-color: var(--component-color);
   border-radius: 6px;
-  background: var(--component-color) url("../images/icon-movie.svg") no-repeat
-    right;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.16);
 
-    
   @media only screen and (max-width: 600px) {
     padding: 25px 10px;
   }
-}
-
-.hero__content {
-  max-width: 720px;
 }
 
 .hero__title {
@@ -24,7 +17,7 @@
   line-height: 1.2;
   margin-bottom: 10px;
 
-    @media only screen and (max-width: 920px) {
+  @media only screen and (max-width: 920px) {
     font-size: 32px;
   }
 
@@ -44,7 +37,7 @@
 
 .hero__desc {
   margin: 0;
-  
+
   @media only screen and (max-width: 840px) {
     font-size: 18px;
   }

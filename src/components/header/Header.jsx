@@ -4,25 +4,19 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 
 export default function Header({
+  isAdmin,
   isSitenavOpen,
   isAuth,
   setIsAuth,
   handleSitenavToggle,
 }) {
-  const list = [
-    {
-      name: "Profil",
-      icon: "/images/icon-mini-account.svg",
-      route: "/profile",
-    },
-    {
-      name: "Sozlamalar",
-      icon: "/images/icon-settings.svg",
-      route: "/settings",
-    },
-  ];
-
   const navigate = useNavigate();
+  const user = auth.currentUser;
+  const getUserImgUrl = () => {
+    if (isAuth === false) return;
+    const photoURL = user.photoURL;
+    return photoURL;
+  };
 
   const signOutUser = () => {
     signOut(auth).then(() => {
@@ -48,7 +42,7 @@ export default function Header({
           </button>
           <Link to={"/"}>
             <img
-              className="logo__img"
+              className="logo"
               src="/images/logo.svg"
               alt="kino blog logo"
               width={45}
@@ -61,25 +55,37 @@ export default function Header({
             <button className="user-account__btn">
               <img
                 className="user-account__img"
-                src="/images/icon-account.svg"
+                src={getUserImgUrl() ? getUserImgUrl(): "/images/icon-account.svg"}
                 alt=""
               />
             </button>
             <ul className="user-account__list">
-              {list &&
-                list.map((item) => (
-                  <li key={item.name} className="user-account__item">
+              {isAuth && (
+                <>
+                  <li className="user-account__item">
                     <img
                       className="user-account__item-img"
-                      src={item.icon}
-                      alt={`${item.name} icon`}
+                      src="/images/icon-settings.svg"
+                      alt="settings icon"
                     />
-                    <span className="user-account__item-inner">
-                      {item.name}
-                    </span>
-                    {isAuth && <Link to={item.route} />}
+                    <span className="user-account__item-inner">Sozlamalar</span>
+                    {isAuth && <Link to={"/settings"} />}
                   </li>
-                ))}
+                  <li className="user-account__item">
+                    <img
+                      className="user-account__item-img"
+                      src="/images/icon-sign-out.svg"
+                      alt=""
+                    />
+                    <button
+                      className="user-account__item-btn"
+                      onClick={signOutUser}
+                    >
+                      chiqish
+                    </button>
+                  </li>
+                </>
+              )}
               {!isAuth && (
                 <li className="user-account__item">
                   <img
@@ -89,21 +95,6 @@ export default function Header({
                   />
                   <span className="user-account__item-inner">kirish</span>
                   <Link to={"/login"} />
-                </li>
-              )}
-              {isAuth && (
-                <li className="user-account__item">
-                  <img
-                    className="user-account__item-img"
-                    src="/images/icon-sign-out.svg"
-                    alt=""
-                  />
-                  <button
-                    className="user-account__item-btn"
-                    onClick={signOutUser}
-                  >
-                    chiqish
-                  </button>
                 </li>
               )}
             </ul>

@@ -15,6 +15,7 @@ import About from "../pages/about/About";
 import Create from "../pages/create-edit/Create";
 import Edit from "../pages/create-edit/Edit";
 import Tags from "../pages/tags/Tags";
+import Settings from "../pages/settings/Settings";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
@@ -95,6 +96,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
           />
         }
       />
+      <Route path="/settings" element={<Settings isAuth={isAuth} />} />
       <Route path="/about" element={<About />} />
       <Route>
         <Route
