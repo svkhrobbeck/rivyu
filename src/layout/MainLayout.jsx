@@ -45,9 +45,9 @@ export default function MainLayout() {
         ) {
           setIsAuth(true);
         }
+        getAdminData(db, "admin", uid);
       }
     });
-    getAdminData(db, "admin", uid);
   }, [isAuth]);
 
   const handleSitenavToggle = () => {
