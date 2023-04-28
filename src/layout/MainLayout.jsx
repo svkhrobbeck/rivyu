@@ -24,7 +24,9 @@ export default function MainLayout() {
         newData.forEach((item) => {
           if (localStorage.getItem("$U$I$D$") === item.adminToken) {
             if (localStorage.getItem("$U$I$D$") === uid) {
-              setIsAdmin(true);
+              if (isAuth) {
+                setIsAdmin(true);
+              }
             }
           } else {
             setIsAdmin(false);
@@ -57,6 +59,7 @@ export default function MainLayout() {
   const handleSitenavToggle = () => {
     setIsSitenavOpen((prev) => !prev);
   };
+  console.log(isAuth);
 
   return (
     <>
