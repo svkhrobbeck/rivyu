@@ -84,6 +84,7 @@ export default function Create({ setData }) {
               description,
               tags,
               createdAt,
+              likesList: "",
               time,
               image: downloadURL,
             });
