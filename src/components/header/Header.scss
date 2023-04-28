@@ -173,6 +173,10 @@
     border-bottom: 1px solid var(--border-color);
   }
 
+  &:last-child {
+    cursor: pointer;
+  }
+
   &-img {
     margin-right: 10px;
   }
@@ -184,7 +188,6 @@
     border: none;
     padding: 0;
     background-color: transparent;
-    cursor: pointer;
 
     &:focus {
       outline: none;

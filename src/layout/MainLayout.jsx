@@ -22,14 +22,12 @@ export default function MainLayout() {
         const uid = user.uid;
 
         newData.forEach((item) => {
-          if (localStorage.getItem("$U$I$D$") === item.adminToken) {
-            if (localStorage.getItem("$U$I$D$") === uid) {
-              if (isAuth) {
-                setIsAdmin(true);
-              }
-            }
-          } else {
-            setIsAdmin(false);
+          if (
+            isAuth &&
+            localStorage.getItem("$U$I$D$") === item.adminToken &&
+            localStorage.getItem("$U$I$D$") === uid
+          ) {
+            setIsAdmin(true);
           }
         });
       }
@@ -50,6 +48,8 @@ export default function MainLayout() {
           setIsAuth(false);
         }
       } else {
+        setIsAuth(false);
+        setIsAdmin(false);
         console.log("user signed out");
       }
     });
@@ -63,7 +63,7 @@ export default function MainLayout() {
   return (
     <>
       <Header
-      isSitenavOpen={isSitenavOpen}
+        isSitenavOpen={isSitenavOpen}
         isAuth={isAuth}
         setIsAuth={setIsAuth}
         handleSitenavToggle={handleSitenavToggle}
