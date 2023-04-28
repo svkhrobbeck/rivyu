@@ -6,6 +6,7 @@ import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function PostPage({ isAuth, setData, arr, state = false }) {
+  const [isShowToast, setIsShowToast] = useState(false);
   const id = useParams().id;
 
   const data = arr.find((item) => item.id === id)
@@ -38,6 +39,13 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
     });
   };
 
+  const copyLink = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setIsShowToast(true);
+      setTimeout(() => setIsShowToast(false), 3000);
+    });
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -55,20 +63,25 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
               <time className="post__time" dateTime={data.createdAt}>
                 {data.createdAt}
               </time>
-              <button onClick={updateLike} className="post__like-button">
-                {data?.likesList && <span>{data?.likesList?.length}</span>}
-                {!data?.likesList && (
-                  <img src="/images/rolling-spinner.svg" alt="" />
-                )}
-                <img
-                  src={`/images/icon-${
-                    data.likesList?.includes(localStorage.getItem("$U$I$D$"))
-                      ? "like"
-                      : "unlike"
-                  }.svg`}
-                  alt=""
-                />
-              </button>
+              <div className="post__buttons-wrapper">
+                <button onClick={copyLink} className="post__button">
+                  <img src="/images/icon-link.svg" alt="" />
+                </button>
+                <button onClick={updateLike} className="post__button">
+                  {data?.likesList && <span>{data?.likesList?.length}</span>}
+                  {!data?.likesList && (
+                    <img src="/images/rolling-spinner.svg" alt="" />
+                  )}
+                  <img
+                    src={`/images/icon-${
+                      data.likesList?.includes(localStorage.getItem("$U$I$D$"))
+                        ? "like"
+                        : "unlike"
+                    }.svg`}
+                    alt=""
+                  />
+                </button>
+              </div>
             </div>
             <h2 className="post__title" data-post-layout-title>
               {data.title}
@@ -107,6 +120,16 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
               ))}
           </ul>
         </div>
+      </div>
+      <div className={`toast toast--success ${isShowToast && "toast--show"}`}>
+        <button className="toast__close" onClick={() => setIsShowToast(false)}>
+          <img
+            className="toast__close-img"
+            src="/images/icon-close.svg"
+            alt="icon close"
+          />
+        </button>
+        <span className="toast__inner">Havola nusxalandi!</span>
       </div>
     </section>
   );

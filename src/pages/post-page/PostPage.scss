@@ -104,7 +104,12 @@
   }
 }
 
-.post__like-button {
+.post__buttons-wrapper {
+  display: flex;
+  gap: 0 20px;
+}
+
+.post__button {
   border: none;
   background-color: transparent;
   padding: 0;
@@ -116,7 +121,7 @@
   font-family: inherit;
   font-size: inherit;
   border: 1px solid var(--border-color);
-  padding: 0 4px;
+  padding: 0 6px;
   border-top: none;
   border-radius: 0 0 5px 5px;
 
@@ -312,4 +317,35 @@
   @media only screen and (max-width: 576px) {
     font-size: 14px;
   }
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 30px;
+  z-index: 200;
+  padding: 16px 40px;
+  border-radius: 6px;
+  border: 1px solid var(--accent-color);
+  background: #1f2a37 no-repeat 8px center / 24px;
+  right: -100%;
+  transition: right 1s ease;
+
+  &--show {
+    right: 10px;
+    transition: right 0.3s ease-out;
+  }
+
+  &--success {
+    background-image: url("../images/icon-success.svg");
+  }
+}
+
+.toast__close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  border: none;
+  background-color: transparent;
+  display: flex;
 }
