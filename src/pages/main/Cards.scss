@@ -217,3 +217,17 @@
   display: flex;
   padding: 3px;
 }
+
+/* MODAL INNER */
+.modal-inner__title {
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.modal-inner__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

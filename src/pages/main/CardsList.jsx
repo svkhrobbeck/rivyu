@@ -4,13 +4,18 @@ import { auth, db, storage } from "../../firebase/firebase";
 import { Link } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
+import Modal from "../../components/modal/Modal";
+import { useState } from "react";
 
 export default function CardsList({ setData, isAdmin, data, state = false }) {
   const text = state ? "Tahlillar / Maqolalar" : "Yangiliklar";
   const stateText = state ? "reviews" : "news";
   document.title = `Kino Blog | ${text}`;
 
-  console.log(data);
+  const [id, setId] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const handleModalClose = () => setIsOpen(false);
+  const handleModalOpen = () => setIsOpen(true);
 
   const deletePost = async (id, state) => {
     const itemObj = data.find((item) => item.id === id);
@@ -21,6 +26,7 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
         const postDoc = doc(db, stateText, id);
         deleteDoc(postDoc);
         setData(data);
+        handleModalClose();
       })
       .catch((error) => {
         console.log("Uh-oh, an error occurred!");
@@ -30,6 +36,27 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
   return (
     <section className="cards">
       <div className="container">
+        <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
+          <div className="modal-inner">
+            <h3 className="modal-inner__title">
+              Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?
+            </h3>
+            <div className="modal-inner__buttons">
+              <button
+                className="button button--green"
+                onClick={handleModalClose}
+              >
+                Yo'q
+              </button>
+              <button
+                className="button button--blue"
+                onClick={() => deletePost(id, state)}
+              >
+                Ha
+              </button>
+            </div>
+          </div>
+        </Modal>
         <div className="cards__inner">
           <h2 className="cards__title">{text}</h2>
           <ul className="cards-list">
@@ -68,7 +95,10 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
                     <div className="card-item__buttons">
                       <button
                         className="card-item__button"
-                        onClick={() => deletePost(item.id, state)}
+                        onClick={() => {
+                          handleModalOpen();
+                          setId(item.id);
+                        }}
                       >
                         <img src="/images/icon-trash.svg" alt="" />
                       </button>

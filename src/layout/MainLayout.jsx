@@ -14,24 +14,26 @@ export default function MainLayout() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
 
-  const getAdminData = (db, collectionType, uid) => {
+  const getAdminData = async (db, collectionType) => {
     const newsCollectionRef = collection(db, collectionType);
-    const getArr = async () => {
-      const data = await getDocs(newsCollectionRef);
-      const newData = data.docs.map((doc) => ({ ...doc.data() }));
+    const dataBack = await getDocs(newsCollectionRef);
+    const newData = dataBack.docs.map((doc) => ({ ...doc.data() }));
 
-      newData.forEach((item) => {
-        if (
-          localStorage.getItem("$U$I$D$") === item.adminToken &&
-          item.adminToken === uid
-        ) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-      });
-      getArr();
-    };
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+
+        newData.forEach((item) => {
+          if (localStorage.getItem("$U$I$D$") === item.adminToken) {
+            if (localStorage.getItem("$U$I$D$") === uid) {
+              setIsAdmin(true);
+            }
+          } else {
+            setIsAdmin(false);
+          }
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -45,9 +47,11 @@ export default function MainLayout() {
         ) {
           setIsAuth(true);
         }
-        getAdminData(db, "admin", uid);
+      } else {
+        console.log("user signed out");
       }
     });
+    getAdminData(db, "admin");
   }, [isAuth]);
 
   const handleSitenavToggle = () => {
