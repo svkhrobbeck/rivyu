@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 
 // COMPONENTS
-import Hero from "../components/hero/Hero";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -16,6 +15,7 @@ import Create from "../pages/create-edit/Create";
 import Edit from "../pages/create-edit/Edit";
 import Tags from "../pages/tags/Tags";
 import Settings from "../pages/settings/Settings";
+import Home from "../pages/home/Home";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
@@ -47,7 +47,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
 
   return (
     <Routes>
-      <Route path="/" element={<Hero />} />
+      <Route path="/" element={<Home news={news} reviews={reviews} />} />
       <Route
         path="/reviews"
         element={

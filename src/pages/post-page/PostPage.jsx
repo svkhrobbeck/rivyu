@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import MiniSideBar from "../../components/mini-sidebar/MiniSideBar";
 
 export default function PostPage({ isAuth, setData, arr, state = false }) {
   const [isShowToast, setIsShowToast] = useState(false);
@@ -15,6 +16,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
     ? arr.find((item) => item.id === id)
     : {};
   const stateText = state ? "reviews" : "news";
+  const stateTitle = `So'nggi ${state ? "tahlillar" : "yangiliklar"}`;
 
   const updateLike = async () => {
     const docRef = doc(db, stateText, id);
@@ -55,7 +57,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
   return (
     <section className="post-page">
       <div className="post-page__inner container">
-        <div className="post">
+        <div className="post-page__post post">
           <div className="post__inner">
             <span className="post__badge">{state ? "Tahlil" : "Xabar"}</span>
 
@@ -101,24 +103,8 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
             </ul>
           </div>
         </div>
-        <div className="mini-sidebar">
-          <h3 className="mini-sidebar__title">
-            So'nggi {state ? "tahlillar" : "yangiliklar"}
-          </h3>
-          <ul className="mini-sidebar__list">
-            {filteredArr &&
-              filteredArr.map((item) => (
-                <li
-                  onClick={() => (document.documentElement.scrollTop = 0)}
-                  key={item.id}
-                  className="mini-sidebar__item"
-                >
-                  <Link to={`/${state ? "reviews" : "news"}/${item.id}`}>
-                    {item.title}
-                  </Link>
-                </li>
-              ))}
-          </ul>
+        <div className="post-page__side-bar">
+          <MiniSideBar arr={filteredArr} title={stateTitle} state={stateText} />
         </div>
       </div>
       <div className={`toast toast--success ${isShowToast && "toast--show"}`}>
