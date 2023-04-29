@@ -6,7 +6,7 @@ export default function MiniSideBar({ arr = [], title = "", state = "" }) {
     <div className="mini-sidebar">
       <h3 className="mini-sidebar__title">
         {title}
-        {arr.length ? "" : <img src="/images/rolling-spinner.svg" />}
+        {!arr.length && <img src="/images/rolling-spinner.svg" />}
       </h3>
       <ul className="mini-sidebar__list">
         {arr &&

@@ -10,6 +10,8 @@
 }
 
 .post-page__side-bar {
+  position: sticky;
+  top: 96px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -88,7 +90,10 @@
   justify-content: space-between;
   gap: 0 25px;
   border-top: 1px solid var(--border-color);
-  margin-bottom: 10px;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
 }
 
 .post__time {

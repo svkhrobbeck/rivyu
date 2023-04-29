@@ -59,13 +59,22 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
       <div className="post-page__inner container">
         <div className="post-page__post post">
           <div className="post__inner">
-            <span className="post__badge">{state ? "Tahlil" : "Xabar"}</span>
-
-            <img className="post__image" src={data.image} alt={data.title} />
+            {data.image && (
+              <>
+                <span className="post__badge">
+                  {state ? "Tahlil" : "Xabar"}
+                </span>
+                <img
+                  className="post__image"
+                  src={data.image}
+                  alt={data.title}
+                />
+              </>
+            )}
 
             <div className="post__time-like-wrapper">
               <time className="post__time" dateTime={data.createdAt}>
-                {data.createdAt}
+                {data.image ? data.createdAt : "yuklanmoqda..."}
               </time>
               <div className="post__buttons-wrapper">
                 <button onClick={copyLink} className="post__button">
@@ -87,20 +96,24 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
                 </button>
               </div>
             </div>
-            <h2 className="post__title" data-post-layout-title>
-              {data.title}
-            </h2>
-            <p className="post__description" data-post-layout-desc>
-              {data.description}
-            </p>
-            <ul className="post__tags" data-post-layout-tags>
-              {data.tags &&
-                data.tags.map((item) => (
-                  <li key={item} className="post__tag">
-                    <Link to={`/tags/${item}`}>{item}</Link>
-                  </li>
-                ))}
-            </ul>
+            {data.image && (
+              <>
+                <h2 className="post__title" data-post-layout-title>
+                  {data.title}
+                </h2>
+                <p className="post__description" data-post-layout-desc>
+                  {data.description}
+                </p>
+                <ul className="post__tags" data-post-layout-tags>
+                  {data.tags &&
+                    data.tags.map((item) => (
+                      <li key={item} className="post__tag">
+                        <Link to={`/tags/${item}`}>{item}</Link>
+                      </li>
+                    ))}
+                </ul>
+              </>
+            )}
           </div>
         </div>
         <div className="post-page__side-bar">

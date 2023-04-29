@@ -23,7 +23,7 @@
   img {
     margin-left: 5px;
   }
-  
+
   @media only screen and (max-width: 840px) {
     font-size: 22px;
   }
@@ -32,7 +32,6 @@
 .mini-sidebar__list {
   padding: 0;
   margin: 0;
-  border-top: 1px solid var(--border-color);
 }
 
 .mini-sidebar__item {
@@ -40,6 +39,10 @@
   flex-direction: column;
   padding: 15px;
   position: relative;
+
+  &:first-child {
+    border-top: 1px solid var(--border-color);
+  }
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--border-color);

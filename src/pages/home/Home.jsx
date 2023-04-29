@@ -24,7 +24,7 @@ export default function Home({ news, reviews }) {
             </div>
           </section>
 
-          <div className="favorite-post">
+          <section className="favorite-post">
             {postData && (
               <img
                 className="favorite-post__img"
@@ -37,7 +37,7 @@ export default function Home({ news, reviews }) {
             )}
             <h4 className="favorite-post__title">
               Eng so'ngi yangilik{" "}
-              {postData ? "" : <img src="/images/rolling-spinner.svg" />}
+              {!postData && <img src="/images/rolling-spinner.svg" />}
             </h4>
             {postData && (
               <h5 className="favorite-post__subtitle" title={postData.title}>
@@ -45,9 +45,11 @@ export default function Home({ news, reviews }) {
               </h5>
             )}
             <Link to={postData ? `/news/${postData.id}` : "/"}>
-              <button className="button button--green">Batafsil</button>
+              <button className="button button--green">
+                {postData ? "Batafsil" : "Yuklanmoqda..."}
+              </button>
             </Link>
-          </div>
+          </section>
         </div>
         <div className="home__side-bar">
           <MiniSideBar
