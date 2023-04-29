@@ -67,11 +67,6 @@
   margin-bottom: 10px;
 }
 
-.post__video {
-  width: 100%;
-  height: auto;
-}
-
 .post__time-like-wrapper {
   display: flex;
   justify-content: space-between;
@@ -147,7 +142,7 @@
 
 .post__title {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
   margin-top: 0;
   margin-bottom: 15px;
@@ -170,7 +165,7 @@
   margin-top: 0;
   margin-bottom: 20px;
   font-weight: 300;
-
+ 
   hr {
     border: none;
     margin: 10px 0;

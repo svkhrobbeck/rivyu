@@ -9,6 +9,8 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
   const [isShowToast, setIsShowToast] = useState(false);
   const id = useParams().id;
 
+  const filteredArr = arr.filter((item) => item.id !== id);
+
   const data = arr.find((item) => item.id === id)
     ? arr.find((item) => item.id === id)
     : {};
@@ -104,8 +106,8 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
             So'nggi {state ? "tahlillar" : "yangiliklar"}
           </h3>
           <ul className="mini-sidebar__list">
-            {arr &&
-              arr.map((item) => (
+            {filteredArr &&
+              filteredArr.map((item) => (
                 <li
                   onClick={() => (document.documentElement.scrollTop = 0)}
                   key={item.id}
