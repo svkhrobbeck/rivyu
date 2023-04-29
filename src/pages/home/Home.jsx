@@ -1,10 +1,5 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
-// import "swiper/modules/navigation/navigation.css";
-import "swiper/css";
-import "swiper/css/navigation";
-import MiniSideBar from "../../components/mini-sidebar/MiniSideBar";
 import "./Home.scss";
+import MiniSideBar from "../../components/mini-sidebar/MiniSideBar";
 import { Link } from "react-router-dom";
 
 export default function Home({ news, reviews }) {
