@@ -25,17 +25,14 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
       if (!localStorage.getItem("$U$I$D$") || !isAuth) return;
       if (user.uid !== localStorage.getItem("$U$I$D$")) return;
       if (user) {
-        const itemObj = { ...data };
-        if (!itemObj.likesList.includes(user.uid)) {
+        if (!data.likesList.includes(user.uid)) {
           updateDoc(docRef, {
-            likesList: [...itemObj.likesList, user.uid],
+            likesList: [...data.likesList, user.uid],
           });
         } else {
-          itemObj.likesList = itemObj.likesList.filter(
-            (item) => item !== user.uid
-          );
+          data.likesList = data.likesList.filter((item) => item !== user.uid);
           updateDoc(docRef, {
-            likesList: [...itemObj.likesList],
+            likesList: [...data.likesList],
           });
         }
         setData(arr);
