@@ -16,7 +16,9 @@ export default function MiniSideBar({ arr = [], title = "", state = "" }) {
               key={item.id}
               className="mini-sidebar__item"
             >
-              <Link to={`/${state}/${item.id}`}>{item.title}</Link>
+              <Link to={`/${item.isNews ? "news" : "reviews"}/${item.id}`}>
+                {item.title}
+              </Link>
             </li>
           ))}
       </ul>

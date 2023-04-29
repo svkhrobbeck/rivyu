@@ -15,7 +15,6 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
   const data = arr.find((item) => item.id === id)
     ? arr.find((item) => item.id === id)
     : {};
-  const stateText = state ? "reviews" : "news";
   const stateTitle = `So'nggi ${state ? "tahlillar" : "yangiliklar"}`;
 
   const updateLike = async () => {
@@ -117,7 +116,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
           </div>
         </div>
         <div className="post-page__side-bar">
-          <MiniSideBar arr={filteredArr} title={stateTitle} state={stateText} />
+          <MiniSideBar arr={filteredArr} title={stateTitle} />
         </div>
       </div>
       <div className={`toast toast--success ${isShowToast && "toast--show"}`}>

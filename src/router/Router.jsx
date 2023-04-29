@@ -47,7 +47,12 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
 
   return (
     <Routes>
-      <Route path="/" element={<Home news={news} reviews={reviews} />} />
+      <Route
+        path="/"
+        element={
+          <Home data={[...news, ...reviews].sort((a, b) => b.time - a.time)} />
+        }
+      />
       <Route
         path="/reviews"
         element={

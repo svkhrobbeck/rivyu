@@ -2,9 +2,9 @@ import "./Home.scss";
 import MiniSideBar from "../../components/mini-sidebar/MiniSideBar";
 import { Link } from "react-router-dom";
 
-export default function Home({ news, reviews }) {
+export default function Home({ data }) {
   document.title = `Kino Blog | Bosh sahifa`;
-  const postData = news[0] || null;
+  const postData = data[0] || null;
 
   return (
     <section className="home">
@@ -36,7 +36,7 @@ export default function Home({ news, reviews }) {
               />
             )}
             <h4 className="favorite-post__title">
-              Eng so'ngi yangilik{" "}
+              Eng so'ngi xabar
               {!postData && <img src="/images/rolling-spinner.svg" />}
             </h4>
             {postData && (
@@ -44,7 +44,13 @@ export default function Home({ news, reviews }) {
                 {postData.title}
               </h5>
             )}
-            <Link to={postData ? `/news/${postData.id}` : "/"}>
+            <Link
+              to={
+                postData
+                  ? `/${postData.isNews ? "news" : "reviews"}/${postData.id}`
+                  : "/"
+              }
+            >
               <button className="button button--green">
                 {postData ? "Batafsil" : "Yuklanmoqda..."}
               </button>
@@ -53,14 +59,9 @@ export default function Home({ news, reviews }) {
         </div>
         <div className="home__side-bar">
           <MiniSideBar
-            arr={news.slice(0, 3)}
+            arr={data.slice(1, 6)}
             title="So'nggi yangiliklar"
             state="news"
-          />
-          <MiniSideBar
-            arr={reviews.slice(0, 3)}
-            title="So'nggi tahlillar"
-            state="reviews"
           />
         </div>
       </div>
