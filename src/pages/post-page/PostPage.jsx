@@ -15,6 +15,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
   const data = arr.find((item) => item.id === id)
     ? arr.find((item) => item.id === id)
     : {};
+  const stateText = state ? "reviews" : "news";
   const stateTitle = `So'nggi ${state ? "tahlillar" : "yangiliklar"}`;
 
   const updateLike = async () => {

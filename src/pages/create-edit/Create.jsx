@@ -84,7 +84,7 @@ export default function Create({ setData }) {
               description,
               tags,
               createdAt,
-              likesList: "",
+              likesList: [],
               time,
               isNews,
               image: downloadURL,

@@ -7,7 +7,13 @@ import Modal from "../../components/modal/Modal";
 import { useState } from "react";
 import Loader from "../../components/loader/Loader";
 
-export default function CardsList({ setData, isAdmin, data, state = false }) {
+export default function CardsList({
+  setData,
+  isAuth,
+  isAdmin,
+  data,
+  state = false,
+}) {
   const text = state ? "Tahlillar / Maqolalar" : "Yangiliklar";
   const stateText = state ? "reviews" : "news";
   document.title = `Kino Blog | ${text}`;
@@ -102,13 +108,17 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
                       <button
                         className="card-item__button"
                         onClick={() => {
-                          handleModalOpen();
                           setId(item.id);
+                          handleModalOpen();
                         }}
                       >
                         <img src="/images/icon-trash.svg" alt="" />
                       </button>
-                      <Link to={`/admin/edit-post/${stateText}/${item.id}`}>
+                      <Link
+                        to={`/admin/edit-post/${
+                          item.isNews ? "news" : "reviews"
+                        }/${item.id}`}
+                      >
                         <button className="card-item__button">
                           <img src="/images/icon-edit.svg" alt="" />
                         </button>

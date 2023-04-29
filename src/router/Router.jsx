@@ -58,6 +58,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
         element={
           <CardsList
             setData={setData}
+            isAuth={isAuth}
             isAdmin={isAdmin}
             data={reviews}
             state={true}
@@ -69,6 +70,7 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
         element={
           <CardsList
             setData={setData}
+            isAuth={isAuth}
             isAdmin={isAdmin}
             data={news}
             state={false}
