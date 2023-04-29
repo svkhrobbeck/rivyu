@@ -24,8 +24,8 @@ export default function Home({ news, reviews }) {
             </div>
           </section>
 
-          {postData && (
-            <div className="favorite-post">
+          <div className="favorite-post">
+            {postData && (
               <img
                 className="favorite-post__img"
                 src={postData.image}
@@ -34,15 +34,20 @@ export default function Home({ news, reviews }) {
                 height="270"
                 title={postData.title}
               />
-              <h4 className="favorite-post__title">Eng so'ngi yangilik</h4>
+            )}
+            <h4 className="favorite-post__title">
+              Eng so'ngi yangilik{" "}
+              {postData ? "" : <img src="/images/rolling-spinner.svg" />}
+            </h4>
+            {postData && (
               <h5 className="favorite-post__subtitle" title={postData.title}>
                 {postData.title}
               </h5>
-              <Link to={`/news/${postData.id}`}>
-                <button className="button button--green">Batafsil</button>
-              </Link>
-            </div>
-          )}
+            )}
+            <Link to={postData ? `/news/${postData.id}` : "/"}>
+              <button className="button button--green">Batafsil</button>
+            </Link>
+          </div>
         </div>
         <div className="home__side-bar">
           <MiniSideBar

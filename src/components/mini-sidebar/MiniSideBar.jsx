@@ -4,7 +4,10 @@ import "./MiniSideBar.scss";
 export default function MiniSideBar({ arr = [], title = "", state = "" }) {
   return (
     <div className="mini-sidebar">
-      <h3 className="mini-sidebar__title">{title}</h3>
+      <h3 className="mini-sidebar__title">
+        {title}
+        {arr.length ? "" : <img src="/images/rolling-spinner.svg" />}
+      </h3>
       <ul className="mini-sidebar__list">
         {arr &&
           arr.map((item) => (
