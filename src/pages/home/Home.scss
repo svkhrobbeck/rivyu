@@ -114,6 +114,11 @@
   border-radius: 4px;
   object-position: top;
   margin-bottom: 10px;
+
+  @media only screen and (max-width: 840px) {
+    height: auto;
+    object-fit: contain;
+  }
 }
 
 .favorite-post__title {
