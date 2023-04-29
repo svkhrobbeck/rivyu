@@ -1,0 +1,44 @@
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 30px;
+  z-index: 200;
+  padding: 16px 40px;
+  border-radius: 6px;
+  background: #1f2a37 no-repeat 8px center / 24px;
+  right: -100%;
+  transition: right 1s ease;
+
+  &--show {
+    right: 10px;
+    transition: right 0.3s ease-out;
+  }
+
+  &--success {
+    background-image: url("../images/icon-success.svg");
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  &--failure {
+    border: 1px solid #9b1c1c;
+    background-image: url("../images/icon-failure.svg");
+    color: #9b1c1c;
+  }
+}
+
+.toast__close {
+  display: flex;
+  color: inherit;
+  position: absolute;
+  padding: 0;
+  top: 2px;
+  right: 2px;
+  border: none;
+  background-color: transparent;
+  display: flex;
+
+  &:focus {
+    outline: none;
+  }
+}

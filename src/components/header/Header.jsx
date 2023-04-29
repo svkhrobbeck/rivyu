@@ -55,7 +55,9 @@ export default function Header({
             <button className="user-account__btn">
               <img
                 className="user-account__img"
-                src={getUserImgUrl() ? getUserImgUrl(): "/images/icon-account.svg"}
+                src={
+                  getUserImgUrl() ? getUserImgUrl() : "/images/icon-account.svg"
+                }
                 alt=""
               />
             </button>
@@ -80,9 +82,8 @@ export default function Header({
                     <button
                       className="user-account__item-btn"
                       onClick={signOutUser}
-                    >
-                      chiqish
-                    </button>
+                    />
+                    <span className="user-account__item-inner">Chiqish</span>
                   </li>
                 </>
               )}

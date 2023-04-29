@@ -5,16 +5,18 @@ import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import MiniSideBar from "../../components/mini-sidebar/MiniSideBar";
+import Toast from "../../components/toast/Toast";
 
 export default function PostPage({ isAuth, setData, arr, state = false }) {
-  const [isShowToast, setIsShowToast] = useState(false);
   const id = useParams().id;
-
+  const [isShowToast, setIsShowToast] = useState(false);
+  const [isShowFailureToast, setIsShowFailureToast] = useState(false);
+  const handleCloseSuccessToast = () => setIsShowToast(false);
+  const handleOpenSuccessToast = () => setIsShowToast(true);
+  const handleCloseFailureToast = () => setIsShowFailureToast(false);
+  const handleOpenFailureToast = () => setIsShowFailureToast(true);
   const filteredArr = arr.filter((item) => item.id !== id);
-
-  const data = arr.find((item) => item.id === id)
-    ? arr.find((item) => item.id === id)
-    : {};
+  const data = arr.find((item) => item.id === id) || {};
   const stateText = state ? "reviews" : "news";
   const stateTitle = `So'nggi ${state ? "tahlillar" : "yangiliklar"}`;
 
@@ -22,28 +24,30 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
     const docRef = doc(db, stateText, id);
 
     onAuthStateChanged(auth, (user) => {
-      if (!localStorage.getItem("$U$I$D$") || !isAuth) return;
-      if (user.uid !== localStorage.getItem("$U$I$D$")) return;
-      if (user) {
-        if (!data.likesList.includes(user.uid)) {
-          updateDoc(docRef, {
-            likesList: [...data.likesList, user.uid],
-          });
-        } else {
-          data.likesList = data.likesList.filter((item) => item !== user.uid);
-          updateDoc(docRef, {
-            likesList: [...data.likesList],
-          });
+      if (isAuth) {
+        if (user) {
+          if (!data.likesList.includes(user.uid)) {
+            updateDoc(docRef, {
+              likesList: [...data.likesList, user.uid],
+            });
+          } else {
+            data.likesList = data.likesList.filter((item) => item !== user.uid);
+            updateDoc(docRef, {
+              likesList: [...data.likesList],
+            });
+          }
+          setData(arr);
         }
-        setData(arr);
+      } else {
+        handleOpenFailureToast();
       }
     });
   };
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
-      setIsShowToast(true);
-      setTimeout(() => setIsShowToast(false), 3000);
+      handleOpenSuccessToast();
+      setTimeout(() => handleCloseSuccessToast, 3000);
     });
   };
 
@@ -117,16 +121,16 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
           <MiniSideBar arr={filteredArr} title={stateTitle} />
         </div>
       </div>
-      <div className={`toast toast--success ${isShowToast && "toast--show"}`}>
-        <button className="toast__close" onClick={() => setIsShowToast(false)}>
-          <img
-            className="toast__close-img"
-            src="/images/icon-close.svg"
-            alt="icon close"
-          />
-        </button>
-        <span className="toast__inner">Havola nusxalandi!</span>
-      </div>
+      <Toast handleClose={handleCloseSuccessToast} isOpen={isShowToast}>
+        Havola nusxalandi!
+      </Toast>
+      <Toast
+        isSuccess={false}
+        handleClose={handleCloseFailureToast}
+        isOpen={isShowFailureToast}
+      >
+        Hisobga kirmagansiz!
+      </Toast>
     </section>
   );
 }

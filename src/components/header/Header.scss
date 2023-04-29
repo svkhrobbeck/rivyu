@@ -11,7 +11,7 @@
   @media only screen and (max-width: 1140px) {
     padding: 14px 20px;
   }
-  
+
   @media only screen and (max-width: 840px) {
     padding: 10px 20px;
   }
@@ -178,28 +178,19 @@
     border-bottom: 1px solid var(--border-color);
   }
 
-  &:last-child {
-    cursor: pointer;
-  }
-
   &-img {
     margin-right: 10px;
   }
 
-  &-btn {
-    font-family: inherit;
-    font-size: inherit;
+  &-btn + span {
     color: #f05252;
-    border: none;
-    padding: 0;
-    background-color: transparent;
-
-    &:focus {
-      outline: none;
-    }
   }
 
-  a {
+  a,
+  &-btn {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
     position: absolute;
     inset: 0;
     display: inline-block;
