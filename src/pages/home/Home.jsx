@@ -23,7 +23,6 @@ export default function Home({ data }) {
               </p>
             </div>
           </section>
-
           <section className="favorite-post">
             {postData && (
               <img
@@ -31,7 +30,6 @@ export default function Home({ data }) {
                 src={postData.image}
                 alt={postData.title}
                 width="640"
-                height="270"
                 title={postData.title}
               />
             )}

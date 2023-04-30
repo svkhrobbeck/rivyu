@@ -6,6 +6,8 @@ export default function Toast({
   isOpen = false,
   handleClose,
 }) {
+
+  
   return (
     <div
       className={`toast toast--${isSuccess ? "success" : "failure"} ${

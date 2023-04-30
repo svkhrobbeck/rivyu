@@ -15,6 +15,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
   const handleOpenSuccessToast = () => setIsShowToast(true);
   const handleCloseFailureToast = () => setIsShowFailureToast(false);
   const handleOpenFailureToast = () => setIsShowFailureToast(true);
+
   const filteredArr = arr.filter((item) => item.id !== id);
   const data = arr.find((item) => item.id === id) || {};
   const stateText = state ? "reviews" : "news";
@@ -40,6 +41,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
         }
       } else {
         handleOpenFailureToast();
+        setTimeout(handleCloseFailureToast, 3000);
       }
     });
   };
@@ -47,7 +49,7 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
       handleOpenSuccessToast();
-      setTimeout(() => handleCloseSuccessToast, 3000);
+      setTimeout(handleCloseSuccessToast, 3000);
     });
   };
 
