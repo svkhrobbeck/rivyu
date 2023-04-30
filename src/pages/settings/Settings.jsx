@@ -1,5 +1,5 @@
 import "./Settings.scss";
-import { updateProfile } from "firebase/auth";
+import { deleteUser, updateProfile } from "firebase/auth";
 import { auth, storage } from "../../firebase/firebase";
 import {
   deleteObject,
@@ -26,8 +26,6 @@ export default function Settings({ isAuth }) {
       setImage(photoURL);
     }
   }, []);
-
-  console.log(fullName);
 
   const setProfileData = () => {
     if (!isAuth || localStorage.getItem("")) return;
@@ -83,6 +81,18 @@ export default function Settings({ isAuth }) {
     navigate("/");
   };
 
+  const deletingUser = () => {
+    deleteUser(user)
+      .then(() => {
+        console.log("User deleted");
+        localStorage.clear();
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log("something went wrong!");
+      });
+  };
+
   return (
     <section className="settings container">
       <h2 className="settings__title">Sozlamalar</h2>
@@ -134,13 +144,22 @@ export default function Settings({ isAuth }) {
             </label>
           </div>
         </div>
-        <button
-          className="button button--green button--block"
-          type="button"
-          onClick={setProfileData}
-        >
-          Saqlash
-        </button>
+        <div className="form-settings__buttons">
+          <button
+            className="button button--green button--block"
+            type="button"
+            onClick={setProfileData}
+          >
+            Saqlash
+          </button>
+          <button
+            onClick={deletingUser}
+            className="button button--block"
+            type="button"
+          >
+            Hisobni o'chirish
+          </button>
+        </div>
       </form>
     </section>
   );

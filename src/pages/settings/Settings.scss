@@ -3,15 +3,15 @@
   font-weight: 500;
   margin: 0;
   margin-bottom: 15px;
-  
+
   @media only screen and (max-width: 920px) {
     font-size: 26px;
   }
-  
+
   @media only screen and (max-width: 840px) {
     font-size: 24px;
   }
-  
+
   @media only screen and (max-width: 576px) {
     text-align: center;
     font-size: 22px;
@@ -83,4 +83,17 @@
   background-size: 24px;
   padding-left: 60px;
   background-position: 24px center;
+}
+
+.form-settings__buttons {
+  display: flex;
+  gap: 15px;
+
+  @media only screen and (max-width: 576px) {
+    flex-direction: column;
+  }
+
+  .button {
+    flex-grow: 1;
+  }
 }
