@@ -94,7 +94,6 @@ export default function Edit({ setData, news, reviews }) {
         shortDesc,
         tags,
         description,
-        likesList: [],
         lastEdited,
         image: image,
       });
