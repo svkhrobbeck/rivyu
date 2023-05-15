@@ -81,7 +81,18 @@ export default function Settings({ isAuth }) {
     navigate("/");
   };
 
-  const deletingUser = () => {
+  const deletingUser = async () => {
+    if (!user) return;
+    const fileRef = ref(storage, user.photoURL);
+    if (user.photoURL) {
+      deleteObject(fileRef)
+        .then(() => {
+          console.log("File deleted successfully");
+        })
+        .catch((error) => {
+          console.log("Something went wrong");
+        });
+    }
     deleteUser(user)
       .then(() => {
         console.log("User deleted");
@@ -89,7 +100,8 @@ export default function Settings({ isAuth }) {
         navigate("/login");
       })
       .catch((error) => {
-        console.log("something went wrong!");
+        // console.log("something went wrong!");
+        console.log(error);
       });
   };
 
