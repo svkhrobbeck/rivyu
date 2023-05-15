@@ -10,3 +10,4 @@ export { default as Edit } from "./create-edit/Edit";
 export { default as Tags } from "./tags/Tags";
 export { default as Settings } from "./settings/Settings";
 export { default as Home } from "./home/Home";
+export { default as Trailers } from "./trailers/Trailers";

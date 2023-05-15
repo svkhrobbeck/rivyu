@@ -85,6 +85,13 @@
   margin-bottom: 10px;
 }
 
+.post__iframe {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  border: none;
+}
+
 .post__time-like-wrapper {
   display: flex;
   justify-content: space-between;

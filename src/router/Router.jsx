@@ -16,15 +16,16 @@ import {
   Tags,
   Settings,
   Home,
+  Trailers,
 } from "../pages";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [trailers, setTrailers] = useState([]);
   const [data, setData] = useState([]);
 
-  const getData = async (db, state = true) => {
-    const stateText = state ? "news" : "reviews";
+  const getData = async (db, stateText = "reviews") => {
     const newsCollectionRef = collection(db, stateText);
     const data = await getDocs(newsCollectionRef);
     const newData = data.docs
@@ -34,16 +35,19 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       }))
       .sort((a, b) => b.time - a.time);
 
-    if (state) {
-      setNews(newData);
-    } else {
+    if (stateText === "reviews") {
       setReviews(newData);
+    } else if (stateText === "news") {
+      setNews(newData);
+    } else if (stateText === "trailers") {
+      setTrailers(newData);
     }
   };
 
   useEffect(() => {
     getData(db);
-    getData(db, false);
+    getData(db, "news");
+    getData(db, "trailers");
   }, [data]);
 
   return (
@@ -57,52 +61,30 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       <Route
         path="/reviews"
         element={
-          <CardsList
-            setData={setData}
-            isAuth={isAuth}
-            isAdmin={isAdmin}
-            data={reviews}
-            state={true}
-          />
+          <CardsList setData={setData} isAdmin={isAdmin} data={reviews} />
         }
       />
       <Route
         path="/news"
-        element={
-          <CardsList
-            setData={setData}
-            isAuth={isAuth}
-            isAdmin={isAdmin}
-            data={news}
-            state={false}
-          />
-        }
+        element={<CardsList setData={setData} isAdmin={isAdmin} data={news} />}
       />
+      <Route path="/trailers" element={<Trailers trailers={trailers} />} />
       <Route
         path="/reviews/:id"
-        element={
-          <PostPage
-            setData={setData}
-            isAuth={isAuth}
-            arr={reviews}
-            state={true}
-          />
-        }
-      />
-      <Route
-        path={"/tags/:tag"}
-        element={<Tags news={news} reviews={reviews} />}
+        element={<PostPage setData={setData} isAuth={isAuth} arr={reviews} />}
       />
       <Route
         path="/news/:id"
-        element={
-          <PostPage
-            setData={setData}
-            isAuth={isAuth}
-            arr={news}
-            state={false}
-          />
-        }
+        element={<PostPage setData={setData} isAuth={isAuth} arr={news} />}
+      />
+      <Route
+        path="/trailers/:id"
+        element={<PostPage setData={setData} isAuth={isAuth} arr={trailers} />}
+      />
+      <Route path="/trailers/:id" element={""} />
+      <Route
+        path={"/tags/:tag"}
+        element={<Tags data={[...reviews, ...news, ...trailers]} />}
       />
       <Route path="/about" element={<About />} />
       <Route path="/settings" element={<Settings isAuth={isAuth} />} />

@@ -10,7 +10,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
-export default function PostPage({ isAuth, setData, arr, state = false }) {
+export default function PostPage({ isAuth, setData, arr }) {
   const id = useParams().id;
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowFailureToast, setIsShowFailureToast] = useState(false);
@@ -21,11 +21,18 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
 
   const filteredArr = arr.filter((item) => item.id !== id);
   const data = arr.find((item) => item.id === id) || {};
-  const stateText = state ? "reviews" : "news";
-  const stateTitle = `So'nggi ${state ? "tahlillar" : "yangiliklar"}`;
+  const isTrailer = data.type === "trailers";
+
+  const stateText =
+    data.type === "reviews"
+      ? "tahlil"
+      : data.type === "trailers"
+      ? "treyler"
+      : "yangilik";
+  const stateTitle = `So'nggi ${stateText}lar`;
 
   const updateLike = async () => {
-    const docRef = doc(db, stateText, id);
+    const docRef = doc(db, data.type, id);
 
     onAuthStateChanged(auth, (user) => {
       if (isAuth) {
@@ -65,17 +72,28 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
       <div className="post-page__inner container">
         <div className="post-page__post post">
           <div className="post__inner">
-            {data.image && (
+            {data.image && <span className="post__badge">{stateText}</span>}
+            {!isTrailer && (
               <>
-                <span className="post__badge">
-                  {state ? "Tahlil" : "Xabar"}
-                </span>
-                <img
-                  className="post__image"
-                  src={data.image}
-                  alt={data.title}
-                />
+                {data.image && (
+                  <img
+                    className="post__image"
+                    src={data.image}
+                    alt={data.title}
+                  />
+                )}
               </>
+            )}
+            {isTrailer && (
+              <iframe
+                className="post__iframe"
+                width="640"
+                height="355"
+                src={`https://www.youtube-nocookie.com/embed/${data.videoId}`}
+                title={data.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
             )}
 
             <div className="post__time-like-wrapper">
@@ -104,13 +122,9 @@ export default function PostPage({ isAuth, setData, arr, state = false }) {
             </div>
             {data.image && (
               <>
-                <h2 className="post__title" data-post-layout-title>
-                  {data.title}
-                </h2>
-                <p className="post__description" data-post-layout-desc>
-                  {data.description}
-                </p>
-                <ul className="post__tags" data-post-layout-tags>
+                <h2 className="post__title">{data.title}</h2>
+                <p className="post__description">{data.description}</p>
+                <ul className="post__tags">
                   {data.tags &&
                     data.tags.map((item) => (
                       <li key={item} className="post__tag">

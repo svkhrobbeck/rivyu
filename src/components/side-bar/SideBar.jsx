@@ -10,6 +10,11 @@ export default function SideBar({
     { name: "Bosh Sahifa", route: "/", image: "/images/icon-home.svg" },
     { name: "Tahlillar", route: "/reviews", image: "/images/icon-pencil.svg" },
     { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
+    {
+      name: "Treylerlar",
+      route: "/trailers",
+      image: "/images/icon-videplay.svg",
+    },
     { name: "Biz haqimizda", route: "/about", image: "/images/icon-faq.svg" },
   ];
 

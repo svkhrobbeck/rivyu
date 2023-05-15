@@ -1,17 +1,13 @@
+// style
 import "./Tags.scss";
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-export default function Tags({ news, reviews }) {
+export default function Tags({ data }) {
   const tag = useParams().tag;
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const data = [...news, ...reviews];
-    const filteredData = data
-      .filter((item) => item.tags.find((i) => i === tag))
-      .sort((a, b) => b.time - a.time);
-    setData(filteredData);
-  }, [news]);
+
+  const filteredData = data
+    .filter((item) => item.tags.find((i) => i === tag))
+    .sort((a, b) => b.time - a.time);
 
   const getZero = (num) => (num >= 10 ? num : `0${num}`);
 
@@ -22,12 +18,12 @@ export default function Tags({ news, reviews }) {
           Qidiruv natijalari: <span className="tags__title-inner">{tag}</span>
         </h2>
         <ul className="tags__list">
-          {data &&
-            data.map((item, i) => (
+          {filteredData &&
+            filteredData.map((item, i) => (
               <li className="tags__item" key={item.id}>
                 <span className="tags__item-badge">{getZero(++i)}</span>
                 <span className="tags__item-inner">{item.title}</span>
-                <Link to={`/${item.isNews ? "news" : "reviews"}/${item.id}`} />
+                <Link to={`/${item.type}/${item.id}`} />
                 <span className="tags__item-time">{item.createdAt}</span>
               </li>
             ))}

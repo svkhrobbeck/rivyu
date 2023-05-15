@@ -7,19 +7,12 @@ import { Modal, Loader } from "../../components";
 import { useState } from "react";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
 
-export default function CardsList({
-  setData,
-  isAuth,
-  isAdmin,
-  data,
-  state = false,
-}) {
-  const text = state ? "Maqolalar" : "Yangiliklar";
-  const stateText = state ? "reviews" : "news";
-  document.title = `Kino Blog | ${text}`;
+export default function CardsList({ setData, isAdmin, data, state = false }) {
+  const pathName = useLocation().pathname;
+  const text = pathName.slice(1) === "news" ? "Yangiliklar" : "Maqolalar";
 
   const [id, setId] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -27,14 +20,14 @@ export default function CardsList({
   const handleModalOpen = () => setIsOpen(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const deletePost = async (id, state) => {
+  const deletePost = async (id) => {
     setIsLoading(true);
     const itemObj = data.find((item) => item.id === id);
     const desertRef = ref(storage, itemObj.image);
     deleteObject(desertRef)
       .then(() => {
         console.log("File deleted successfully");
-        const postDoc = doc(db, stateText, id);
+        const postDoc = doc(db, pathName.slice(1), id);
         deleteDoc(postDoc);
         setData(data);
         handleModalClose();
@@ -73,7 +66,7 @@ export default function CardsList({
           </div>
         </Modal>
         <div className="cards__inner">
-          <h2 className="cards__title">{text}</h2>
+          <h2 className="cards__title main-title">{text}</h2>
           <ul className="cards-list">
             {data &&
               data.map((item) => (
@@ -86,19 +79,19 @@ export default function CardsList({
                   />
                   <div className="card-item__content">
                     <h3 className="card-item__title">
-                      <Link to={`/${stateText}/${item.id}`}>{item.title}</Link>
+                      <Link to={`${pathName}/${item.id}`}>{item.title}</Link>
                     </h3>
                     <p className="card-item__desc">{item.shortDesc}</p>
                     <div className="card-item__times">
                       <time
-                        className="card-item__time"
+                        className="card-item__time main-time"
                         dateTime={item.createdAt}
                       >
                         {item.createdAt}
                       </time>
                       {item.lastEdited && (
                         <time
-                          className="card-item__time card-item__time--edited"
+                          className="card-item__time main-time card-item__time--edited"
                           dateTime={item.lastEdited}
                         >
                           {item.lastEdited}
@@ -117,11 +110,7 @@ export default function CardsList({
                       >
                         <img src="/images/icon-trash.svg" alt="" />
                       </button>
-                      <Link
-                        to={`/admin/edit-post/${
-                          item.isNews ? "news" : "reviews"
-                        }/${item.id}`}
-                      >
+                      <Link to={`/admin/edit-post${pathName}/${item.id}`}>
                         <button className="card-item__button">
                           <img src="/images/icon-edit.svg" alt="" />
                         </button>
