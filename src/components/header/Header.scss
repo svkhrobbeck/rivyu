@@ -123,6 +123,10 @@
 .user-account {
   display: flex;
   position: relative;
+
+  &:hover .user-account__list {
+    transform: scale(1);
+  }
 }
 
 .user-account__img {
@@ -140,10 +144,6 @@
   display: flex;
   border-radius: 50%;
   padding: 0;
-
-  &:focus + .user-account__list {
-    transform: scale(1);
-  }
 }
 
 .user-account__list {

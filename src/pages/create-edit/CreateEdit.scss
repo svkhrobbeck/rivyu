@@ -101,17 +101,7 @@
   }
 }
 
-.create-edit__field,
-.create-edit__textarea {
-  font-family: inherit;
-  font-size: 18px;
-  padding: 14px 16px;
-  border-radius: 5px;
-  background-color: var(--component-color);
-  color: var(--text-color);
-  border: 1px solid var(--accent-color);
-  flex-grow: 1;
-
+.create-edit__field {
   &--tag {
     border-radius: 5px 0 0 5px;
 

@@ -1,0 +1,17 @@
+.search {
+  display: flex;
+}
+
+.search__input {
+  border-radius: 5px 0 0 5px;
+
+  @media only screen and (max-width: 576px) {
+    width: 100%;
+  }
+}
+
+.search__button {
+  display: flex;
+  align-items: center;
+  border-radius: 0 5px 5px 0;
+}

@@ -1,10 +1,14 @@
+// style
 import "./CreateEdit.scss";
+
+// components
+import { TagBadge } from "../../components";
+
 import { useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
-import TagBadge from "../../components/tag-badge/TagBadge";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export default function Edit({ setData, news, reviews }) {
@@ -122,7 +126,7 @@ export default function Edit({ setData, news, reviews }) {
         ""
       )}
       <input
-        className="create-edit__field create-edit__field--title"
+        className="main-field create-edit__field create-edit__field--title"
         type="text"
         name="title"
         placeholder="sarlavha"
@@ -130,7 +134,7 @@ export default function Edit({ setData, news, reviews }) {
         onChange={(e) => setTitle(e.target.value)}
       />
       <input
-        className="create-edit__field create-edit__field--short-desc"
+        className="main-field create-edit__field create-edit__field--short-desc"
         type="text"
         name="short_description"
         placeholder="qisqa izoh"
@@ -139,7 +143,7 @@ export default function Edit({ setData, news, reviews }) {
       />
       <div className="create-edit__field-wrapper">
         <input
-          className="create-edit__field create-edit__field--tag"
+          className="main-field create-edit__field create-edit__field--tag"
           type="text"
           name="tags"
           placeholder="teglar"
@@ -163,14 +167,14 @@ export default function Edit({ setData, news, reviews }) {
         onChange={(e) => setMedia(e.target.files[0])}
       />
       <label
+        className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
         htmlFor="image-input-edit"
-        className="create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
       >
         {media ? "rasm tanlandi" : "rasmni tanlang"}
       </label>
       <div className="create-edit__fields">
         <textarea
-          className="create-edit__textarea"
+          className="main-field create-edit__textarea"
           name="description"
           placeholder="izoh"
           value={description}

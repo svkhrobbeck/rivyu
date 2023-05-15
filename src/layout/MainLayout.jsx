@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import SideBar from "../components/side-bar/SideBar";
-import Router from "../router/Router";
-import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer";
 import { collection, getDocs } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+
+// components
+import Router from "../router/Router";
+import { Header, Footer, SideBar } from "../components";
 
 export default function MainLayout() {
   const [isSitenavOpen, setIsSitenavOpen] = useState(false);

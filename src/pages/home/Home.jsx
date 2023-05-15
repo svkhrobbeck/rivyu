@@ -1,5 +1,9 @@
+// style
 import "./Home.scss";
-import MiniSideBar from "../../components/mini-sidebar/MiniSideBar";
+
+// components
+import { Search, MiniSideBar } from "../../components";
+
 import { Link } from "react-router-dom";
 
 export default function Home({ data }) {
@@ -10,6 +14,7 @@ export default function Home({ data }) {
     <section className="home">
       <div className="container home__inner">
         <div className="home__content">
+          <Search />
           <section className="hero">
             <div className="hero__content">
               <h2 className="hero__title">

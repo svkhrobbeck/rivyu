@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+// style
 import "./PostPage.scss";
+
+// components
+import { MiniSideBar, Toast } from "../../components";
+
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import MiniSideBar from "../../components/mini-sidebar/MiniSideBar";
-import Toast from "../../components/toast/Toast";
 
 export default function PostPage({ isAuth, setData, arr, state = false }) {
   const id = useParams().id;

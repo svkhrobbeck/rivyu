@@ -1,5 +1,6 @@
 .side-bar {
   position: relative;
+
   @media only screen and (max-width: 1140px) {
     &.side-bar--show .side-bar__nav {
       transition: left 0.4s ease;
@@ -25,13 +26,13 @@
   height: 100vh;
   background-color: var(--component-color);
   left: 0;
-  top: 86px;
+  top: 83px;
   z-index: 100;
 
   @media only screen and (max-width: 1140px) {
     display: flex;
     left: -100%;
-    top: 71.5px;
+    top: 69px;
     transition: left 0.6s ease;
   }
 
@@ -59,6 +60,7 @@
   background-color: transparent;
   font-family: inherit;
   font-size: 20px;
+  font-weight: 500;
   border: none;
   display: flex;
   align-items: center;

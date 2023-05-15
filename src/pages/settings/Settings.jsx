@@ -134,7 +134,7 @@ export default function Settings({ isAuth }) {
           </div>
           <div className="form-settings__fields">
             <input
-              className="form-settings__field"
+              className="main-field form-settings__field"
               type="text"
               name="full_name"
               placeholder="Ismingizni kiriting!"
@@ -149,7 +149,7 @@ export default function Settings({ isAuth }) {
               onChange={(e) => setMedia(e.target.files[0])}
             />
             <label
-              className="form-settings__file-label"
+              className="main-field form-settings__file-label"
               htmlFor="settings-image-input"
             >
               {media ? "rasm tanlandi" : "rasm yuklang"}

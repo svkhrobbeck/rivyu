@@ -1,11 +1,14 @@
+// style
 import "./Cards.scss";
+
+// components
+import { Modal, Loader } from "../../components";
+
+import { useState } from "react";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { Link } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
-import Modal from "../../components/modal/Modal";
-import { useState } from "react";
-import Loader from "../../components/loader/Loader";
 
 export default function CardsList({
   setData,
@@ -14,7 +17,7 @@ export default function CardsList({
   data,
   state = false,
 }) {
-  const text = state ? "Tahlillar / Maqolalar" : "Yangiliklar";
+  const text = state ? "Maqolalar" : "Yangiliklar";
   const stateText = state ? "reviews" : "news";
   document.title = `Kino Blog | ${text}`;
 

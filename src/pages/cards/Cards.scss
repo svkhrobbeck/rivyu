@@ -3,10 +3,10 @@
   background-color: var(--component-color);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding-top: 25px;
+  padding-top: 10px;
 
   @media only screen and (max-width: 840px) {
-    padding-top: 15px;
+    padding-top: 8px;
   }
 }
 
@@ -133,7 +133,6 @@
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 18px;
-  font-weight: 300;
   color: #6c757d;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -175,7 +174,6 @@
 
 .card-item__time {
   color: #6c757d;
-  font-weight: 300;
   font-size: 14px;
   display: flex;
   align-items: center;

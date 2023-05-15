@@ -1,21 +1,22 @@
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { getDocs, collection } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 
-// COMPONENTS
-import Login from "../pages/auth/Login";
-import Register from "../pages/auth/Register";
-import AdminDashboard from "../pages/admin/AdminDashboard";
-import Page404 from "../pages/404/404";
-import CardsList from "../pages/main/CardsList";
-import PostPage from "../pages/post-page/PostPage";
-import About from "../pages/about/About";
-import Create from "../pages/create-edit/Create";
-import Edit from "../pages/create-edit/Edit";
-import Tags from "../pages/tags/Tags";
-import Settings from "../pages/settings/Settings";
-import Home from "../pages/home/Home";
+import {
+  Page404,
+  About,
+  Login,
+  Register,
+  AdminDashboard,
+  CardsList,
+  PostPage,
+  Create,
+  Edit,
+  Tags,
+  Settings,
+  Home,
+} from "../pages";
 
 export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
   const [news, setNews] = useState([]);
@@ -103,8 +104,8 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
           />
         }
       />
-      <Route path="/settings" element={<Settings isAuth={isAuth} />} />
       <Route path="/about" element={<About />} />
+      <Route path="/settings" element={<Settings isAuth={isAuth} />} />
       <Route>
         <Route
           path="/register"

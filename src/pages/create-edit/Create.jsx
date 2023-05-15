@@ -1,12 +1,15 @@
+// style
 import "./CreateEdit.scss";
+
+// components
+import { TagBadge, Loader } from "../../components";
+
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
-import TagBadge from "../../components/tag-badge/TagBadge";
-import Loader from "../../components/loader/Loader";
 
 export default function Create({ setData }) {
   const [media, setMedia] = useState(null);
@@ -137,7 +140,7 @@ export default function Create({ setData }) {
       )}
       <div className="create-edit__fields">
         <input
-          className="create-edit__field create-edit__field--title"
+          className="main-field create-edit__field create-edit__field--title"
           type="text"
           name="title"
           placeholder="sarlavha"
@@ -145,7 +148,7 @@ export default function Create({ setData }) {
           onChange={(e) => setTitle(e.target.value)}
         />
         <input
-          className="create-edit__field create-edit__field--short-desc"
+          className="main-field create-edit__field create-edit__field--short-desc"
           type="text"
           name="short_description"
           placeholder="qisqa izoh"
@@ -156,7 +159,7 @@ export default function Create({ setData }) {
       <div className="create-edit__fields">
         <div className="create-edit__field-wrapper">
           <input
-            className="create-edit__field create-edit__field--tag"
+            className="main-field create-edit__field create-edit__field--tag"
             type="text"
             name="tags"
             placeholder="teglar"
@@ -181,8 +184,8 @@ export default function Create({ setData }) {
             onChange={(e) => setMedia(e.target.files[0])}
           />
           <label
+            className="main-field create-edit__field create-edit__field--image-label"
             htmlFor="image-input-create"
-            className="create-edit__field create-edit__field--image-label"
           >
             {media ? "rasm tanlandi" : "rasmni tanlang"}
           </label>
@@ -190,7 +193,7 @@ export default function Create({ setData }) {
       </div>
       <div className="create-edit__fields">
         <textarea
-          className="create-edit__textarea"
+          className="main-field create-edit__textarea"
           name="description"
           placeholder="izoh"
           value={description}

@@ -1,0 +1,12 @@
+export { default as Page404 } from "./404/404";
+export { default as About } from "./about/About";
+export { default as Login } from "./auth/Login";
+export { default as Register } from "./auth/Register";
+export { default as AdminDashboard } from "./admin/AdminDashboard";
+export { default as CardsList } from "./cards/CardsList";
+export { default as PostPage } from "./post-page/PostPage";
+export { default as Create } from "./create-edit/Create";
+export { default as Edit } from "./create-edit/Edit";
+export { default as Tags } from "./tags/Tags";
+export { default as Settings } from "./settings/Settings";
+export { default as Home } from "./home/Home";
