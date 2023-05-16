@@ -40,7 +40,6 @@ export default function CardsList() {
         const postDoc = doc(db, pathName, id);
         deleteDoc(postDoc);
         handleModalClose();
-        // dispatch({ type: "GET_ARR", payload: [] });
       })
       .catch((error) => {
         console.log("Uh-oh, an error occurred!");
