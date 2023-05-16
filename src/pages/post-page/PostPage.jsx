@@ -4,13 +4,15 @@ import "./PostPage.scss";
 // components
 import { MiniSideBar, Toast } from "../../components";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { Context } from "../../context/Context";
 
-export default function PostPage({ isAuth, setData, arr }) {
+export default function PostPage() {
+  const { state } = useContext(Context);
   const id = useParams().id;
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowFailureToast, setIsShowFailureToast] = useState(false);
@@ -19,8 +21,8 @@ export default function PostPage({ isAuth, setData, arr }) {
   const handleCloseFailureToast = () => setIsShowFailureToast(false);
   const handleOpenFailureToast = () => setIsShowFailureToast(true);
 
-  const filteredArr = arr.filter((item) => item.id !== id);
-  const data = arr.find((item) => item.id === id) || {};
+  const filteredArr = state.arr.filter((item) => item.id !== id);
+  const data = state.arr.find((item) => item.id === id) || {};
   const isTrailer = data.type === "trailers";
 
   const stateText =
@@ -35,7 +37,7 @@ export default function PostPage({ isAuth, setData, arr }) {
     const docRef = doc(db, data.type, id);
 
     onAuthStateChanged(auth, (user) => {
-      if (isAuth) {
+      if (state.isAuth) {
         if (user) {
           if (!data.likesList.includes(user.uid)) {
             updateDoc(docRef, {
@@ -47,7 +49,6 @@ export default function PostPage({ isAuth, setData, arr }) {
               likesList: [...data.likesList],
             });
           }
-          setData(arr);
         }
       } else {
         handleOpenFailureToast();
@@ -137,7 +138,12 @@ export default function PostPage({ isAuth, setData, arr }) {
           </div>
         </div>
         <div className="post-page__side-bar">
-          <MiniSideBar arr={filteredArr} title={stateTitle} />
+          <MiniSideBar
+            arr={filteredArr
+              .filter((item) => item?.type === data?.type)
+              .slice(0, 6)}
+            title={stateTitle}
+          />
         </div>
       </div>
       <Toast handleClose={handleCloseSuccessToast} isOpen={isShowToast}>

@@ -2,48 +2,54 @@
 import "./Cards.scss";
 
 // components
-import { Modal, Loader } from "../../components";
+import { Modal } from "../../components";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { Link, useLocation } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
+import { Context } from "../../context/Context";
 
-export default function CardsList({ setData, isAdmin, data, state = false }) {
-  const pathName = useLocation().pathname;
-  const text = pathName.slice(1) === "news" ? "Yangiliklar" : "Maqolalar";
+export default function CardsList() {
+  const pathName = useLocation().pathname.slice(1);
+  const text = pathName === "news" ? "Yangiliklar" : "Maqolalar";
+  const { state, dispatch } = useContext(Context);
+
+  const getData = () => {
+    if (pathName === "news") {
+      return state.data.news;
+    } else if (pathName === "reviews") {
+      return state.data.reviews;
+    } else if (pathName === "trailers") {
+      return state.data.trailers;
+    }
+  };
 
   const [id, setId] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const handleModalClose = () => setIsOpen(false);
   const handleModalOpen = () => setIsOpen(true);
-  const [isLoading, setIsLoading] = useState(false);
 
   const deletePost = async (id) => {
-    setIsLoading(true);
-    const itemObj = data.find((item) => item.id === id);
-    const desertRef = ref(storage, itemObj.image);
+    const item = getData().find((item) => item.id === id);
+    const desertRef = ref(storage, item.image);
     deleteObject(desertRef)
       .then(() => {
         console.log("File deleted successfully");
-        const postDoc = doc(db, pathName.slice(1), id);
+        const postDoc = doc(db, pathName, id);
         deleteDoc(postDoc);
-        setData(data);
         handleModalClose();
+        // dispatch({ type: "GET_ARR", payload: [] });
       })
       .catch((error) => {
         console.log("Uh-oh, an error occurred!");
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 
   return (
     <section className="cards">
       <div className="container">
-        {isLoading && <Loader />}
         <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
           <div className="modal-inner">
             <h3 className="modal-inner__title">
@@ -58,7 +64,7 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
               </button>
               <button
                 className="button button--blue"
-                onClick={() => deletePost(id, state)}
+                onClick={() => deletePost(id)}
               >
                 Ha
               </button>
@@ -68,8 +74,8 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
         <div className="cards__inner">
           <h2 className="cards__title main-title">{text}</h2>
           <ul className="cards-list">
-            {data &&
-              data.map((item) => (
+            {getData() &&
+              getData().map((item) => (
                 <li key={item.id} className="card-item">
                   <img
                     className="card-item__image"
@@ -79,7 +85,7 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
                   />
                   <div className="card-item__content">
                     <h3 className="card-item__title">
-                      <Link to={`${pathName}/${item.id}`}>{item.title}</Link>
+                      <Link to={`/${pathName}/${item.id}`}>{item.title}</Link>
                     </h3>
                     <p className="card-item__desc">{item.shortDesc}</p>
                     <div className="card-item__times">
@@ -99,7 +105,7 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
                       )}
                     </div>
                   </div>
-                  {isAdmin && (
+                  {state.isAdmin && (
                     <div className="card-item__buttons">
                       <button
                         className="card-item__button"
@@ -110,7 +116,7 @@ export default function CardsList({ setData, isAdmin, data, state = false }) {
                       >
                         <img src="/images/icon-trash.svg" alt="" />
                       </button>
-                      <Link to={`/admin/edit-post${pathName}/${item.id}`}>
+                      <Link to={`/admin/edit-post/${pathName}/${item.id}`}>
                         <button className="card-item__button">
                           <img src="/images/icon-edit.svg" alt="" />
                         </button>

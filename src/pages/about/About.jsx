@@ -12,7 +12,6 @@ export default function About() {
           bo'yicha bilimlarimni mustahkamlash va yangi bilimlarni amaliyot
           tariqasida o'zlashtirish.
           <br />
-          <br />
           <q className="about__quote">
             Nega aynan kino sayt tariqasida bilimlarimni mustahkamlamoqdaman,
             boshqa foydaliroq dastur qilib, biror muammoga yechim topsam
@@ -25,7 +24,6 @@ export default function About() {
           qiziqqan mavzularda saytlar yaratmoqchi edim va buning kichik qismi
           amalga oshdi.
           <br />
-          <br />
           Dastur(sayt)ni yaratishda JavaScript dasturlash tilining{" "}
           <q className="about__quote">React</q> kutubxonasidan, hamda{" "}
           <q className="about__quote">Vite</q> texnologiyasidan foydalanildi.
@@ -35,7 +33,6 @@ export default function About() {
             Firebase
           </q>{" "}
           texnologiyasi qo'llanildi.
-          <br />
           <br />
           Saytda ba'zi xatoliklar va hali yechimi topilmagan qismlar mavjud.
           Sayt boshlang'ich dasturchi tomonidan yaratilganligini inobatga olib,

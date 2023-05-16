@@ -1,15 +1,18 @@
 // style
 import "./Tags.scss";
+
+import { getZero } from "../../utils/utils";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
 
 export default function Tags({ data }) {
   const tag = useParams().tag;
+  const { state } = useContext(Context);
 
-  const filteredData = data
-    .filter((item) => item.tags.find((i) => i === tag))
-    .sort((a, b) => b.time - a.time);
-
-  const getZero = (num) => (num >= 10 ? num : `0${num}`);
+  const filteredData = state.arr.filter((item) =>
+    item.tags.find((i) => i === tag)
+  );
 
   return (
     <section className="tags">

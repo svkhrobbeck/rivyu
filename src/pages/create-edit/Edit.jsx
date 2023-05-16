@@ -4,30 +4,43 @@ import "./CreateEdit.scss";
 // components
 import { TagBadge } from "../../components";
 
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { getZero } from "../../utils/utils";
+import { Context } from "../../context/Context";
 
-export default function Edit({ setData, arr }) {
+export default function Edit() {
   const navigate = useNavigate();
-  const id = useParams().id;
+  const { type, id } = useParams();
+  const { state } = useContext(Context);
+  const [data, setData] = useState({});
 
-  const data = arr.find((item) => item.id === id);
   const [media, setMedia] = useState(null);
-  const [image, _] = useState(data.image);
-  const [title, setTitle] = useState(data.title);
-  const [shortDesc, setShortDesc] = useState(data.shortDesc);
-  const [description, setDescription] = useState(data.description);
-  const [mytags, setMytags] = useState(
-    data.tags.map((value) => ({ value, id: uuidv4() }))
-  );
+  const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [shortDesc, setShortDesc] = useState("");
+  const [description, setDescription] = useState("");
+  const [mytags, setMytags] = useState([]);
   const tags = mytags.map((item) => item.value);
   const elTagInput = useRef(null);
   const date = new Date();
-  const getZero = (num) => (num >= 10 ? num : `0${num}`);
+
+  useEffect(() => {
+    if (state.arr.length) {
+      setData(state.arr.find((item) => item.id === id));
+      setImage(data?.image);
+      setTitle(data?.title);
+      setShortDesc(data?.shortDesc);
+      setDescription(data?.description);
+      setMytags(
+        data.tags ? data.tags.map((value) => ({ value, id: uuidv4() })) : []
+      );
+    }
+  }, [state.arr, data]);
 
   const lastEdited = `${getZero(date.getDate())}.${getZero(
     date.getMonth() + 1
@@ -70,7 +83,7 @@ export default function Edit({ setData, arr }) {
     }
   }
 
-  const postRef = doc(db, data.type, id);
+  const postRef = doc(db, type, id);
   const updatePost = async () => {
     if (media !== null) {
       const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
@@ -116,7 +129,6 @@ export default function Edit({ setData, arr }) {
     } else {
       await updateDoc(postRef, updatePostObj());
     }
-    setData(arr);
     navigate(`/${data.type}`);
   };
 
@@ -147,7 +159,7 @@ export default function Edit({ setData, arr }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      {data.type !== "trailers" && (
+      {data?.type !== "trailers" && (
         <input
           className="main-field create-edit__field create-edit__field--short-desc"
           type="text"
@@ -173,7 +185,7 @@ export default function Edit({ setData, arr }) {
           Teg qo'shish
         </button>
       </div>
-      {data.type !== "trailers" && (
+      {data?.type !== "trailers" && (
         <>
           <input
             className="create-edit__field create-edit__field--image visually-hidden"
@@ -216,7 +228,7 @@ export default function Edit({ setData, arr }) {
         )}
       </div>
       <div className="create-edit__buttons">
-        <Link to={`/${data.type}`}>
+        <Link to={`/${data?.type}`}>
           <button className="button button--blue">Bekor Qilish</button>
         </Link>
         <button

@@ -10,8 +10,9 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
+import { getZero } from "../../utils/utils";
 
-export default function Create({ setData }) {
+export default function Create() {
   const [media, setMedia] = useState(null);
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
@@ -38,10 +39,7 @@ export default function Create({ setData }) {
     setMytags(filteredTags);
   };
 
-  const getZero = (num) => (num >= 10 ? num : `0${num}`);
-
   const date = new Date();
-  const time = date.getTime();
 
   const createdAt = `${getZero(date.getDate())}.${getZero(
     date.getMonth() + 1
@@ -90,20 +88,17 @@ export default function Create({ setData }) {
                 tags,
                 createdAt,
                 likesList: [],
-                time,
+                time: date.getTime(),
                 type,
                 image: downloadURL,
               });
               setIsLoading(false);
-              setData({ createdAt });
               navigate("/");
             });
           }
         );
       } catch {
         console.log("error");
-      } finally {
-        console.log("image uploaded");
       }
     } else {
       addDoc(postsCollectionRef, {
@@ -115,11 +110,10 @@ export default function Create({ setData }) {
         tags,
         createdAt,
         likesList: [],
-        time,
+        time: date.getTime(),
         type,
       });
       setIsLoading(false);
-      setData({ createdAt });
       navigate("/");
     }
   };

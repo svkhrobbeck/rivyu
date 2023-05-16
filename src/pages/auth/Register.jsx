@@ -2,39 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginRegister.scss";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Context } from "../../context/Context";
 
-export default function Register({ setIsAuth }) {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [isPassword, setIsPassword] = useState(true);
-
-  const validatePassword = (e) => {
-    const val = e.target.value.toLowerCase();
-
-    setPassword(val);
-    if (val.length === 0) {
-      setErr("Parolingizni kiriting");
-    } else if (val.length >= 8) {
-      setErr("");
-    } else if (val.length < 8) {
-      setErr("Parol kamida 8 ta belgidan iborat bo'lishi kerak");
-    }
-  };
-
-  const validateEmail = (e) => {
-    const val = e.target.value.toLowerCase();
-
-    setEmail(val);
-
-    if (val.length === 0) {
-      setErr("Emailingizni kiriting");
-    } else if (val.length > 0) {
-      setErr("");
-    }
-  };
+  const { dispatch } = useContext(Context);
 
   const signUpWithEmail = () => {
     if (email === "" && password === "") {
@@ -56,7 +33,7 @@ export default function Register({ setIsAuth }) {
         localStorage.setItem("$#SA$UTH$", true);
         localStorage.setItem("$U$I$D$", currentUser?.uid);
         localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);
-        setIsAuth(true);
+        dispatch({ type: "SET_AUTH", payload: true });
         navigate("/");
         return;
       })
@@ -83,7 +60,7 @@ export default function Register({ setIsAuth }) {
             placeholder="Emailingizni kiriting"
             id="login-register-email"
             value={email}
-            onChange={validateEmail}
+            onChange={(e) => validateEmail(e, setErr, setEmail)}
           />
         </div>
         <label
@@ -100,7 +77,7 @@ export default function Register({ setIsAuth }) {
             placeholder="Parolingizni kiriting"
             id="login-register-password"
             value={password}
-            onChange={validatePassword}
+            onChange={(e) => validatePassword(e, setErr, setPassword)}
           />
           <button
             className="form-login-register__password-toggle"

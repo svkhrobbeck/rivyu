@@ -10,6 +10,10 @@
     font-weight: 400;
     text-align: center;
   }
+
+  @media only screen and (max-width: 576px) {
+    text-align: left;
+  }
 }
 
 .about__quote {
@@ -38,8 +42,4 @@
 
 .about__link-wrapper {
   font-weight: 500;
-
-  @media only screen and (max-width: 1140px) {
-    text-align: center;
-  }
 }

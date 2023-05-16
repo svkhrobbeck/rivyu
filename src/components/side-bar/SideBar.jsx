@@ -1,11 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import "./SideBar.scss";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 
-export default function SideBar({
-  isAdmin,
-  isSitenavOpen,
-  handleSitenavToggle,
-}) {
+export default function SideBar() {
   const links = [
     { name: "Tahlillar", route: "/reviews", image: "/images/icon-pencil.svg" },
     { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
@@ -17,16 +15,20 @@ export default function SideBar({
     { name: "Dastur haqida", route: "/about", image: "/images/icon-faq.svg" },
   ];
 
+  const { state, dispatch } = useContext(Context);
+  const hanleSidebarClose = () => dispatch({ type: "SITENAV_TOGGLE" });
   const location = useLocation().pathname;
 
   return (
-    <section className={`side-bar ${isSitenavOpen ? "side-bar--show" : ""}`}>
+    <section
+      className={`side-bar ${state.siteNavOpen ? "side-bar--show" : ""}`}
+    >
       <nav className="side-bar__nav">
         <ul className="side-bar__list">
           <li className="side-bar__item">
             <Link to={"/"}>
               <button
-                onClick={handleSitenavToggle}
+                onClick={hanleSidebarClose}
                 className={`side-bar__link ${
                   location.includes("/") &&
                   location === "/" &&
@@ -48,7 +50,7 @@ export default function SideBar({
               <li key={link.name} className={"side-bar__item"}>
                 <Link to={link.route}>
                   <button
-                    onClick={handleSitenavToggle}
+                    onClick={hanleSidebarClose}
                     className={`side-bar__link ${
                       location.includes(link.route) && "side-bar__link--active"
                     }`}
@@ -64,11 +66,11 @@ export default function SideBar({
                 </Link>
               </li>
             ))}
-          {isAdmin && (
+          {state.isAdmin && (
             <li className="side-bar__item">
               <Link to={"/admin"}>
                 <button
-                  onClick={handleSitenavToggle}
+                  onClick={hanleSidebarClose}
                   className={`side-bar__link ${
                     location.includes("/admin") && "side-bar__link--active"
                   }`}
@@ -86,7 +88,7 @@ export default function SideBar({
           )}
         </ul>
       </nav>
-      <div className="side-bar__overflow" onClick={handleSitenavToggle} />
+      <div className="side-bar__overflow" onClick={hanleSidebarClose} />
     </section>
   );
 }

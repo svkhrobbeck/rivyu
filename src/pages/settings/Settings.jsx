@@ -1,4 +1,6 @@
+// style
 import "./Settings.scss";
+
 import { deleteUser, updateProfile } from "firebase/auth";
 import { auth, storage } from "../../firebase/firebase";
 import {
@@ -8,15 +10,17 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../../context/Context";
 
-export default function Settings({ isAuth }) {
+export default function Settings() {
   const user = auth.currentUser;
   const [image, setImage] = useState(null);
   const [media, setMedia] = useState(null);
   const [fullName, setFullName] = useState("");
   const navigate = useNavigate();
+  const { state } = useContext(Context);
 
   useEffect(() => {
     if (user !== null) {
@@ -28,7 +32,7 @@ export default function Settings({ isAuth }) {
   }, []);
 
   const setProfileData = () => {
-    if (!isAuth || localStorage.getItem("")) return;
+    if (!state.isAuth || localStorage.getItem("")) return;
     const mediaRef = ref(storage, `profiles/${media.name + uuidv4()}`);
     const desertRef = ref(storage, image);
 
@@ -100,7 +104,6 @@ export default function Settings({ isAuth }) {
         navigate("/login");
       })
       .catch((error) => {
-        // console.log("something went wrong!");
         console.log(error);
       });
   };

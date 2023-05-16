@@ -2,18 +2,16 @@ import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 
-export default function Header({
-  isAdmin,
-  isSitenavOpen,
-  isAuth,
-  setIsAuth,
-  handleSitenavToggle,
-}) {
+export default function Header() {
   const navigate = useNavigate();
   const user = auth.currentUser;
+  const { state, dispatch } = useContext(Context);
+
   const getUserImgUrl = () => {
-    if (isAuth === false) return;
+    if (state.isAuth === false) return;
     const photoURL = user.photoURL;
     return photoURL;
   };
@@ -21,7 +19,7 @@ export default function Header({
   const signOutUser = () => {
     signOut(auth).then(() => {
       localStorage.clear();
-      setIsAuth(false);
+      dispatch({ type: "SET_AUTH", payload: false });
       navigate("/login");
     });
   };
@@ -32,9 +30,9 @@ export default function Header({
         <div className="site-header__left">
           <button
             className={`sitenav-toggler ${
-              isSitenavOpen && "sitenav-toggler--show"
+              state.siteNavOpen && "sitenav-toggler--show"
             }`}
-            onClick={handleSitenavToggle}
+            onClick={() => dispatch({ type: "SITENAV_TOGGLE" })}
           >
             <span className="sitenav-toggler__inner"></span>
             <span className="sitenav-toggler__inner"></span>
@@ -62,7 +60,7 @@ export default function Header({
               />
             </button>
             <ul className="user-account__list">
-              {isAuth && (
+              {state.isAuth && (
                 <>
                   <li className="user-account__item">
                     <img
@@ -71,7 +69,7 @@ export default function Header({
                       alt="settings icon"
                     />
                     <span className="user-account__item-inner">Sozlamalar</span>
-                    {isAuth && <Link to={"/settings"} />}
+                    {state.isAuth && <Link to={"/settings"} />}
                   </li>
                   <li className="user-account__item">
                     <img
@@ -87,7 +85,7 @@ export default function Header({
                   </li>
                 </>
               )}
-              {!isAuth && (
+              {!state.isAuth && (
                 <li className="user-account__item">
                   <img
                     className="user-account__item-img"

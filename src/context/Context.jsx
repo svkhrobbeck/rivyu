@@ -1,10 +1,11 @@
 import { createContext, useReducer, useState } from "react";
 
 const initialValue = {
-  news: [],
-  reviews: [],
+  data: {},
+  arr: [],
   isAdmin: false,
   isAuth: false,
+  siteNavOpen: false,
 };
 
 export const Context = createContext();
@@ -13,17 +14,20 @@ const reducer = (state = initialValue, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "GET_NEWS":
-      return { ...state, news: payload };
+    case "GET_DATA":
+      return { ...state, data: payload };
 
-    case "GET_REVIEWS":
-      return { ...state, reviews: payload };
+    case "GET_ARR":
+      return { ...state, arr: payload };
 
-    case "IS_AUTH":
+    case "SET_AUTH":
       return { ...state, isAuth: payload };
 
-    case "IS_ADMIN":
+    case "SET_ADMIN":
       return { ...state, isAdmin: payload };
+
+    case "SITENAV_TOGGLE":
+      return { ...state, siteNavOpen: !state.siteNavOpen };
 
     default:
       return { state };

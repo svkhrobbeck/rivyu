@@ -5,10 +5,18 @@ import "./Home.scss";
 import { Search, MiniSideBar } from "../../components";
 
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 
-export default function Home({ data }) {
-  document.title = `Kino Blog | Bosh sahifa`;
-  const postData = data[0] || null;
+export default function Home() {
+  document.title = "Kino Blog | Bosh sahifa";
+
+  const { state, _ } = useContext(Context);
+  let postData;
+
+  if (state.data.news) {
+    postData = state.arr[0] || null;
+  }
 
   return (
     <section className="home">
@@ -55,7 +63,7 @@ export default function Home({ data }) {
         </div>
         <div className="home__side-bar">
           <MiniSideBar
-            arr={data.slice(1, 8)}
+            arr={state.arr.slice(1, 8)}
             title="So'nggi yangiliklar"
             state="news"
           />

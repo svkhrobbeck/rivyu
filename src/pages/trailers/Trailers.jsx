@@ -1,14 +1,18 @@
 // style
 import { Link } from "react-router-dom";
 import "./Trailers.scss";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 
-export default function Trailers({ trailers }) {
+export default function Trailers() {
+  const { state, _ } = useContext(Context);
+
   return (
     <section className="trailers">
       <h2 className="trailers__title main-title">Treylerlar</h2>
       <ul className="trailers__list">
-        {trailers &&
-          trailers.map((item) => (
+        {state.data.trailers &&
+          state.data.trailers.map((item) => (
             <li key={item.id} className="trailers__item item-trailers">
               <img
                 className="item-trailers__img"
