@@ -9,8 +9,6 @@ import { Header, Footer, SideBar } from "../components";
 import { Context } from "../context/Context";
 
 export default function MainLayout() {
-  const [isSitenavOpen, setIsSitenavOpen] = useState(false);
-
   const { state, dispatch } = useContext(Context);
 
   const getData = useCallback(async () => {
@@ -102,10 +100,6 @@ export default function MainLayout() {
   useEffect(() => {
     getData();
   }, [getData]);
-
-  const handleSitenavToggle = () => {
-    setIsSitenavOpen((prev) => !prev);
-  };
 
   return (
     <>
