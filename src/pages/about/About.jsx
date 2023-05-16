@@ -1,3 +1,4 @@
+// style
 import "./About.scss";
 
 export default function About() {
@@ -37,6 +38,14 @@ export default function About() {
           Saytda ba'zi xatoliklar va hali yechimi topilmagan qismlar mavjud.
           Sayt boshlang'ich dasturchi tomonidan yaratilganligini inobatga olib,
           ushbu xatoliklarga ko'z yumasiz degan umiddamiz!
+          <br />
+          <br />
+          <span className="about__icons">
+            <img className="about__icon" src="/react.svg" alt="logo react" />
+            <img className="about__icon" src="/vite.svg" alt="logo vite" />
+            <img className="about__icon" src="/firebase.svg" alt="logo firebase" />
+            <img className="about__icon" src="/kinoblog.svg" alt="logo kinoblog" />
+          </span>
         </p>
       </div>
     </section>
