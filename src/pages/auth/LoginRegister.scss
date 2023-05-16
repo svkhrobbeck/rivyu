@@ -34,6 +34,7 @@
 
 .form-login-resgister__label {
   margin-bottom: 10px;
+  font-size: inherit;
 }
 
 .form-login-register__field {
@@ -95,11 +96,7 @@
   }
 
   @media only screen and (max-width: 840px) {
-    font-size: 17px;
-  }
-
-  @media only screen and (max-width: 600px) {
-    font-size: 16px;
+    font-size: inherit;
   }
 }
 

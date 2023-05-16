@@ -55,7 +55,7 @@ export default function Home({ data }) {
         </div>
         <div className="home__side-bar">
           <MiniSideBar
-            arr={data.slice(1, 6)}
+            arr={data.slice(1, 8)}
             title="So'nggi yangiliklar"
             state="news"
           />

@@ -3,9 +3,13 @@
 }
 
 .about__desc {
-  font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.2px;
+
+  @media only screen and (max-width: 840px) {
+    font-weight: 400;
+    text-align: center;
+  }
 }
 
 .about__quote {
