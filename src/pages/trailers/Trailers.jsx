@@ -11,6 +11,9 @@ export default function Trailers() {
     <section className="trailers">
       <h2 className="trailers__title main-title">Treylerlar</h2>
       <ul className="trailers__list">
+        {!state.arr.length && (
+          <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>
+        )}
         {state.data.trailers &&
           state.data.trailers.map((item) => (
             <li key={item.id} className="trailers__item item-trailers">

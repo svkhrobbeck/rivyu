@@ -73,6 +73,9 @@ export default function CardsList() {
         <div className="cards__inner">
           <h2 className="cards__title main-title">{text}</h2>
           <ul className="cards-list">
+            {!state.arr.length && (
+              <li className="card-item">{text} topilmadi!</li>
+            )}
             {getData() &&
               getData().map((item) => (
                 <li key={item.id} className="card-item">
