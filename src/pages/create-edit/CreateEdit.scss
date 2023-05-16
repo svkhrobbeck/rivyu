@@ -63,25 +63,25 @@
   }
 }
 
-.create-edit__checkbox:checked + .create-edit__fake-checkbox {
-  background: var(--accent-color) url("../images/icon-check.svg") no-repeat
-    center / contain;
+.create-edit__checkbox:checked + .create-edit__fake-radio {
+  background-color: #fff;
+  border: 4px solid var(--accent-color);
 }
 
-.create-edit__checkbox:focus + .create-edit__fake-checkbox {
+.create-edit__checkbox:focus + .create-edit__fake-radio {
   outline: 2px dashed var(--accent-color);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
-.create-edit__fake-checkbox {
-  background-color: #374151;
+.create-edit__fake-radio {
+  background-color: var(--border-color);
   display: block;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   margin-right: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.36);
-  transition: background 0.5s ease;
+  border: 1px solid #6b7280;
+  transition: background 0.2s ease;
 }
 
 .create-edit__tags {

@@ -16,13 +16,11 @@ export default function Create({ setData }) {
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
   const [linkTrailer, setLinkTrailer] = useState("");
-  const videoId = linkTrailer.slice(-11);
   const [description, setDescription] = useState("");
   const [mytags, setMytags] = useState([]);
   const tags = mytags.map((item) => item.value);
-  const [isTrailer, setIsTrailer] = useState(false);
-  const [isNews, setIsNews] = useState(false);
-  const postType = isNews ? "news" : isTrailer ? "trailers" : "reviews";
+  const videoId = linkTrailer.slice(-11);
+  const [type, setType] = useState("reviews");
 
   const elTagInput = useRef(null);
   const navigate = useNavigate();
@@ -52,14 +50,14 @@ export default function Create({ setData }) {
   )}`;
 
   const [isLoading, setIsLoading] = useState(false);
-  const postsCollectionRef = collection(db, postType);
+  const postsCollectionRef = collection(db, type);
 
   const createPost = async () => {
-    if (!isTrailer) {
+    if (type !== "trailers") {
       if (media === null) return;
     } else if (title === "") return;
 
-    if (!isTrailer) {
+    if (type !== "trailers") {
       const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
       try {
         setIsLoading(true);
@@ -93,7 +91,7 @@ export default function Create({ setData }) {
                 createdAt,
                 likesList: [],
                 time,
-                type: postType,
+                type,
                 image: downloadURL,
               });
               setIsLoading(false);
@@ -118,7 +116,7 @@ export default function Create({ setData }) {
         createdAt,
         likesList: [],
         time,
-        type: postType,
+        type,
       });
       setIsLoading(false);
       setData({ createdAt });
@@ -131,32 +129,39 @@ export default function Create({ setData }) {
       {isLoading && <Loader />}
       <h2 className="create-edit__title">Yangi Post Yaratish</h2>
       <div className="create-edit__fields">
-        {!isTrailer && (
-          <label className="create-edit__label">
-            <input
-              className="create-edit__checkbox visually-hidden"
-              type="checkbox"
-              name="is_news"
-              checked={isNews}
-              onChange={(e) => setIsNews(e.target.checked)}
-            />
-            <span className="create-edit__fake-checkbox"></span>
-            <span className="create-edit__label-inner">yangilik</span>
-          </label>
-        )}
-        {!isNews && (
-          <label className="create-edit__label">
-            <input
-              className="create-edit__checkbox visually-hidden"
-              type="checkbox"
-              name="is_news"
-              checked={isTrailer}
-              onChange={(e) => setIsTrailer(e.target.checked)}
-            />
-            <span className="create-edit__fake-checkbox"></span>
-            <span className="create-edit__label-inner">treyler</span>
-          </label>
-        )}
+        <label className="create-edit__label">
+          <input
+            className="create-edit__checkbox visually-hidden"
+            type="radio"
+            name="is_news"
+            checked={type === "reviews"}
+            onChange={() => setType("reviews")}
+          />
+          <span className="create-edit__fake-radio" />
+          <span className="create-edit__label-inner">Maqola</span>
+        </label>
+
+        <label className="create-edit__label">
+          <input
+            className="create-edit__checkbox visually-hidden"
+            type="radio"
+            name="is_news"
+            onChange={() => setType("news")}
+          />
+          <span className="create-edit__fake-radio" />
+          <span className="create-edit__label-inner">Yangilik</span>
+        </label>
+
+        <label className="create-edit__label">
+          <input
+            className="create-edit__checkbox visually-hidden"
+            type="radio"
+            name="is_news"
+            onChange={() => setType("trailers")}
+          />
+          <span className="create-edit__fake-radio" />
+          <span className="create-edit__label-inner">Treyler</span>
+        </label>
       </div>
       {tags.length ? (
         <>
@@ -183,7 +188,7 @@ export default function Create({ setData }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        {!isTrailer && (
+        {type !== "trailers" && (
           <input
             className="main-field create-edit__field create-edit__field--short-desc"
             type="text"
@@ -194,8 +199,8 @@ export default function Create({ setData }) {
           />
         )}
       </div>
-      <div className="create-edit__fields">
-        {isTrailer && (
+      {type === "trailers" && (
+        <div className="create-edit__fields">
           <input
             className="main-field create-edit__field create-edit__field--short-desc"
             type="text"
@@ -204,8 +209,8 @@ export default function Create({ setData }) {
             value={linkTrailer}
             onChange={(e) => setLinkTrailer(e.target.value)}
           />
-        )}
-      </div>
+        </div>
+      )}
       <div className="create-edit__fields">
         <div className="create-edit__field-wrapper">
           <input
@@ -223,7 +228,7 @@ export default function Create({ setData }) {
             Teg qo'shish
           </button>
         </div>
-        {!isTrailer && (
+        {type !== "trailers" && (
           <div className="create-edit__fields">
             <input
               className="create-edit__field create-edit__field--image visually-hidden"
@@ -252,7 +257,7 @@ export default function Create({ setData }) {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        {!isTrailer && (
+        {type !== "trailers" && (
           <img
             className="create-edit__img"
             src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}

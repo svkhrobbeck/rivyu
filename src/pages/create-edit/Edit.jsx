@@ -11,11 +11,11 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
-export default function Edit({ setData, news, reviews }) {
+export default function Edit({ setData, arr }) {
   const navigate = useNavigate();
-  const { type: paramType, id: paramId } = useParams();
-  const arr = paramType === "news" ? news : reviews;
-  const data = arr.find((item) => item.id === paramId);
+  const id = useParams().id;
+
+  const data = arr.find((item) => item.id === id);
   const [media, setMedia] = useState(null);
   const [image, _] = useState(data.image);
   const [title, setTitle] = useState(data.title);
@@ -48,7 +48,29 @@ export default function Edit({ setData, news, reviews }) {
     setMytags(filteredTags);
   };
 
-  const postRef = doc(db, paramType, paramId);
+  function updatePostObj() {
+    if (data.type === "trailers") {
+      return {
+        title,
+        tags,
+        description,
+        lastEdited,
+        image,
+      };
+    } else {
+      return {
+        ...data,
+        title,
+        shortDesc,
+        tags,
+        description,
+        lastEdited,
+        image,
+      };
+    }
+  }
+
+  const postRef = doc(db, data.type, id);
   const updatePost = async () => {
     if (media !== null) {
       const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
@@ -92,18 +114,10 @@ export default function Edit({ setData, news, reviews }) {
         console.log("image uploaded");
       }
     } else {
-      await updateDoc(postRef, {
-        ...data,
-        title,
-        shortDesc,
-        tags,
-        description,
-        lastEdited,
-        image: image,
-      });
+      await updateDoc(postRef, updatePostObj());
     }
     setData(arr);
-    navigate(`/${paramType}`);
+    navigate(`/${data.type}`);
   };
 
   return (
@@ -133,14 +147,16 @@ export default function Edit({ setData, news, reviews }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <input
-        className="main-field create-edit__field create-edit__field--short-desc"
-        type="text"
-        name="short_description"
-        placeholder="qisqa izoh"
-        value={shortDesc}
-        onChange={(e) => setShortDesc(e.target.value)}
-      />
+      {data.type !== "trailers" && (
+        <input
+          className="main-field create-edit__field create-edit__field--short-desc"
+          type="text"
+          name="short_description"
+          placeholder="qisqa izoh"
+          value={shortDesc}
+          onChange={(e) => setShortDesc(e.target.value)}
+        />
+      )}
       <div className="create-edit__field-wrapper">
         <input
           className="main-field create-edit__field create-edit__field--tag"
@@ -157,21 +173,25 @@ export default function Edit({ setData, news, reviews }) {
           Teg qo'shish
         </button>
       </div>
-      <input
-        className="create-edit__field create-edit__field--image visually-hidden"
-        type="file"
-        name="image"
-        accept="image/*"
-        placeholder="post rasmi"
-        id="image-input-edit"
-        onChange={(e) => setMedia(e.target.files[0])}
-      />
-      <label
-        className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
-        htmlFor="image-input-edit"
-      >
-        {media ? "rasm tanlandi" : "rasmni tanlang"}
-      </label>
+      {data.type !== "trailers" && (
+        <>
+          <input
+            className="create-edit__field create-edit__field--image visually-hidden"
+            type="file"
+            name="image"
+            accept="image/*"
+            placeholder="post rasmi"
+            id="image-input-edit"
+            onChange={(e) => setMedia(e.target.files[0])}
+          />
+          <label
+            className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
+            htmlFor="image-input-edit"
+          >
+            {media ? "rasm tanlandi" : "rasmni tanlang"}
+          </label>
+        </>
+      )}
       <div className="create-edit__fields">
         <textarea
           className="main-field create-edit__textarea"
@@ -196,7 +216,7 @@ export default function Edit({ setData, news, reviews }) {
         )}
       </div>
       <div className="create-edit__buttons">
-        <Link to={`/${paramType}`}>
+        <Link to={`/${data.type}`}>
           <button className="button button--blue">Bekor Qilish</button>
         </Link>
         <button

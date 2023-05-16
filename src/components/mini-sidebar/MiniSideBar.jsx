@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./MiniSideBar.scss";
 
-export default function MiniSideBar({ arr = [], title = "", state = "" }) {
+export default function MiniSideBar({ arr = [], title = "" }) {
   return (
     <div className="mini-sidebar">
       <h3 className="mini-sidebar__title">
@@ -16,9 +16,7 @@ export default function MiniSideBar({ arr = [], title = "", state = "" }) {
               key={item.id}
               className="mini-sidebar__item"
             >
-              <Link to={`/${item.isNews ? "news" : "reviews"}/${item.id}`}>
-                {item.title}
-              </Link>
+              <Link to={`/${item.type}/${item.id}`}>{item.title}</Link>
             </li>
           ))}
       </ul>

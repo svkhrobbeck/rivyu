@@ -4,7 +4,7 @@ import "./Trailers.scss";
 
 export default function Trailers({ trailers }) {
   return (
-    <section className="trailers container">
+    <section className="trailers">
       <h2 className="trailers__title main-title">Treylerlar</h2>
       <ul className="trailers__list">
         {trailers &&

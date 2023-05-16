@@ -55,7 +55,11 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       <Route
         path="/"
         element={
-          <Home data={[...news, ...reviews].sort((a, b) => b.time - a.time)} />
+          <Home
+            data={[...news, ...reviews, ...trailers].sort(
+              (a, b) => b.time - a.time
+            )}
+          />
         }
       />
       <Route
@@ -113,7 +117,9 @@ export default function Router({ isAdmin, isAuth, setIsAuth, loader }) {
       {isAdmin && (
         <Route
           path="/admin/edit-post/:type/:id"
-          element={<Edit setData={setData} news={news} reviews={reviews} />}
+          element={
+            <Edit setData={setData} arr={[...news, ...reviews, ...trailers]} />
+          }
         />
       )}
       <Route path="*" element={<Page404 />} />

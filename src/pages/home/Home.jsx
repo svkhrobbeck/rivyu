@@ -47,13 +47,7 @@ export default function Home({ data }) {
                 {postData.title}
               </h5>
             )}
-            <Link
-              to={
-                postData
-                  ? `/${postData.isNews ? "news" : "reviews"}/${postData.id}`
-                  : "/"
-              }
-            >
+            <Link to={postData ? `/${postData.type}/${postData.id}` : "/"}>
               <button className="button button--green">
                 {postData ? "Batafsil" : "Yuklanmoqda..."}
               </button>

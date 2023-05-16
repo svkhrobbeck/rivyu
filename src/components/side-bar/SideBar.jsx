@@ -7,7 +7,6 @@ export default function SideBar({
   handleSitenavToggle,
 }) {
   const links = [
-    { name: "Bosh Sahifa", route: "/", image: "/images/icon-home.svg" },
     { name: "Tahlillar", route: "/reviews", image: "/images/icon-pencil.svg" },
     { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
     {
@@ -24,6 +23,26 @@ export default function SideBar({
     <section className={`side-bar ${isSitenavOpen ? "side-bar--show" : ""}`}>
       <nav className="side-bar__nav">
         <ul className="side-bar__list">
+          <li className="side-bar__item">
+            <Link to={"/"}>
+              <button
+                onClick={handleSitenavToggle}
+                className={`side-bar__link ${
+                  location.includes("/") &&
+                  location === "/" &&
+                  "side-bar__link--active"
+                }`}
+              >
+                <img
+                  className="side-bar__link-icon"
+                  src="/images/icon-home.svg"
+                  alt="icon"
+                  aria-hidden="true"
+                />
+                <span className="side-bar__link-text">Bosh Sahifa</span>
+              </button>
+            </Link>
+          </li>
           {links &&
             links.map((link) => (
               <li key={link.name} className={"side-bar__item"}>
@@ -31,7 +50,7 @@ export default function SideBar({
                   <button
                     onClick={handleSitenavToggle}
                     className={`side-bar__link ${
-                      link.route === location && "side-bar__link--active"
+                      location.includes(link.route) && "side-bar__link--active"
                     }`}
                   >
                     <img
@@ -51,7 +70,7 @@ export default function SideBar({
                 <button
                   onClick={handleSitenavToggle}
                   className={`side-bar__link ${
-                    "/admin" === location && "side-bar__link--active"
+                    location.includes("/admin") && "side-bar__link--active"
                   }`}
                 >
                   <img
