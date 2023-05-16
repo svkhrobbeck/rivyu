@@ -6,13 +6,13 @@
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.2px;
+}
 
-  q {
-    color: var(--accent-color);
+.about__quote {
+  color: var(--accent-color);
 
-    a {
-      color: inherit;
-    }
+  a {
+    color: inherit;
   }
 }
 
@@ -33,7 +33,7 @@
 }
 
 .about__link-wrapper {
-  display: block;
+  font-weight: 500;
 
   @media only screen and (max-width: 1140px) {
     text-align: center;

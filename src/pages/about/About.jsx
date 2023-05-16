@@ -13,7 +13,7 @@ export default function About() {
           tariqasida o'zlashtirish.
           <br />
           <br />
-          <q>
+          <q className="about__quote">
             Nega aynan kino sayt tariqasida bilimlarimni mustahkamlamoqdaman,
             boshqa foydaliroq dastur qilib, biror muammoga yechim topsam
             bo'lmasmidi?
@@ -26,52 +26,52 @@ export default function About() {
           amalga oshdi.
           <br />
           <br />
-          Dastur(sayt)ni yaratishda JavaScript dasturlash tilining <q>
-            React
+          Dastur(sayt)ni yaratishda JavaScript dasturlash tilining{" "}
+          <q className="about__quote">React</q> kutubxonasidan, hamda{" "}
+          <q className="about__quote">Vite</q> texnologiyasidan foydalanildi.
+          <br />
+          <br />
+          Ma'lumotlar bazasi sifatida <q className="about__quote">
+            Firebase
           </q>{" "}
-          kutubxonasidan, hamda <q>Vite</q> texnologiyasidan foydalanildi.
-          <br />
-          <br />
-          Ma'lumotlar bazasi sifatida <q>Firebase</q> texnologiyasi qo'llanildi.
+          texnologiyasi qo'llanildi.
           <br />
           <br />
           Saytda ba'zi xatoliklar va hali yechimi topilmagan qismlar mavjud.
           Sayt boshlang'ich dasturchi tomonidan yaratilganligini inobatga olib,
           ushbu xatoliklarga ko'z yumasiz degan umiddamiz!
-          <br />
-          <br />
-          <span className="about__icons">
-            <img className="about__icon" src="/react.svg" alt="logo react" />
-            <img className="about__icon" src="/vite.svg" alt="logo vite" />
-            <img
-              className="about__icon"
-              src="/firebase.svg"
-              alt="logo firebase"
-            />
-            <img
-              className="about__icon"
-              src="/kinoblog.svg"
-              alt="logo kinoblog"
-            />
-          </span>
-          <br />
-          <span className="about__link-wrapper">
-            Dasturchi:{" "}
-            <q>
-              <a href="https://tme.to/svkhrobbeck" target="_blank">
-                Suhrobbek Soatov
-              </a>
-            </q>
-          </span>
-          <span className="about__link-wrapper">
-            Portfolio:{" "}
-            <q>
-              <a href="https://soatov.uz" target="_blank">
-                Havola
-              </a>
-            </q>
-          </span>
         </p>
+        <div className="about__icons">
+          <img className="about__icon" src="/react.svg" alt="logo react" />
+          <img className="about__icon" src="/vite.svg" alt="logo vite" />
+          <img
+            className="about__icon"
+            src="/firebase.svg"
+            alt="logo firebase"
+          />
+          <img
+            className="about__icon"
+            src="/kinoblog.svg"
+            alt="logo kinoblog"
+          />
+        </div>
+        <br />
+        <div className="about__link-wrapper">
+          Dasturchi:{" "}
+          <q className="about__quote">
+            <a href="https://tme.to/svkhrobbeck" target="_blank">
+              Suhrobbek Soatov
+            </a>
+          </q>
+        </div>
+        <div className="about__link-wrapper">
+          Portfolio:{" "}
+          <q className="about__quote">
+            <a href="https://soatov.uz" target="_blank">
+              Havola
+            </a>
+          </q>
+        </div>
       </div>
     </section>
   );
