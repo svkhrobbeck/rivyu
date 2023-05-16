@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section className="about">
       <div className="container">
-        <h2 className="about__title main-title">Biz haqimizda</h2>
+        <h2 className="about__title main-title">Dastur haqida</h2>
         <p className="about__desc">
           Ushbu sayt hechqanday tijoriy va moddiy manfaatlarni ko'zlab
           yaratilmagan. Saytni yaratishdan asosiy maqsad o'zimning "dasturlash"
@@ -43,8 +43,33 @@ export default function About() {
           <span className="about__icons">
             <img className="about__icon" src="/react.svg" alt="logo react" />
             <img className="about__icon" src="/vite.svg" alt="logo vite" />
-            <img className="about__icon" src="/firebase.svg" alt="logo firebase" />
-            <img className="about__icon" src="/kinoblog.svg" alt="logo kinoblog" />
+            <img
+              className="about__icon"
+              src="/firebase.svg"
+              alt="logo firebase"
+            />
+            <img
+              className="about__icon"
+              src="/kinoblog.svg"
+              alt="logo kinoblog"
+            />
+          </span>
+          <br />
+          <span className="about__link-wrapper">
+            Dasturchi:{" "}
+            <q>
+              <a href="https://tme.to/svkhrobbeck" target="_blank">
+                Suhrobbek Soatov
+              </a>
+            </q>
+          </span>
+          <span className="about__link-wrapper">
+            Portfolio:{" "}
+            <q>
+              <a href="https://soatov.uz" target="_blank">
+                Havola
+              </a>
+            </q>
           </span>
         </p>
       </div>

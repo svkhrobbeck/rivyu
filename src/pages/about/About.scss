@@ -9,6 +9,10 @@
 
   q {
     color: var(--accent-color);
+
+    a {
+      color: inherit;
+    }
   }
 }
 
@@ -26,4 +30,12 @@
 .about__icon {
   width: 32px;
   height: auto;
+}
+
+.about__link-wrapper {
+  display: block;
+
+  @media only screen and (max-width: 1140px) {
+    text-align: center;
+  }
 }

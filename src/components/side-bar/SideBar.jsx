@@ -14,7 +14,7 @@ export default function SideBar({
       route: "/trailers",
       image: "/images/icon-videplay.svg",
     },
-    { name: "Biz haqimizda", route: "/about", image: "/images/icon-faq.svg" },
+    { name: "Dastur haqida", route: "/about", image: "/images/icon-faq.svg" },
   ];
 
   const location = useLocation().pathname;
