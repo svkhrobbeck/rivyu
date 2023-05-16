@@ -49,6 +49,7 @@
   background-color: var(--component-color);
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.16);
+  text-align: center;
 
   @media only screen and (max-width: 600px) {
     padding: 25px 10px;
@@ -61,23 +62,22 @@
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 10px;
+  q {
+    color: var(--accent-color);
+  }
 
   @media only screen and (max-width: 920px) {
     font-size: 32px;
   }
 
   @media only screen and (max-width: 840px) {
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 500;
   }
 
   @media only screen and (max-width: 576px) {
-    font-size: 25px;
+    font-size: 22px;
   }
-}
-
-.hero__title-inner {
-  color: var(--accent-color);
 }
 
 .hero__desc {
