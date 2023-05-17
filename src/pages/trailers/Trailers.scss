@@ -69,6 +69,14 @@
   color: var(--text-color);
   transition: color 0.4s ease;
   outline: none;
+  z-index: 2;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
 
   &:hover {
     color: var(--accent-color);
@@ -81,6 +89,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   margin-top: 5px;
+  z-index: 5;
 }
 
 .item-trailers__button {
@@ -88,4 +97,5 @@
   border: none;
   display: inline-flex;
   padding: 5px;
+  cursor: pointer;
 }
