@@ -5,7 +5,7 @@ import { Context } from "../../context/Context";
 
 export default function SideBar() {
   const links = [
-    { name: "Tahlillar", route: "/reviews", image: "/images/icon-pencil.svg" },
+    { name: "Maqolalar", route: "/reviews", image: "/images/icon-pencil.svg" },
     { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
     {
       name: "Treylerlar",
