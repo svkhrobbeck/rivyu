@@ -1,4 +1,6 @@
+// style
 import "./AdminDashboard.scss";
+
 import { Link } from "react-router-dom";
 
 export default function AdminDashboard() {
@@ -6,8 +8,8 @@ export default function AdminDashboard() {
     <section className="admin-dashboard">
       <div className="container">
         <div className="admin-dashboard__btn-wrapper">
-          <Link to={"/admin/create-post"}>
-            <button className="button button--green">Yangi Post</button>
+          <Link className="button button--green" to={"/admin/create-post"}>
+            Yangi Post
           </Link>
         </div>
       </div>

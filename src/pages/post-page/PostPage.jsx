@@ -12,7 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Context } from "../../context/Context";
 
 export default function PostPage() {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const id = useParams().id;
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowFailureToast, setIsShowFailureToast] = useState(false);
@@ -49,6 +49,7 @@ export default function PostPage() {
               likesList: [...data.likesList],
             });
           }
+          dispatch({ type: "IS_UPDATED" });
         }
       } else {
         handleOpenFailureToast();

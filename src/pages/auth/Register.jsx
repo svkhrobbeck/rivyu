@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginRegister.scss";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
+import { validateEmail, validatePassword } from "../../utils/utils";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -11,7 +13,29 @@ export default function Register() {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [isPassword, setIsPassword] = useState(true);
-  const { dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+
+  const addUser = async (email, password, uid, name, token) => {
+    if (
+      !state.users.admins.some((item) => item.email.includes(email)) &&
+      !state.users.users.some((item) => item.email.includes(email))
+    ) {
+      const ref = doc(db, "users", "users");
+
+      const user = {
+        email,
+        password,
+        uid,
+        name,
+        token,
+        image: null,
+      };
+      console.log(user);
+      await updateDoc(ref, {
+        users: [...state.users.users, user],
+      });
+    }
+  };
 
   const signUpWithEmail = () => {
     if (email === "" && password === "") {
@@ -34,6 +58,14 @@ export default function Register() {
         localStorage.setItem("$U$I$D$", currentUser?.uid);
         localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);
         dispatch({ type: "SET_AUTH", payload: true });
+        dispatch({ type: "IS_UPDATED" });
+        addUser(
+          email,
+          password,
+          currentUser?.uid,
+          currentUser.displayName,
+          currentUser?.accessToken
+        );
         navigate("/");
         return;
       })

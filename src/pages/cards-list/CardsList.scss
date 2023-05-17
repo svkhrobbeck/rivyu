@@ -13,7 +13,6 @@
 .cards-list {
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--border-color);
 }
 
 /* CARD ITEM */
@@ -22,6 +21,10 @@
   align-items: flex-start;
   padding: 15px 40px 15px 15px;
   position: relative;
+
+  &:first-child {
+    border-top: 1px solid var(--border-color);
+  }
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--border-color);

@@ -1,5 +1,5 @@
 // style
-import "./CreateEdit.scss";
+import "./AdminDashboard.scss";
 
 // components
 import { TagBadge } from "../../components";
@@ -16,31 +16,26 @@ import { Context } from "../../context/Context";
 export default function Edit() {
   const navigate = useNavigate();
   const { type, id } = useParams();
-  const { state } = useContext(Context);
-  const [data, setData] = useState({});
+  const { state, dispatch } = useContext(Context);
+  const [data, setData] = useState(
+    state.arr.find((item) => item.id === id) || {}
+  );
+
+  if (!state.arr.length) {
+    window.location.pathname = "/";
+  }
 
   const [media, setMedia] = useState(null);
-  const [image, setImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [shortDesc, setShortDesc] = useState("");
-  const [description, setDescription] = useState("");
-  const [mytags, setMytags] = useState([]);
+  const [image, setImage] = useState(data.image || null);
+  const [title, setTitle] = useState(data.title || "");
+  const [shortDesc, setShortDesc] = useState(data.shortDesc || "");
+  const [description, setDescription] = useState(data.description || "");
+  const [mytags, setMytags] = useState(
+    data.tags ? data.tags.map((value) => ({ value, id: uuidv4() })) : []
+  );
   const tags = mytags.map((item) => item.value);
   const elTagInput = useRef(null);
   const date = new Date();
-
-  useEffect(() => {
-    if (state.arr.length) {
-      setData(state.arr.find((item) => item.id === id));
-      setImage(data?.image);
-      setTitle(data?.title);
-      setShortDesc(data?.shortDesc);
-      setDescription(data?.description);
-      setMytags(
-        data.tags ? data.tags.map((value) => ({ value, id: uuidv4() })) : []
-      );
-    }
-  }, [state.arr, data]);
 
   const lastEdited = `${getZero(date.getDate())}.${getZero(
     date.getMonth() + 1
@@ -130,6 +125,7 @@ export default function Edit() {
       await updateDoc(postRef, updatePostObj());
     }
     navigate(`/${data.type}`);
+    dispatch({ type: "IS_UPDATED" });
   };
 
   return (

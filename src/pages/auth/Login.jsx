@@ -31,12 +31,18 @@ export default function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
-        currentUser = result.user;
-        currentUser.displayName = email.split("@")[0];
+        const {
+          uid,
+          displayName,
+          accessToken: token,
+          photoURL: image,
+        } = result.user;
+
         localStorage.setItem("$#SA$UTH$", true);
-        localStorage.setItem("$U$I$D$", currentUser?.uid);
-        localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);
+        localStorage.setItem("$U$I$D$", uid);
+        localStorage.setItem("$T$O$K$E$N$", token);
         dispatch({ type: "SET_AUTH", payload: true });
+        dispatch({ type: "IS_UPDATED" });
         navigate("/");
       })
       .catch((err) => setErr("Email yoki Parol xato kiritilgan"));

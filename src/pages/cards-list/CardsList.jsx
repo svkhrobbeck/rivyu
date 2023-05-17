@@ -1,5 +1,5 @@
 // style
-import "./Cards.scss";
+import "./CardsList.scss";
 
 // components
 import { Modal } from "../../components";
@@ -32,18 +32,26 @@ export default function CardsList() {
   const handleModalOpen = () => setIsOpen(true);
 
   const deletePost = async (id) => {
+    const postDoc = doc(db, pathName, id);
     const item = getData().find((item) => item.id === id);
-    const desertRef = ref(storage, item.image);
-    deleteObject(desertRef)
-      .then(() => {
-        console.log("File deleted successfully");
-        const postDoc = doc(db, pathName, id);
-        deleteDoc(postDoc);
-        handleModalClose();
-      })
-      .catch((error) => {
-        console.log("Uh-oh, an error occurred!");
-      });
+    if (item.image) {
+      const desertRef = ref(storage, item.image);
+      deleteObject(desertRef)
+        .then(() => {
+          console.log("File deleted successfully");
+          deleteDoc(postDoc);
+        })
+        .catch((error) => {
+          console.log("Uh-oh, an error occurred!");
+        })
+        .finally(() => {
+          dispatch({ type: "IS_UPDATED" });
+        });
+    } else {
+      deleteDoc(postDoc);
+      dispatch({ type: "IS_UPDATED" });
+    }
+    handleModalClose();
   };
 
   return (
@@ -106,25 +114,25 @@ export default function CardsList() {
                         </time>
                       )}
                     </div>
-                  </div>
-                  {state.isAdmin && (
-                    <div className="card-item__buttons">
-                      <button
-                        className="card-item__button"
-                        onClick={() => {
-                          setId(item.id);
-                          handleModalOpen();
-                        }}
-                      >
-                        <img src="/images/icon-trash.svg" alt="" />
-                      </button>
-                      <Link to={`/admin/edit-post/${pathName}/${item.id}`}>
-                        <button className="card-item__button">
-                          <img src="/images/icon-edit.svg" alt="" />
+                    {state.isAdmin && (
+                      <div className="card-item__buttons">
+                        <button
+                          className="card-item__button"
+                          onClick={() => {
+                            setId(item.id);
+                            handleModalOpen();
+                          }}
+                        >
+                          <img src="/images/icon-trash.svg" alt="" />
                         </button>
-                      </Link>
-                    </div>
-                  )}
+                        <Link to={`/admin/edit-post/${pathName}/${item.id}`}>
+                          <button className="card-item__button">
+                            <img src="/images/icon-edit.svg" alt="" />
+                          </button>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                 </li>
               ))}
           </ul>

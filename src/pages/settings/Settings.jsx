@@ -1,42 +1,45 @@
 // style
 import "./Settings.scss";
 
-import { deleteUser, updateProfile } from "firebase/auth";
-import { auth, storage } from "../../firebase/firebase";
 import {
   deleteObject,
   getDownloadURL,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { deleteUser } from "firebase/auth";
+import { db, storage } from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default function Settings() {
-  const user = auth.currentUser;
-  const [image, setImage] = useState(null);
+  const { state, dispatch } = useContext(Context);
+  const [image, setImage] = useState(state.currentUser.image || null);
   const [media, setMedia] = useState(null);
-  const [fullName, setFullName] = useState("");
+  const [fullName, setFullName] = useState(state.currentUser.name || "");
   const navigate = useNavigate();
-  const { state } = useContext(Context);
 
-  useEffect(() => {
-    if (user !== null) {
-      const displayName = user.displayName;
-      const photoURL = user.photoURL;
-      setFullName(displayName);
-      setImage(photoURL);
-    }
-  }, []);
+  if (!Object.keys(state.currentUser).length) {
+    window.location.pathname = "/";
+  }
+  const oldImageRef = ref(storage, image);
 
-  const setProfileData = () => {
-    if (!state.isAuth || localStorage.getItem("")) return;
-    const mediaRef = ref(storage, `profiles/${media.name + uuidv4()}`);
-    const desertRef = ref(storage, image);
+  const deleteOldImage = () => {
+    deleteObject(oldImageRef).then(() => {
+      console.log("Old profile pic deleted successful");
+    });
+    setImage(null);
+  };
+
+  const setProfileData = async () => {
+    if (!state.isAuth || !localStorage.getItem("$U$I$D$")) return;
+    const updateRef = doc(db, "users", "users");
 
     if (media !== null) {
+      const mediaRef = ref(storage, `profiles/${media.name + uuidv4()}`);
       try {
         const uploadTask = uploadBytesResumable(mediaRef, media);
         uploadTask.on(
@@ -59,9 +62,48 @@ export default function Settings() {
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              updateProfile(user, {
-                displayName: fullName,
-                photoURL: downloadURL,
+              if (state.isAdmin) {
+                const idx = state.users.admins.findIndex(
+                  (item) => item.uid === state.currentUser.uid
+                );
+                const arr = [...state.users.admins];
+                arr.splice(idx, 1);
+                updateDoc(updateRef, {
+                  admins: [
+                    ...arr,
+                    {
+                      ...state.currentUser,
+                      name: fullName,
+                      image: downloadURL,
+                    },
+                  ],
+                });
+              } else {
+                const idx = state.users.users.findIndex(
+                  (item) => item.uid === state.currentUser.uid
+                );
+                const arr = [...state.users.users];
+                arr.splice(idx, 1);
+                updateDoc(updateRef, {
+                  users: [
+                    ...arr,
+                    {
+                      ...state.currentUser,
+                      name: fullName,
+                      image: downloadURL,
+                    },
+                  ],
+                });
+              }
+
+              // currentUser
+              dispatch({
+                type: "GET_USER",
+                payload: {
+                  ...state.currentUser,
+                  name: fullName,
+                  image: downloadURL,
+                },
               });
             });
           }
@@ -72,17 +114,42 @@ export default function Settings() {
         console.log("image uploaded");
       }
       if (image !== null) {
-        deleteObject(desertRef).then(() => {
-          console.log("File deleted successfully");
+        deleteObject(oldImageRef).then(() => {
+          console.log("Old profile pic deleted successful");
         });
       }
     } else {
-      updateProfile(user, {
-        displayName: fullName,
-        photoURL: image,
+      if (state.isAdmin) {
+        const idx = state.users.admins.findIndex(
+          (item) => item.uid === state.currentUser.uid
+        );
+        const arr = [...state.users.admins];
+        arr.splice(idx, 1);
+        await updateDoc(updateRef, {
+          admins: [...arr, { ...state.currentUser, name: fullName, image }],
+        });
+      } else {
+        const idx = state.users.users.findIndex(
+          (item) => item.uid === state.currentUser.uid
+        );
+        const arr = [...state.users.users];
+        arr.splice(idx, 1);
+        await updateDoc(updateRef, {
+          users: [...arr, { ...state.currentUser, name: fullName, image }],
+        });
+      }
+      // currentUser
+      dispatch({
+        type: "GET_USER",
+        payload: {
+          ...state.currentUser,
+          name: fullName,
+          image,
+        },
       });
     }
     navigate("/");
+    dispatch({ type: "IS_UPDATED" });
   };
 
   const deletingUser = async () => {
@@ -149,7 +216,7 @@ export default function Settings() {
               type="file"
               accept="image/*"
               id="settings-image-input"
-              onChange={(e) => setMedia(e.target.files[0])}
+              onChange={(e) => setMedia(e.target.files[0] || null)}
             />
             <label
               className="main-field form-settings__file-label"
@@ -166,6 +233,13 @@ export default function Settings() {
             onClick={setProfileData}
           >
             Saqlash
+          </button>
+          <button
+            onClick={deleteOldImage}
+            className="button button--green"
+            type="button"
+          >
+            Profil rasmini o'chirish
           </button>
           <button
             onClick={deletingUser}

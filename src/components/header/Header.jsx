@@ -10,12 +10,6 @@ export default function Header() {
   const user = auth.currentUser;
   const { state, dispatch } = useContext(Context);
 
-  const getUserImgUrl = () => {
-    if (state.isAuth === false) return;
-    const photoURL = user.photoURL;
-    return photoURL;
-  };
-
   const signOutUser = () => {
     signOut(auth).then(() => {
       localStorage.clear();
@@ -54,7 +48,9 @@ export default function Header() {
               <img
                 className="user-account__img"
                 src={
-                  getUserImgUrl() ? getUserImgUrl() : "/images/icon-account.svg"
+                  state.currentUser.image
+                    ? state.currentUser.image
+                    : "/images/icon-account.svg"
                 }
                 alt=""
               />

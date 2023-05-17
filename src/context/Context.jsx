@@ -1,8 +1,13 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 
 const initialValue = {
   data: {},
+  reviews: [],
   arr: [],
+  users: {},
+  currentUser: {},
+  isUpdated: false,
+  isLoading: false,
   isAdmin: false,
   isAuth: false,
   siteNavOpen: false,
@@ -19,6 +24,18 @@ const reducer = (state = initialValue, action) => {
 
     case "GET_ARR":
       return { ...state, arr: payload };
+
+    case "GET_USERS":
+      return { ...state, users: payload };
+
+    case "GET_USER":
+      return { ...state, currentUser: payload };
+
+    case "IS_UPDATED":
+      return { ...state, isUpdated: !state.isUpdated };
+
+    case "IS_LOADING":
+      return { ...state, isLoading: payload };
 
     case "SET_AUTH":
       return { ...state, isAuth: payload };

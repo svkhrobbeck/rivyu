@@ -73,10 +73,19 @@
   &:hover {
     color: var(--accent-color);
   }
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
+.item-trailers__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.item-trailers__button {
+  background-color: transparent;
+  border: none;
+  display: inline-flex;
+  padding: 5px;
 }

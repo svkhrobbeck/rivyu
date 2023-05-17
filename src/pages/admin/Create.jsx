@@ -1,8 +1,8 @@
 // style
-import "./CreateEdit.scss";
+import "./AdminDashboard.scss";
 
 // components
-import { TagBadge, Loader } from "../../components";
+import { TagBadge } from "../../components";
 
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,8 +11,11 @@ import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
 import { getZero } from "../../utils/utils";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 
 export default function Create() {
+  const { state, dispatch } = useContext(Context);
   const [media, setMedia] = useState(null);
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
@@ -46,8 +49,6 @@ export default function Create() {
   )}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
     date.getMinutes()
   )}`;
-
-  const [isLoading, setIsLoading] = useState(false);
   const postsCollectionRef = collection(db, type);
 
   const createPost = async () => {
@@ -58,7 +59,7 @@ export default function Create() {
     if (type !== "trailers") {
       const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
       try {
-        setIsLoading(true);
+        dispatch({ type: "IS_LOADING", payload: true });
         const uploadTask = uploadBytesResumable(mediaRef, media);
         uploadTask.on(
           "state_changed",
@@ -92,8 +93,9 @@ export default function Create() {
                 type,
                 image: downloadURL,
               });
-              setIsLoading(false);
               navigate("/");
+              dispatch({ type: "IS_LOADING", payload: false });
+              dispatch({ type: "IS_UPDATED" });
             });
           }
         );
@@ -113,14 +115,14 @@ export default function Create() {
         time: date.getTime(),
         type,
       });
-      setIsLoading(false);
       navigate("/");
+      dispatch({ type: "IS_LOADING", payload: false });
+      dispatch({ type: "IS_UPDATED" });
     }
   };
 
   return (
     <div className="create-edit container">
-      {isLoading && <Loader />}
       <h2 className="create-edit__title">Yangi Post Yaratish</h2>
       <div className="create-edit__fields">
         <label className="create-edit__label">
@@ -260,15 +262,18 @@ export default function Create() {
         )}
       </div>
       <div className="create-edit__buttons">
-        <Link to={"/"}>
-          <button className="button button--blue">Bekor Qilish</button>
+        <Link className="button button--green" to={"/admin"}>
+          Bekor Qilish
         </Link>
         <button
-          className="button button--green"
+          className="create-edit__button button button--blue"
           type="button"
           onClick={createPost}
         >
-          Yaratish
+          <span>
+            {state.isLoading && <img src="/images/rolling-spinner.svg" />}
+          </span>
+          {!state.isLoading ? "Yaratish" : "Yaratilmoqda..."}
         </button>
       </div>
     </div>

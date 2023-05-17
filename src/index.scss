@@ -111,20 +111,22 @@ body {
   font-weight: 500;
   font-size: 17px;
 
-  @media only screen and (max-width: 920px) {
-    font-size: 16px;
-  }
-
-  @media only screen and (max-width: 600px) {
-    font-size: 15px;
-  }
   &--green {
+    color: var(--text-color);
     background-color: var(--accent-color);
   }
 
   &--blue {
     background-color: var(--text-color);
     color: #1c64f2;
+  }
+
+  @media only screen and (max-width: 920px) {
+    font-size: 16px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    font-size: 15px;
   }
 }
 
