@@ -130,7 +130,7 @@ export default function PostPage() {
                   {data.tags &&
                     data.tags.map((item) => (
                       <li key={item} className="post__tag">
-                        <Link to={`/tags/${item}`}>{item}</Link>
+                        <Link to={`/search/${item.toLowerCase()}`}>{item}</Link>
                       </li>
                     ))}
                 </ul>

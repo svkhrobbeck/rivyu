@@ -11,10 +11,10 @@ import {
   PostPage,
   Create,
   Edit,
-  Tags,
   Settings,
   Home,
   Trailers,
+  SearchResults,
 } from "../pages";
 import { Context } from "../context/Context";
 
@@ -30,7 +30,7 @@ export default function Router() {
       <Route path="/reviews/:id" element={<PostPage />} />
       <Route path="/news/:id" element={<PostPage />} />
       <Route path="/trailers/:id" element={<PostPage />} />
-      <Route path={"/tags/:tag"} element={<Tags />} />
+      <Route path={"/search/:query"} element={<SearchResults />} />
       <Route path="/about" element={<About />} />
       <Route path="/settings" element={<Settings />} />
       <Route>

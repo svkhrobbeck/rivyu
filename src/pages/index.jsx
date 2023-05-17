@@ -7,7 +7,7 @@ export { default as CardsList } from "./cards-list/CardsList";
 export { default as PostPage } from "./post-page/PostPage";
 export { default as Create } from "./admin/Create";
 export { default as Edit } from "./admin/Edit";
-export { default as Tags } from "./tags/Tags";
+export { default as SearchResults } from "./search-results/SearchResults";
 export { default as Settings } from "./settings/Settings";
 export { default as Home } from "./home/Home";
 export { default as Trailers } from "./trailers/Trailers";
