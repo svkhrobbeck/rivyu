@@ -1,9 +1,18 @@
 // style
+import { useContext } from "react";
 import "./FavoritePost.scss";
 
 import { Link } from "react-router-dom";
+import { Context } from "../../context/Context";
 
-const FavoritePost = ({ data }) => {
+const FavoritePost = () => {
+  const { state } = useContext(Context);
+  let data = [];
+
+  if (state.data?.news) {
+    data = state.arr[0] || null;
+  }
+
   return (
     <>
       {!!data?.image && (
