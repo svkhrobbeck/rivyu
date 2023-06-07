@@ -190,19 +190,22 @@
 }
 
 .post__description {
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin: 0;
   font-weight: 300;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+
+    @media only screen and (max-width: 920px) {
+      margin-bottom: 15px;
+    }
+  }
 
   hr {
     border: none;
     margin: 10px 0;
     display: block;
     border-top: 1px solid var(--border-color);
-  }
-
-  @media only screen and (max-width: 920px) {
-    margin-bottom: 15px;
   }
 }
 

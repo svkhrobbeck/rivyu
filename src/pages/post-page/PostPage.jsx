@@ -10,10 +10,12 @@ import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { Context } from "../../context/Context";
+import { getLocalStorage } from "../../utils/utils";
 
 export default function PostPage() {
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
   const id = useParams().id;
+
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowFailureToast, setIsShowFailureToast] = useState(false);
   const handleCloseSuccessToast = () => setIsShowToast(false);
@@ -21,22 +23,17 @@ export default function PostPage() {
   const handleCloseFailureToast = () => setIsShowFailureToast(false);
   const handleOpenFailureToast = () => setIsShowFailureToast(true);
 
-  const filteredArr = state.arr.filter((item) => item.id !== id);
-  const data = state.arr.find((item) => item.id === id) || {};
+  const filteredArr = state.arr.filter(item => item.id !== id);
+  const data = state.arr.find(item => item.id === id) || {};
   const isTrailer = data.type === "trailers";
 
-  const stateText =
-    data.type === "reviews"
-      ? "tahlil"
-      : data.type === "trailers"
-      ? "treyler"
-      : "yangilik";
+  const stateText = data.type === "reviews" ? "tahlil" : data.type === "trailers" ? "treyler" : "yangilik";
   const stateTitle = `So'nggi ${stateText}lar`;
 
   const updateLike = async () => {
     const docRef = doc(db, data.type, id);
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, user => {
       if (state.isAuth) {
         if (user) {
           if (!data.likesList.includes(user.uid)) {
@@ -44,12 +41,11 @@ export default function PostPage() {
               likesList: [...data.likesList, user.uid],
             });
           } else {
-            data.likesList = data.likesList.filter((item) => item !== user.uid);
+            data.likesList = data.likesList.filter(item => item !== user.uid);
             updateDoc(docRef, {
               likesList: [...data.likesList],
             });
           }
-          dispatch({ type: "IS_UPDATED" });
         }
       } else {
         handleOpenFailureToast();
@@ -75,17 +71,7 @@ export default function PostPage() {
         <div className="post-page__post post">
           <div className="post__inner">
             {data.image && <span className="post__badge">{stateText}</span>}
-            {!isTrailer && (
-              <>
-                {data.image && (
-                  <img
-                    className="post__image"
-                    src={data.image}
-                    alt={data.title}
-                  />
-                )}
-              </>
-            )}
+            {!isTrailer && <>{data.image && <img className="post__image" src={data.image} alt={data.title} />}</>}
             {isTrailer && (
               <iframe
                 className="post__iframe"
@@ -93,7 +79,7 @@ export default function PostPage() {
                 height="355"
                 src={`https://www.youtube-nocookie.com/embed/${data.videoId}`}
                 title={data.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="autoplay; picture-in-picture;"
                 allowFullScreen
               ></iframe>
             )}
@@ -104,21 +90,12 @@ export default function PostPage() {
               </time>
               <div className="post__buttons-wrapper">
                 <button onClick={copyLink} className="post__button">
-                  <img src="/images/icon-link.svg" alt="" />
+                  <img src="/images/icon-link.svg" />
                 </button>
                 <button onClick={updateLike} className="post__button">
                   {data?.likesList && <span>{data?.likesList?.length}</span>}
-                  {!data?.likesList && (
-                    <img src="/images/rolling-spinner.svg" alt="" />
-                  )}
-                  <img
-                    src={`/images/icon-${
-                      data.likesList?.includes(localStorage.getItem("$U$I$D$"))
-                        ? "like"
-                        : "unlike"
-                    }.svg`}
-                    alt=""
-                  />
+                  {!data?.likesList && <img src="/images/rolling-spinner.svg" />}
+                  <img src={`/images/icon-${data.likesList?.includes(getLocalStorage("$U$I$D$")) ? "like" : "unlike"}.svg`} />
                 </button>
               </div>
             </div>
@@ -126,35 +103,28 @@ export default function PostPage() {
               <>
                 <h2 className="post__title">{data.title}</h2>
                 <p className="post__description">{data.description}</p>
-                <ul className="post__tags">
-                  {data.tags &&
-                    data.tags.map((item) => (
-                      <li key={item} className="post__tag">
-                        <Link to={`/search/${item.toLowerCase()}`}>{item}</Link>
-                      </li>
-                    ))}
-                </ul>
+                {data.tags.length ? (
+                  <ul className="post__tags">
+                    {data.tags &&
+                      data.tags.map(item => (
+                        <li key={item} className="post__tag">
+                          <Link to={`/search/${item.toLowerCase()}`}>{item}</Link>
+                        </li>
+                      ))}
+                  </ul>
+                ) : null}
               </>
             )}
           </div>
         </div>
         <div className="post-page__side-bar">
-          <MiniSideBar
-            arr={filteredArr
-              .filter((item) => item?.type === data?.type)
-              .slice(0, 6)}
-            title={stateTitle}
-          />
+          <MiniSideBar arr={filteredArr.filter(({ type }) => type === data?.type).slice(0, 6)} title={stateTitle} />
         </div>
       </div>
       <Toast handleClose={handleCloseSuccessToast} isOpen={isShowToast}>
         Havola nusxalandi!
       </Toast>
-      <Toast
-        isSuccess={false}
-        handleClose={handleCloseFailureToast}
-        isOpen={isShowFailureToast}
-      >
+      <Toast isSuccess={false} handleClose={handleCloseFailureToast} isOpen={isShowFailureToast}>
         Hisobga kirmagansiz!
       </Toast>
     </section>
