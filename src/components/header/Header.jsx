@@ -27,39 +27,40 @@ export default function Header() {
             <span className="sitenav-toggler__inner"></span>
             <span className="sitenav-toggler__inner"></span>
           </button>
-          <Link to={"/"}>
+          <Link to="/">
             <img className="logo" src="/images/logo.svg" alt="kino blog logo" width={45} height={45} />
           </Link>
         </div>
         <div className="site-header__actions">
-          <div className="user-account">
-            <button className="user-account__btn">
-              <img className="user-account__img" src={state.currentUser.image ? state.currentUser.image : "/images/icon-account.svg"} alt="" />
-              <ul className="user-account__list">
-                {state.isAuth && (
-                  <>
-                    <li className="user-account__item">
-                      <img className="user-account__item-img" src="/images/icon-settings.svg" alt="settings icon" />
-                      <span className="user-account__item-inner">Sozlamalar</span>
-                      {state.isAuth && <Link to={"/settings"} />}
-                    </li>
-                    <li className="user-account__item">
-                      <img className="user-account__item-img" src="/images/icon-sign-out.svg" alt="" />
-                      <button className="user-account__item-btn" onClick={signOutUser} />
-                      <span className="user-account__item-inner">Chiqish</span>
-                    </li>
-                  </>
-                )}
-                {!state.isAuth && (
-                  <li className="user-account__item">
-                    <img className="user-account__item-img" src="/images/icon-login.svg" alt="" />
-                    <span className="user-account__item-inner">kirish</span>
-                    <Link to={"/login"} />
+          <button className="button user-account">
+            <img className="user-account__img" src={state.currentUser?.image ? state.currentUser?.image : "/images/icon-account.svg"} alt="icon account" />
+            <ul className="user-account__list">
+              {state.isAuth && (
+                <>
+                  <li className="user-account__item item-account-user">
+                    <img className="item-account-user__img" src="/images/icon-settings.svg" />
+                    <Link className="item-account-user__link" to={"/settings"}>
+                      Sozlamalar
+                    </Link>
                   </li>
-                )}
-              </ul>
-            </button>
-          </div>
+                  <li className="user-account__item item-account-user">
+                    <img className="item-account-user__img" src="/images/icon-sign-out.svg" />
+                    <span className="item-account-user__inner item-account-user__inner--red" onClick={signOutUser}>
+                      Chiqish
+                    </span>
+                  </li>
+                </>
+              )}
+              {!state.isAuth && (
+                <li className="user-account__item item-account-user">
+                  <img className="item-account-user__img" src="/images/icon-login.svg" />
+                  <Link className="item-account-user__link" to={"/login"}>
+                    kirish
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </button>
         </div>
       </div>
     </header>
