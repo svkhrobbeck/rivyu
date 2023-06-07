@@ -1,12 +1,7 @@
 // style
 import "./Settings.scss";
 
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { deleteUser } from "firebase/auth";
 import { db, storage } from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -44,9 +39,8 @@ export default function Settings() {
         const uploadTask = uploadBytesResumable(mediaRef, media);
         uploadTask.on(
           "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          snapshot => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
             switch (snapshot.state) {
               case "paused":
@@ -57,15 +51,13 @@ export default function Settings() {
                 break;
             }
           },
-          (error) => {
+          error => {
             console.log(error);
           },
           () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               if (state.isAdmin) {
-                const idx = state.users.admins.findIndex(
-                  (item) => item.uid === state.currentUser.uid
-                );
+                const idx = state.users.admins.findIndex(item => item.uid === state.currentUser.uid);
                 const arr = [...state.users.admins];
                 arr.splice(idx, 1);
                 updateDoc(updateRef, {
@@ -79,9 +71,7 @@ export default function Settings() {
                   ],
                 });
               } else {
-                const idx = state.users.users.findIndex(
-                  (item) => item.uid === state.currentUser.uid
-                );
+                const idx = state.users.users.findIndex(item => item.uid === state.currentUser.uid);
                 const arr = [...state.users.users];
                 arr.splice(idx, 1);
                 updateDoc(updateRef, {
@@ -120,18 +110,14 @@ export default function Settings() {
       }
     } else {
       if (state.isAdmin) {
-        const idx = state.users.admins.findIndex(
-          (item) => item.uid === state.currentUser.uid
-        );
+        const idx = state.users.admins.findIndex(item => item.uid === state.currentUser.uid);
         const arr = [...state.users.admins];
         arr.splice(idx, 1);
         await updateDoc(updateRef, {
           admins: [...arr, { ...state.currentUser, name: fullName, image }],
         });
       } else {
-        const idx = state.users.users.findIndex(
-          (item) => item.uid === state.currentUser.uid
-        );
+        const idx = state.users.users.findIndex(item => item.uid === state.currentUser.uid);
         const arr = [...state.users.users];
         arr.splice(idx, 1);
         await updateDoc(updateRef, {
@@ -149,7 +135,6 @@ export default function Settings() {
       });
     }
     navigate("/");
-    dispatch({ type: "IS_UPDATED" });
   };
 
   const deletingUser = async () => {
@@ -160,7 +145,7 @@ export default function Settings() {
         .then(() => {
           console.log("File deleted successfully");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("Something went wrong");
         });
     }
@@ -170,7 +155,7 @@ export default function Settings() {
         localStorage.clear();
         navigate("/login");
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -181,21 +166,11 @@ export default function Settings() {
       <form className="form-settings">
         <div className="form-settings__inner">
           <div className="form-settings__image-wrapper">
-            {!media && (
-              <img
-                className="form-settings__image"
-                src={image ? image : "/images/temp-image.svg"}
-                alt="profile image"
-                width={130}
-                height={130}
-              />
-            )}
+            {!media && <img className="form-settings__image" src={image ? image : "/images/temp-image.svg"} alt="profile image" width={130} height={130} />}
             {media && (
               <img
                 className="form-settings__image"
-                src={
-                  media ? URL.createObjectURL(media) : "/images/temp-image.svg"
-                }
+                src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
                 alt="profile image"
                 width={130}
                 height={130}
@@ -208,7 +183,7 @@ export default function Settings() {
               type="text"
               name="full_name"
               placeholder="Ismingizni kiriting!"
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={e => setFullName(e.target.value)}
               value={fullName === null ? "" : fullName}
             />
             <input
@@ -216,36 +191,21 @@ export default function Settings() {
               type="file"
               accept="image/*"
               id="settings-image-input"
-              onChange={(e) => setMedia(e.target.files[0] || null)}
+              onChange={e => setMedia(e.target.files[0] || null)}
             />
-            <label
-              className="main-field form-settings__file-label"
-              htmlFor="settings-image-input"
-            >
+            <label className="main-field form-settings__file-label" htmlFor="settings-image-input">
               {media ? "rasm tanlandi" : "rasm yuklang"}
             </label>
           </div>
         </div>
         <div className="form-settings__buttons">
-          <button
-            className="button button--green button--block"
-            type="button"
-            onClick={setProfileData}
-          >
+          <button className="button button--green button--block" type="button" onClick={setProfileData}>
             Saqlash
           </button>
-          <button
-            onClick={deleteOldImage}
-            className="button button--green"
-            type="button"
-          >
+          <button onClick={deleteOldImage} className="button button--green" type="button">
             Profil rasmini o'chirish
           </button>
-          <button
-            onClick={deletingUser}
-            className="button button--block"
-            type="button"
-          >
+          <button onClick={deletingUser} className="button button--blue" type="button">
             Hisobni o'chirish
           </button>
         </div>

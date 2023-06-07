@@ -16,11 +16,10 @@ export default function Trailers() {
 
   const handleModalOpen = () => setIsOpen(true);
 
-  const handleTrailerDelete = (id) => {
+  const handleTrailerDelete = id => {
     const postDoc = doc(db, "trailers", id);
     deleteDoc(postDoc);
     handleModalClose();
-    dispatch({ type: "IS_UPDATED" });
   };
 
   return (
@@ -29,54 +28,34 @@ export default function Trailers() {
       <ul className="trailers__list">
         <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
           <div className="modal-inner">
-            <h3 className="modal-inner__title">
-              Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?
-            </h3>
+            <h3 className="modal-inner__title">Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?</h3>
             <div className="modal-inner__buttons">
-              <button
-                className="button button--green"
-                onClick={handleModalClose}
-              >
+              <button className="button button--green" onClick={handleModalClose}>
                 Yo'q
               </button>
-              <button
-                className="button button--blue"
-                onClick={() => handleTrailerDelete(id)}
-              >
+              <button className="button button--blue" onClick={() => handleTrailerDelete(id)}>
                 Ha
               </button>
             </div>
           </div>
         </Modal>
-        {!state.arr.length && (
-          <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>
-        )}
+        {!state.arr.length && <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>}
         {state.data.trailers &&
-          state.data.trailers.map((item) => (
+          state.data.trailers.map(item => (
             <li key={item.id} className="trailers__item item-trailers">
               <img
                 className="item-trailers__img"
-                src={
-                  item.image
-                    ? item.image
-                    : "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi"
-                }
+                src={item.image ? item.image : "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi"}
                 alt="Ma'lumot havfsizligini ta'minlash (1-dars)"
                 width={300}
               />
               <h3 className="item-trailers__heading">
-                <Link
-                  className="item-trailers__link"
-                  to={`/trailers/${item.id}`}
-                >
+                <Link className="item-trailers__link" to={`/trailers/${item.id}`}>
                   {item.title}
                 </Link>
               </h3>
               <div className="item-trailers__times">
-                <time
-                  className="item-trailers__time main-time"
-                  dateTime={item.createdAt}
-                >
+                <time className="item-trailers__time main-time" dateTime={item.createdAt}>
                   {item.createdAt}
                 </time>
               </div>
@@ -91,10 +70,7 @@ export default function Trailers() {
                   >
                     <img src="/images/icon-trash.svg" alt="" />
                   </button>
-                  <Link
-                    className="item-trailers__button"
-                    to={`/admin/edit-post/trailers/${item.id}`}
-                  >
+                  <Link className="item-trailers__button" to={`/admin/edit-post/trailers/${item.id}`}>
                     <img src="/images/icon-edit.svg" alt="" />
                   </Link>
                 </div>
