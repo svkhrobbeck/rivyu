@@ -14,7 +14,7 @@ import { Context } from "../../context/Context";
 export default function CardsList() {
   const pathName = useLocation().pathname.slice(1);
   const text = pathName === "news" ? "Yangiliklar" : "Maqolalar";
-  const { state, dispatch } = useContext(Context);
+  const { state } = useContext(Context);
 
   const getData = () => {
     if (pathName === "news") {
@@ -51,7 +51,6 @@ export default function CardsList() {
     }
     navigate("/");
     handleModalClose();
-    dispatch({ type: "IS_UPDATED" });
   };
 
   return (
