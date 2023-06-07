@@ -1,4 +1,4 @@
-export const getZero = (num) => (num >= 10 ? num : `0${num}`);
+export const getZero = num => (num >= 10 ? num : `0${num}`);
 
 export const validatePassword = (e, setErr, setPassword) => {
   const val = e.target.value.toLowerCase();
@@ -24,4 +24,8 @@ export const validateEmail = (e, setErr, setEmail) => {
   } else if (val.length > 0) {
     setErr("");
   }
+};
+
+export const getLocalStorage = key => {
+  return localStorage.getItem(key);
 };
