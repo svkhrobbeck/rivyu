@@ -122,11 +122,6 @@
 
 .user-account {
   display: flex;
-  position: relative;
-
-  &:hover .user-account__list {
-    transform: scale(1);
-  }
 }
 
 .user-account__img {
@@ -144,6 +139,8 @@
   display: flex;
   border-radius: 50%;
   padding: 0;
+  color: inherit;
+  position: relative;
 }
 
 .user-account__list {
@@ -159,7 +156,11 @@
   top: 85%;
   right: 85%;
   transform-origin: top right;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease 0.3s;
+}
+
+.user-account__btn:focus .user-account__list {
+  transform: scale(1);
 }
 
 .user-account__item {

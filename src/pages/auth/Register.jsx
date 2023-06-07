@@ -16,10 +16,7 @@ export default function Register() {
   const { state, dispatch } = useContext(Context);
 
   const addUser = async (email, password, uid, name, token) => {
-    if (
-      !state.users.admins.some((item) => item.email.includes(email)) &&
-      !state.users.users.some((item) => item.email.includes(email))
-    ) {
+    if (!state.users.admins.some(item => item.email.includes(email)) && !state.users.users.some(item => item.email.includes(email))) {
       const ref = doc(db, "users", "users");
 
       const user = {
@@ -50,22 +47,15 @@ export default function Register() {
     }
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(userCredential => {
         // Signed in
         const currentUser = userCredential.user;
         currentUser.displayName = email.split("@")[0];
-        localStorage.setItem("$#SA$UTH$", true);
-        localStorage.setItem("$U$I$D$", currentUser?.uid);
         localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);
+        localStorage.setItem("$U$I$D$", currentUser?.uid);
         dispatch({ type: "SET_AUTH", payload: true });
         dispatch({ type: "IS_UPDATED" });
-        addUser(
-          email,
-          password,
-          currentUser?.uid,
-          currentUser.displayName,
-          currentUser?.accessToken
-        );
+        addUser(email, password, currentUser?.uid, currentUser.displayName, currentUser?.accessToken);
         navigate("/");
         return;
       })
@@ -78,10 +68,7 @@ export default function Register() {
     <section className="login-register">
       <h2 className="login-register__title">Ro'yxatdan o'tish</h2>
       <form className="login-register__form form-login-resgister">
-        <label
-          className="form-login-resgister__label"
-          htmlFor="login-register-email"
-        >
+        <label className="form-login-resgister__label" htmlFor="login-register-email">
           Emailingiz
         </label>
         <div className="form-login-register__field">
@@ -92,13 +79,10 @@ export default function Register() {
             placeholder="Emailingizni kiriting"
             id="login-register-email"
             value={email}
-            onChange={(e) => validateEmail(e, setErr, setEmail)}
+            onChange={e => validateEmail(e, setErr, setEmail)}
           />
         </div>
-        <label
-          className="form-login-resgister__label"
-          htmlFor="login-register-password"
-        >
+        <label className="form-login-resgister__label" htmlFor="login-register-password">
           Parolingiz
         </label>
         <div className="form-login-register__field">
@@ -109,44 +93,20 @@ export default function Register() {
             placeholder="Parolingizni kiriting"
             id="login-register-password"
             value={password}
-            onChange={(e) => validatePassword(e, setErr, setPassword)}
+            onChange={e => validatePassword(e, setErr, setPassword)}
           />
-          <button
-            className="form-login-register__password-toggle"
-            type="button"
-            onClick={() => setIsPassword((prev) => !prev)}
-          >
-            <img
-              className="form-login-register__password-toggle-img"
-              src={
-                isPassword
-                  ? "/images/icon-eye.svg"
-                  : "/images/icon-eye-slash.svg"
-              }
-              alt="eye icon"
-            />
+          <button className="form-login-register__password-toggle" type="button" onClick={() => setIsPassword(prev => !prev)}>
+            <img className="form-login-register__password-toggle-img" src={isPassword ? "/images/icon-eye.svg" : "/images/icon-eye-slash.svg"} alt="eye icon" />
           </button>
         </div>
-        <button
-          className="button button--green"
-          type="button"
-          onClick={signUpWithEmail}
-        >
+        <button className="button button--green" type="button" onClick={signUpWithEmail}>
           Hisob yaratish
         </button>
-        {err && (
-          <p className="form-login-resgister__text form-login-resgister__text--error">
-            {err}
-          </p>
-        )}
+        {err && <p className="form-login-resgister__text form-login-resgister__text--error">{err}</p>}
         <p className="form-login-resgister__text">
-          <span className="form-login-resgister__text-inner">
-            Ro'yxatdan o'tgansizmi?
-          </span>
+          <span className="form-login-resgister__text-inner">Ro'yxatdan o'tgansizmi?</span>
           <Link to={"/login"}>
-            <span className="form-login-resgister__text-link">
-              Hisobingizga kiring
-            </span>
+            <span className="form-login-resgister__text-link">Hisobingizga kiring</span>
           </Link>
         </p>
       </form>

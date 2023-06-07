@@ -1,4 +1,5 @@
 export { default as Header } from "./header/Header";
+export { default as FavoritePost } from "./favorite-post/FavoritePost";
 export { default as Footer } from "./footer/Footer";
 export { default as SideBar } from "./side-bar/SideBar";
 export { default as MiniSideBar } from "./mini-sidebar/MiniSideBar";

@@ -30,38 +30,28 @@ export default function Login() {
     let currentUser = "";
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        const {
-          uid,
-          displayName,
-          accessToken: token,
-          photoURL: image,
-        } = result.user;
+      .then(result => {
+        const { accessToken, uid } = result.user;
 
-        localStorage.setItem("$#SA$UTH$", true);
+        localStorage.setItem("$T$O$K$E$N$", accessToken);
         localStorage.setItem("$U$I$D$", uid);
-        localStorage.setItem("$T$O$K$E$N$", token);
         dispatch({ type: "SET_AUTH", payload: true });
-        dispatch({ type: "IS_UPDATED" });
         navigate("/");
       })
-      .catch((err) => setErr("Email yoki Parol xato kiritilgan"));
+      .catch(err => setErr("Email yoki Parol xato kiritilgan"));
   };
 
   return (
     <section className="login-register">
       <h2 className="login-register__title">Kirish</h2>
       <form
-        onSubmit={(e) => {
+        onSubmit={e => {
           e.preventDefault();
           signInWithEmail();
         }}
         className="login-register__form form-login-resgister"
       >
-        <label
-          className="form-login-resgister__label"
-          htmlFor="login-register-email"
-        >
+        <label className="form-login-resgister__label" htmlFor="login-register-email">
           Emailingiz
         </label>
         <div className="form-login-register__field">
@@ -73,13 +63,10 @@ export default function Login() {
             placeholder="Emailingizni kiriting"
             id="login-register-email"
             value={email}
-            onChange={(e) => validateEmail(e, setErr, setEmail)}
+            onChange={e => validateEmail(e, setErr, setEmail)}
           />
         </div>
-        <label
-          className="form-login-resgister__label"
-          htmlFor="login-register-password"
-        >
+        <label className="form-login-resgister__label" htmlFor="login-register-password">
           Parolingiz
         </label>
         <div className="form-login-register__field">
@@ -90,40 +77,20 @@ export default function Login() {
             placeholder="Parolingizni kiriting"
             id="login-register-password"
             value={password}
-            onChange={(e) => validatePassword(e, setErr, setPassword)}
+            onChange={e => validatePassword(e, setErr, setPassword)}
           />
-          <button
-            className="form-login-register__password-toggle"
-            type="button"
-            onClick={() => setIsPassword((prev) => !prev)}
-          >
-            <img
-              className="form-login-register__password-toggle-img"
-              src={
-                isPassword
-                  ? "/images/icon-eye.svg"
-                  : "/images/icon-eye-slash.svg"
-              }
-              alt="eye icon"
-            />
+          <button className="form-login-register__password-toggle" type="button" onClick={() => setIsPassword(prev => !prev)}>
+            <img className="form-login-register__password-toggle-img" src={isPassword ? "/images/icon-eye.svg" : "/images/icon-eye-slash.svg"} alt="eye icon" />
           </button>
         </div>
         <button className="button button--green" type="submit">
           Kirish
         </button>
-        {err && (
-          <p className="form-login-resgister__text form-login-resgister__text--error">
-            {err}
-          </p>
-        )}
+        {err && <p className="form-login-resgister__text form-login-resgister__text--error">{err}</p>}
         <p className="form-login-resgister__text">
-          <span className="form-login-resgister__text-inner">
-            Ro'yxatdan o'tmagansizmi?
-          </span>
+          <span className="form-login-resgister__text-inner">Ro'yxatdan o'tmagansizmi?</span>
           <Link to={"/register"}>
-            <span className="form-login-resgister__text-link">
-              Hisob yarating
-            </span>
+            <span className="form-login-resgister__text-link">Hisob yarating</span>
           </Link>
         </p>
       </form>

@@ -16,11 +16,10 @@ export default function MainLayout() {
     const dataBack = await getDoc(newsCollectionRef);
     const newData = dataBack.data();
 
-    newData.admins.forEach((item) => {
+    newData.admins.forEach(item => {
       if (localStorage.getItem("$U$I$D$") === item.uid) {
         dispatch({ type: "SET_ADMIN", payload: true });
         dispatch({ type: "IS_UPDATED" });
-        console.log("admined");
       }
     });
   };
@@ -40,37 +39,32 @@ export default function MainLayout() {
 
     // arrays
     const news = newsArr.docs
-      .map((doc) => ({
+      .map(doc => ({
         ...doc.data(),
         id: doc.id,
       }))
       .sort((a, b) => b.time - a.time);
 
     const reviews = reviewsArr.docs
-      .map((doc) => ({
+      .map(doc => ({
         ...doc.data(),
         id: doc.id,
       }))
       .sort((a, b) => b.time - a.time);
 
     const trailers = trailersArr.docs
-      .map((doc) => ({
+      .map(doc => ({
         ...doc.data(),
         id: doc.id,
       }))
       .sort((a, b) => b.time - a.time);
 
     const users = usersArr.data();
-    const user =
-      [...users.users, ...users.admins].find(
-        (item) => item.uid === localStorage.getItem("$U$I$D$")
-      ) || {};
+    const user = [...users.users, ...users.admins].find(item => item.uid === localStorage.getItem("$U$I$D$")) || {};
 
     // data
     const data = { news, reviews, trailers };
-    const arr = [...news, ...reviews, ...trailers].sort(
-      (a, b) => b.time - a.time
-    );
+    const arr = [...news, ...reviews, ...trailers].sort((a, b) => b.time - a.time);
 
     dispatch({ type: "GET_DATA", payload: data });
     dispatch({ type: "GET_ARR", payload: arr });
@@ -87,13 +81,10 @@ export default function MainLayout() {
   }, [getData]);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, user => {
       if (user) {
-        const { uid, accessToken } = user;
-        if (
-          uid === localStorage.getItem("$U$I$D$") &&
-          localStorage.getItem("$T$O$K$E$N$") === accessToken
-        ) {
+        const { accessToken } = user;
+        if (localStorage.getItem("$T$O$K$E$N$") === accessToken) {
           dispatch({ type: "SET_AUTH", payload: true });
           getUserData();
         } else {
