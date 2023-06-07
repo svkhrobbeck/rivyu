@@ -54,7 +54,6 @@ export default function Register() {
         localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);
         localStorage.setItem("$U$I$D$", currentUser?.uid);
         dispatch({ type: "SET_AUTH", payload: true });
-        dispatch({ type: "IS_UPDATED" });
         addUser(email, password, currentUser?.uid, currentUser.displayName, currentUser?.accessToken);
         navigate("/");
         return;
