@@ -107,10 +107,12 @@ body {
   cursor: pointer;
   padding: 9px 17px;
   border-radius: 6px;
+  color: inherit;
   font-family: inherit;
   font-weight: 500;
   font-size: 17px;
   text-align: center;
+  background-color: transparent;
 
   &--green {
     color: var(--text-color);
