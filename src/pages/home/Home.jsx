@@ -11,11 +11,6 @@ export default function Home() {
   document.title = "Kino Blog | Bosh sahifa";
 
   const { state } = useContext(Context);
-  let postData;
-
-  if (state.data.news) {
-    postData = state.arr[0] || null;
-  }
 
   return (
     <section className="home">
@@ -33,10 +28,10 @@ export default function Home() {
               </p>
             </div>
           </section>
-          <FavoritePost data={postData} />
+          <FavoritePost />
         </div>
         <div className="home__side-bar">
-          <MiniSideBar arr={state.arr.slice(1, 8)} title="So'nggi yangiliklar" state="news" />
+          <MiniSideBar arr={state?.arr?.slice(1, 8)} title="So'nggi yangiliklar" state="news" />
         </div>
       </div>
     </section>
