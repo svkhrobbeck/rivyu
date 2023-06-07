@@ -22,7 +22,7 @@ export default function Create() {
   const [linkTrailer, setLinkTrailer] = useState("");
   const [description, setDescription] = useState("");
   const [mytags, setMytags] = useState([]);
-  const tags = mytags.map((item) => item.value);
+  const tags = mytags.map(item => item.value);
   const videoId = linkTrailer.slice(-11);
   const [type, setType] = useState("reviews");
 
@@ -30,23 +30,21 @@ export default function Create() {
   const navigate = useNavigate();
 
   const handleAddTags = () => {
-    if (!elTagInput.current.value || tags.length >= 6) return;
+    if (!elTagInput.current.value.trim() || tags.length >= 6) return;
     const val = elTagInput.current.value.split(" ").join("").trim(" ");
     const newTags = [...mytags, { value: val, id: uuidv4() }];
     setMytags(newTags);
     elTagInput.current.value = "";
   };
 
-  const handleDeleteTags = (id) => {
-    const filteredTags = mytags.filter((item) => item.id !== id);
+  const handleDeleteTags = id => {
+    const filteredTags = mytags.filter(item => item.id !== id);
     setMytags(filteredTags);
   };
 
   const date = new Date();
 
-  const createdAt = `${getZero(date.getDate())}.${getZero(
-    date.getMonth() + 1
-  )}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
+  const createdAt = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
     date.getMinutes()
   )}`;
   const postsCollectionRef = collection(db, type);
@@ -63,9 +61,8 @@ export default function Create() {
         const uploadTask = uploadBytesResumable(mediaRef, media);
         uploadTask.on(
           "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          snapshot => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
             switch (snapshot.state) {
               case "paused":
@@ -76,11 +73,11 @@ export default function Create() {
                 break;
             }
           },
-          (error) => {
+          error => {
             console.log(error);
           },
           () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               addDoc(postsCollectionRef, {
                 lastEdited: "",
                 title,
@@ -138,23 +135,13 @@ export default function Create() {
         </label>
 
         <label className="create-edit__label">
-          <input
-            className="create-edit__checkbox visually-hidden"
-            type="radio"
-            name="is_news"
-            onChange={() => setType("news")}
-          />
+          <input className="create-edit__checkbox visually-hidden" type="radio" name="is_news" onChange={() => setType("news")} />
           <span className="create-edit__fake-radio" />
           <span className="create-edit__label-inner">Yangilik</span>
         </label>
 
         <label className="create-edit__label">
-          <input
-            className="create-edit__checkbox visually-hidden"
-            type="radio"
-            name="is_news"
-            onChange={() => setType("trailers")}
-          />
+          <input className="create-edit__checkbox visually-hidden" type="radio" name="is_news" onChange={() => setType("trailers")} />
           <span className="create-edit__fake-radio" />
           <span className="create-edit__label-inner">Treyler</span>
         </label>
@@ -163,7 +150,7 @@ export default function Create() {
         <>
           <ul className="create-edit__tags">
             {mytags &&
-              mytags.map((item) => (
+              mytags.map(item => (
                 <li key={item.id} className="create-edit__tag">
                   <TagBadge id={item.id} handleDeleteTags={handleDeleteTags}>
                     {item.value}
@@ -182,7 +169,7 @@ export default function Create() {
           name="title"
           placeholder="sarlavha"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={e => setTitle(e.target.value)}
         />
         {type !== "trailers" && (
           <input
@@ -191,7 +178,7 @@ export default function Create() {
             name="short_description"
             placeholder="qisqa izoh"
             value={shortDesc}
-            onChange={(e) => setShortDesc(e.target.value)}
+            onChange={e => setShortDesc(e.target.value)}
           />
         )}
       </div>
@@ -203,24 +190,14 @@ export default function Create() {
             name="link_trailer"
             placeholder="Treylerga havola: https://youtu.be/6ECxfVvKan4"
             value={linkTrailer}
-            onChange={(e) => setLinkTrailer(e.target.value)}
+            onChange={e => setLinkTrailer(e.target.value)}
           />
         </div>
       )}
       <div className="create-edit__fields">
         <div className="create-edit__field-wrapper">
-          <input
-            className="main-field create-edit__field create-edit__field--tag"
-            type="text"
-            name="tags"
-            placeholder="teglar"
-            ref={elTagInput}
-          />
-          <button
-            onClick={handleAddTags}
-            className="admin-form__tag-button"
-            type="button"
-          >
+          <input className="main-field create-edit__field create-edit__field--tag" type="text" name="tags" placeholder="teglar" ref={elTagInput} />
+          <button onClick={handleAddTags} className="admin-form__tag-button" type="button">
             Teg qo'shish
           </button>
         </div>
@@ -233,12 +210,9 @@ export default function Create() {
               accept="image/*"
               id="image-input-create"
               placeholder="post rasmi"
-              onChange={(e) => setMedia(e.target.files[0])}
+              onChange={e => setMedia(e.target.files[0])}
             />
-            <label
-              className="main-field create-edit__field create-edit__field--image-label"
-              htmlFor="image-input-create"
-            >
+            <label className="main-field create-edit__field create-edit__field--image-label" htmlFor="image-input-create">
               {media ? "rasm tanlandi" : "rasmni tanlang"}
             </label>
           </div>
@@ -250,29 +224,17 @@ export default function Create() {
           name="description"
           placeholder="izoh"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={e => setDescription(e.target.value)}
         />
 
-        {type !== "trailers" && (
-          <img
-            className="create-edit__img"
-            src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
-            alt=""
-          />
-        )}
+        {type !== "trailers" && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />}
       </div>
       <div className="create-edit__buttons">
         <Link className="button button--green" to={"/admin"}>
           Bekor Qilish
         </Link>
-        <button
-          className="create-edit__button button button--blue"
-          type="button"
-          onClick={createPost}
-        >
-          <span>
-            {state.isLoading && <img src="/images/rolling-spinner.svg" />}
-          </span>
+        <button className="create-edit__button button button--blue" type="button" onClick={createPost}>
+          <span>{state.isLoading && <img src="/images/rolling-spinner.svg" />}</span>
           {!state.isLoading ? "Yaratish" : "Yaratilmoqda..."}
         </button>
       </div>
