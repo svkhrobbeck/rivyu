@@ -6,7 +6,6 @@ const initialValue = {
   arr: [],
   users: {},
   currentUser: {},
-  isUpdated: false,
   isLoading: false,
   isAdmin: false,
   isAuth: false,
@@ -31,9 +30,6 @@ const reducer = (state = initialValue, action) => {
     case "GET_USER":
       return { ...state, currentUser: payload };
 
-    case "IS_UPDATED":
-      return { ...state, isUpdated: !state.isUpdated };
-
     case "IS_LOADING":
       return { ...state, isLoading: payload };
 
@@ -54,7 +50,5 @@ const reducer = (state = initialValue, action) => {
 export default function ContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialValue);
 
-  return (
-    <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
-  );
+  return <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>;
 }
