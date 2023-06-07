@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 
@@ -7,84 +7,49 @@ import { auth, db } from "../firebase/firebase";
 import Router from "../router/Router";
 import { Header, Footer, SideBar } from "../components";
 import { Context } from "../context/Context";
+import { getLocalStorage } from "../utils/utils";
 
 export default function MainLayout() {
   const { state, dispatch } = useContext(Context);
+  const newsRef = collection(db, "news");
+  const reviewsRef = collection(db, "reviews");
+  const trailersRef = collection(db, "trailers");
+  const usersRef = doc(db, "users", "users");
 
   const getUserData = async () => {
-    const newsCollectionRef = doc(db, "users", "users");
-    const dataBack = await getDoc(newsCollectionRef);
-    const newData = dataBack.data();
+    const data = (await getDoc(usersRef)).data();
 
-    newData.admins.forEach(item => {
-      if (localStorage.getItem("$U$I$D$") === item.uid) {
-        dispatch({ type: "SET_ADMIN", payload: true });
-        dispatch({ type: "IS_UPDATED" });
-      }
+    data.admins.forEach(({ uid }) => {
+      if (getLocalStorage("$U$I$D$") === uid) dispatch({ type: "SET_ADMIN", payload: true });
     });
   };
 
-  const getData = useCallback(async () => {
-    // refs
-    const newsColRef = collection(db, "news");
-    const reviewsColRef = collection(db, "reviews");
-    const trailersColRef = collection(db, "trailers");
-    const usersColRef = doc(db, "users", "users");
-
-    // getted data
-    const newsArr = await getDocs(newsColRef);
-    const reviewsArr = await getDocs(reviewsColRef);
-    const trailersArr = await getDocs(trailersColRef);
-    const usersArr = await getDoc(usersColRef);
+  const getData = async () => {
+    const newsArr = await getDocs(newsRef);
+    const reviewsArr = await getDocs(reviewsRef);
+    const trailersArr = await getDocs(trailersRef);
+    const { users, admins } = (await getDoc(usersRef)).data();
 
     // arrays
-    const news = newsArr.docs
-      .map(doc => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      .sort((a, b) => b.time - a.time);
+    const news = newsArr.docs.map(doc => ({ ...doc.data(), id: doc.id })).sort((a, b) => b.time - a.time);
+    const reviews = reviewsArr.docs.map(doc => ({ ...doc.data(), id: doc.id })).sort((a, b) => b.time - a.time);
+    const trailers = trailersArr.docs.map(doc => ({ ...doc.data(), id: doc.id })).sort((a, b) => b.time - a.time);
 
-    const reviews = reviewsArr.docs
-      .map(doc => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      .sort((a, b) => b.time - a.time);
-
-    const trailers = trailersArr.docs
-      .map(doc => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      .sort((a, b) => b.time - a.time);
-
-    const users = usersArr.data();
-    const user = [...users.users, ...users.admins].find(item => item.uid === localStorage.getItem("$U$I$D$")) || {};
-
-    // data
+    const user = [...users, ...admins].find(({ uid }) => uid === getLocalStorage("$U$I$D$")) || {};
     const data = { news, reviews, trailers };
     const arr = [...news, ...reviews, ...trailers].sort((a, b) => b.time - a.time);
 
     dispatch({ type: "GET_DATA", payload: data });
     dispatch({ type: "GET_ARR", payload: arr });
     dispatch({ type: "GET_USERS", payload: users });
-    dispatch({
-      type: "GET_USER",
-      payload: user,
-    });
-    console.log("fetched");
-  }, [state.isUpdated]);
-
-  useEffect(() => {
-    getData();
-  }, [getData]);
+    dispatch({ type: "GET_USER", payload: user });
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user) {
         const { accessToken } = user;
-        if (localStorage.getItem("$T$O$K$E$N$") === accessToken) {
+        if (getLocalStorage("$T$O$K$E$N$") === accessToken) {
           dispatch({ type: "SET_AUTH", payload: true });
           getUserData();
         } else {
@@ -93,10 +58,27 @@ export default function MainLayout() {
         }
       } else {
         dispatch({ type: "SET_AUTH", payload: false });
-        dispatch({ type: "SET_ADMIN", payload: false });
       }
     });
   }, [state.isAuth]);
+
+  useEffect(() => {
+    onSnapshot(query(newsRef), () => {
+      getData();
+    });
+
+    onSnapshot(query(trailersRef), () => {
+      getData();
+    });
+
+    onSnapshot(query(reviewsRef), () => {
+      getData();
+    });
+
+    onSnapshot(usersRef, () => {
+      getData();
+    });
+  }, []);
 
   return (
     <>
