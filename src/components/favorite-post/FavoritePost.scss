@@ -21,6 +21,10 @@
   object-position: top;
   margin-bottom: 10px;
 
+  @media only screen and (max-width: 1320px) {
+    height: 443px;
+  }
+
   @media only screen and (max-width: 840px) {
     height: auto;
     object-fit: contain;
