@@ -1,7 +1,7 @@
 // style
 import "./Trailers.scss";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import { Card, Modal } from "../../components";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -18,6 +18,10 @@ export default function Trailers() {
     deleteDoc(postDoc);
     handleModalClose();
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section className="trailers">

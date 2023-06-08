@@ -4,7 +4,7 @@ import "./CardsList.scss";
 // components
 import { Modal } from "../../components";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -51,6 +51,10 @@ export default function CardsList() {
     navigate("/");
     handleModalClose();
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section className="cards">

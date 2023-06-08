@@ -2,7 +2,7 @@
 import "./SearchResults.scss";
 
 import { getZero } from "../../utils/utils";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
 
@@ -11,16 +11,14 @@ export default function SearchResults() {
   const { state } = useContext(Context);
   const data =
     [
-      ...state.arr.filter((item) => item.title.toLowerCase().includes(query)),
-      ...state.arr.filter((item) =>
-        item.description.toLowerCase().includes(query)
-      ),
-      ...state.arr.filter((item) => item.tags.find((i) => i === query)),
+      ...state.arr.filter(item => item.title.toLowerCase().includes(query)),
+      ...state.arr.filter(item => item.description.toLowerCase().includes(query)),
+      ...state.arr.filter(item => item.tags.find(i => i === query)),
     ] || [];
 
   function filterUniqueObjects(arr, key) {
     var seen = new Set();
-    return arr.filter((obj) => {
+    return arr.filter(obj => {
       var value = obj[key];
       if (!seen.has(value)) {
         seen.add(value);
@@ -30,6 +28,10 @@ export default function SearchResults() {
     });
     setData(filteredArr);
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section className="tags">
