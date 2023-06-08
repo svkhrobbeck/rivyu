@@ -14,7 +14,8 @@ import { Context } from "../../context/Context";
 export default function CardsList() {
   const pathName = useLocation().pathname.slice(1);
   const text = pathName === "news" ? "Yangiliklar" : "Maqolalar";
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const navigate = useNavigate();
 
   const getData = () => {
     if (pathName === "news") {
@@ -27,10 +28,8 @@ export default function CardsList() {
   };
 
   const [id, setId] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const handleModalClose = () => setIsOpen(false);
-  const handleModalOpen = () => setIsOpen(true);
+  const handleModalClose = () => dispatch({ type: "MODAL_CLOSE" });
+  const handleModalOpen = () => dispatch({ type: "MODAL_OPEN" });
 
   const deletePost = async id => {
     const postDoc = doc(db, pathName, id);
@@ -43,7 +42,7 @@ export default function CardsList() {
           console.log("File deleted successfully");
           deleteDoc(postDoc);
         })
-        .catch(error => {
+        .catch(() => {
           console.log("Uh-oh, an error occurred!");
         });
     } else {
@@ -56,7 +55,7 @@ export default function CardsList() {
   return (
     <section className="cards">
       <div className="container">
-        <Modal isOpen={isOpen} handleModalClose={handleModalClose}>
+        <Modal>
           <div className="modal-inner">
             <h3 className="modal-inner__title">Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?</h3>
             <div className="modal-inner__buttons">
