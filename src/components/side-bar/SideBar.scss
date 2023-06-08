@@ -22,7 +22,7 @@
 
 .side-bar__nav {
   position: fixed;
-  width: 300px;
+  width: 230px;
   height: 100vh;
   background-color: var(--component-color);
   left: 0;
@@ -46,7 +46,7 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  padding: 16px;
+  padding: 12px;
   width: 100%;
 }
 
@@ -60,7 +60,7 @@
   cursor: pointer;
   background-color: transparent;
   font-family: inherit;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   border: none;
   display: flex;
