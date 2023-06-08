@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 import { doc, updateDoc } from "firebase/firestore";
+import { getLocalStorage } from "../../utils/utils";
 
 export default function Settings() {
   const { state, dispatch } = useContext(Context);
@@ -16,22 +17,22 @@ export default function Settings() {
   const [media, setMedia] = useState(null);
   const [fullName, setFullName] = useState(state.currentUser.name || "");
   const navigate = useNavigate();
+  const oldImageRef = ref(storage, image);
+  const updateRef = doc(db, "users", "users");
 
   if (!Object.keys(state.currentUser).length) {
     window.location.pathname = "/";
   }
-  const oldImageRef = ref(storage, image);
 
-  const deleteOldImage = () => {
+  const deleteOldImage = (state = true) => {
     deleteObject(oldImageRef).then(() => {
       console.log("Old profile pic deleted successful");
     });
-    setImage(null);
+    if (state) setImage(null);
   };
 
   const setProfileData = async () => {
-    if (!state.isAuth || !localStorage.getItem("$U$I$D$")) return;
-    const updateRef = doc(db, "users", "users");
+    if (state.isAuth === false || !!!getLocalStorage("$U$I$D$")) return;
 
     if (media !== null) {
       const mediaRef = ref(storage, `profiles/${media.name + uuidv4()}`);
@@ -42,14 +43,6 @@ export default function Settings() {
           snapshot => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
           },
           error => {
             console.log(error);
@@ -57,7 +50,7 @@ export default function Settings() {
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               if (state.isAdmin) {
-                const idx = state.users.admins.findIndex(item => item.uid === state.currentUser.uid);
+                const idx = state.users.admins.findIndex(item => item?.uid === state.currentUser?.uid);
                 const arr = [...state.users.admins];
                 arr.splice(idx, 1);
                 updateDoc(updateRef, {
@@ -104,13 +97,11 @@ export default function Settings() {
         console.log("image uploaded");
       }
       if (image !== null) {
-        deleteObject(oldImageRef).then(() => {
-          console.log("Old profile pic deleted successful");
-        });
+        deleteOldImage(false);
       }
     } else {
-      if (state.isAdmin) {
-        const idx = state.users.admins.findIndex(item => item.uid === state.currentUser.uid);
+      if (state.isAuth) {
+        const idx = state.users.admins.findIndex(({ uid }) => uid === state.currentUser.uid);
         const arr = [...state.users.admins];
         arr.splice(idx, 1);
         await updateDoc(updateRef, {
