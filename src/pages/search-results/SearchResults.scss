@@ -40,24 +40,32 @@
 }
 
 .tags__item {
+  display: flex;
+  flex-direction: column;
   position: relative;
   padding: 16px 44px 16px 16px;
 
-  &:hover .tags__item-inner {
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+  }
+}
+
+.tags__link {
+  color: inherit;
+  transition: color 0.5s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  &:hover {
     color: var(--accent-color);
   }
 
-  a {
-    position: absolute;
-    inset: 0;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--border-color);
+  &:focus {
+    outline: none;
   }
 }
 

@@ -44,11 +44,19 @@ export default function SearchResults() {
             filterUniqueObjects(data, "id").map((item, i) => (
               <li className="tags__item" key={item.id}>
                 <span className="tags__item-badge">{getZero(++i)}</span>
-                <span className="tags__item-inner">{item.title}</span>
-                <Link to={`/${item.type}/${item.id}`} />
+                <span className="tags__item-inner">
+                  <Link className="tags__link" to={`/${item.type}/${item.id}`}>
+                    {item.title}
+                  </Link>
+                </span>
                 <span className="tags__item-time">{item.createdAt}</span>
               </li>
             ))}
+          {!!!data.length && (
+            <li className="tags__item">
+              <span className="tags__item-inner">Natijalar topilmadi</span>
+            </li>
+          )}
         </ul>
       </div>
     </section>
