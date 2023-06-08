@@ -2,7 +2,7 @@
 import "./Home.scss";
 
 // components
-import { Search, MiniSideBar, FavoritePost } from "../../components";
+import { Search, MiniSideBar, FavoritePost, Loader } from "../../components";
 
 import { useContext } from "react";
 import { Context } from "../../context/Context";
@@ -17,17 +17,6 @@ export default function Home() {
       <div className="container home__inner">
         <div className="home__content">
           <Search />
-          <section className="hero">
-            <div className="hero__content">
-              <h2 className="hero__title">
-                <q>Kino Blog</q> - Kino Tahlillar va Yangiliklar
-              </h2>
-              <p className="hero__desc">
-                Kino yangiliklarga oid va turli qiziqarli tahlillarga boy platformamizga xush kelibsiz. Bizda turli janrdagi kino va seriallar haqida bilib
-                olishingiz mumkin.
-              </p>
-            </div>
-          </section>
           <FavoritePost />
         </div>
         <div className="home__side-bar">
