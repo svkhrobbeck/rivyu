@@ -10,6 +10,7 @@ const initialValue = {
   isAdmin: false,
   isAuth: false,
   siteNavOpen: false,
+  modalOpen: false,
 };
 
 export const Context = createContext();
@@ -41,6 +42,12 @@ const reducer = (state = initialValue, action) => {
 
     case "SITENAV_TOGGLE":
       return { ...state, siteNavOpen: !state.siteNavOpen };
+
+    case "MODAL_OPEN":
+      return { ...state, modalOpen: true };
+
+    case "MODAL_CLOSE":
+      return { ...state, modalOpen: false };
 
     default:
       return { state };
