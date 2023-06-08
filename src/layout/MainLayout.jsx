@@ -1,11 +1,11 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 
 // components
 import Router from "../router/Router";
-import { Header, Footer, SideBar } from "../components";
+import { Header, Footer, SideBar, Loader } from "../components";
 import { Context } from "../context/Context";
 import { getLocalStorage } from "../utils/utils";
 
@@ -41,8 +41,9 @@ export default function MainLayout() {
 
     dispatch({ type: "GET_DATA", payload: data });
     dispatch({ type: "GET_ARR", payload: arr });
-    dispatch({ type: "GET_USERS", payload: users });
+    dispatch({ type: "GET_USERS", payload: { users, admins } });
     dispatch({ type: "GET_USER", payload: user });
+    dispatch({ type: "IS_LOADING", payload: false });
   };
 
   useEffect(() => {
@@ -63,6 +64,7 @@ export default function MainLayout() {
   }, [state.isAuth]);
 
   useEffect(() => {
+    dispatch({ type: "IS_LOADING", payload: true });
     onSnapshot(query(newsRef), () => {
       getData();
     });
@@ -82,6 +84,7 @@ export default function MainLayout() {
 
   return (
     <>
+      {state.isLoading && <Loader />}
       <Header />
       <main className="main-content">
         <SideBar />
