@@ -1,3 +1,4 @@
+export { default as Card } from "./card/Card";
 export { default as Header } from "./header/Header";
 export { default as FavoritePost } from "./favorite-post/FavoritePost";
 export { default as Footer } from "./footer/Footer";
