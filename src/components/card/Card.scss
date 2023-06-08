@@ -10,14 +10,6 @@
   padding: 10px;
 
   @media only screen and (max-width: 700px) {
-    max-width: 90%;
-  }
-
-  @media only screen and (max-width: 576px) {
-    max-width: 95%;
-  }
-
-  @media only screen and (max-width: 450px) {
     max-width: 100%;
   }
 }
