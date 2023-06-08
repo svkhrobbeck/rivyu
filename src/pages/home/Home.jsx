@@ -29,7 +29,7 @@ export default function Home() {
           </div>
         </div>
         <div className="home__posts posts-home">
-          <div className="posts-home__inner">{!!state.arr.length && state.arr.filter((_, i) => i !== 0).map(item => <Card {...item} />)}</div>
+          <div className="posts-home__inner">{!!state.arr?.length && state.arr?.filter((_, i) => i !== 0).map(item => <Card key={item.id} {...item} />)}</div>
         </div>
       </div>
     </section>
