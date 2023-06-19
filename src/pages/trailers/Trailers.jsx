@@ -26,10 +26,15 @@ export default function Trailers() {
   return (
     <section className="trailers">
       <h2 className="trailers__title main-title">Treylerlar</h2>
-      <div className="trailers__list">
+      <ul className="trailers__list">
         {!state.arr.length && <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>}
-        {state.data.trailers && state.data.trailers.map(item => <Card key={item.id} {...item} setId={setId} />)}
-      </div>
+        {state.data.trailers &&
+          state.data.trailers.map(item => (
+            <li className="trailers__item" key={item.id}>
+              <Card {...item} setId={setId} />
+            </li>
+          ))}
+      </ul>
 
       <Modal>
         <div className="modal-inner">
