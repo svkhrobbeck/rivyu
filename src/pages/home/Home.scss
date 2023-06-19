@@ -49,8 +49,15 @@
 
 /* POSTS HOME */
 .posts-home__inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 24px;
+
+  @media only screen and (max-width: 1040px) {
+    grid-template-columns: auto auto;
+  }
+
+  @media only screen and (max-width: 576px) {
+    grid-template-columns: auto;
+  }
 }
