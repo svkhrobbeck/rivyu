@@ -20,47 +20,23 @@ export default function SideBar() {
   const location = useLocation().pathname;
 
   return (
-    <section
-      className={`side-bar ${state.siteNavOpen ? "side-bar--show" : ""}`}
-    >
+    <section className={`side-bar ${state.siteNavOpen ? "side-bar--show" : ""}`}>
       <nav className="side-bar__nav">
         <ul className="side-bar__list">
           <li className="side-bar__item">
             <Link to={"/"}>
-              <button
-                onClick={hanleSidebarClose}
-                className={`side-bar__link ${
-                  location.includes("/") &&
-                  location === "/" &&
-                  "side-bar__link--active"
-                }`}
-              >
-                <img
-                  className="side-bar__link-icon"
-                  src="/images/icon-home.svg"
-                  alt="icon"
-                  aria-hidden="true"
-                />
+              <button onClick={hanleSidebarClose} className={`side-bar__link ${location.includes("/") && location === "/" && "side-bar__link--active"}`}>
+                <img className="side-bar__link-icon" src="/images/icon-home.svg" alt="icon" aria-hidden="true" />
                 <span className="side-bar__link-text">Bosh Sahifa</span>
               </button>
             </Link>
           </li>
           {links &&
-            links.map((link) => (
+            links.map(link => (
               <li key={link.name} className={"side-bar__item"}>
                 <Link to={link.route}>
-                  <button
-                    onClick={hanleSidebarClose}
-                    className={`side-bar__link ${
-                      location.includes(link.route) && "side-bar__link--active"
-                    }`}
-                  >
-                    <img
-                      className="side-bar__link-icon"
-                      src={link.image}
-                      alt="icon"
-                      aria-hidden="true"
-                    />
+                  <button onClick={hanleSidebarClose} className={`side-bar__link ${location.includes(link.route) && "side-bar__link--active"}`}>
+                    <img className="side-bar__link-icon" src={link.image} alt="icon" aria-hidden="true" />
                     <span className="side-bar__link-text">{link.name}</span>
                   </button>
                 </Link>
@@ -69,18 +45,8 @@ export default function SideBar() {
           {state.isAdmin && (
             <li className="side-bar__item">
               <Link to={"/admin"}>
-                <button
-                  onClick={hanleSidebarClose}
-                  className={`side-bar__link ${
-                    location.includes("/admin") && "side-bar__link--active"
-                  }`}
-                >
-                  <img
-                    className="side-bar__link-icon"
-                    src="/images/icon-admin.svg"
-                    alt="icon"
-                    aria-hidden="true"
-                  />
+                <button onClick={hanleSidebarClose} className={`side-bar__link ${location.includes("/admin") && "side-bar__link--active"}`}>
+                  <img className="side-bar__link-icon" src="/images/icon-admin.svg" alt="icon" aria-hidden="true" />
                   <span className="side-bar__link-text">Admin</span>
                 </button>
               </Link>
