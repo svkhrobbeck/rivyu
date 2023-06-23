@@ -3,14 +3,13 @@ import "./PostPage.scss";
 
 // components
 import { MiniSideBar, Toast } from "../../components";
-
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { Context } from "../../context/Context";
-import { getLocalStorage } from "../../utils/utils";
+import { getLocalStorage } from "../../utils/SetGetLocalStorage";
 import { youtubeThumb } from "../../constants";
 
 const PostPage = () => {
