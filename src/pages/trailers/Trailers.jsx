@@ -7,7 +7,7 @@ import { Card, Modal } from "../../components";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
-export default function Trailers() {
+const Trailers = () => {
   const { state, dispatch } = useContext(Context);
   const [id, setId] = useState("");
 
@@ -51,4 +51,6 @@ export default function Trailers() {
       </Modal>
     </section>
   );
-}
+};
+
+export default Trailers;
