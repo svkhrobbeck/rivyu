@@ -7,7 +7,7 @@ import { auth, db } from "../firebase/firebase";
 import Router from "../router/Router";
 import { Header, Footer, SideBar, Loader } from "../components";
 import { Context } from "../context/Context";
-import { getLocalStorage } from "../utils/SetGetLocalStorage";
+import { getLocalStorage, removeLocalStorage } from "../utils/SetGetLocalStorage";
 
 const MainLayout = () => {
   const { state, dispatch } = useContext(Context);
