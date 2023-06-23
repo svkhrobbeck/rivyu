@@ -1,9 +1,10 @@
 // style
 import "./About.scss";
 
+import { aboutIcons } from "../../constants";
 import { useEffect } from "react";
 
-export default function About() {
+const About = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -33,10 +34,7 @@ export default function About() {
           xatoliklarga ko'z yumasiz degan umiddamiz!
         </p>
         <div className="about__icons">
-          <img className="about__icon" src="/react.svg" alt="logo react" />
-          <img className="about__icon" src="/vite.svg" alt="logo vite" />
-          <img className="about__icon" src="/firebase.svg" alt="logo firebase" />
-          <img className="about__icon" src="/kinoblog.svg" alt="logo kinoblog" />
+          {!!aboutIcons.length && aboutIcons.map(({ imgPath, alt }) => <img className="about__icon" src={imgPath} alt={alt} key={alt} />)}
         </div>
         <br />
         <div className="about__link-wrapper">
@@ -58,4 +56,6 @@ export default function About() {
       </div>
     </section>
   );
-}
+};
+
+export default About;
