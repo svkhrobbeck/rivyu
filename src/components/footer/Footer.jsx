@@ -3,7 +3,7 @@ import "./Footer.scss";
 
 import { links } from "../../constants";
 
-export default function Footer() {
+const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="container site-footer__container">
@@ -19,4 +19,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

@@ -4,7 +4,8 @@ import "./Modal.scss";
 import { createPortal } from "react-dom";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
-export default function Modal({ children }) {
+
+const Modal = () => {
   const { state, dispatch } = useContext(Context);
 
   const handleModalClose = () => dispatch({ type: "MODAL_CLOSE" });
@@ -21,4 +22,6 @@ export default function Modal({ children }) {
     </section>,
     document.body
   );
-}
+};
+
+export default Modal;

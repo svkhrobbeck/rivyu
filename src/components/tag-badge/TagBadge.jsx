@@ -1,7 +1,7 @@
 // style
 import "./TagBadge.scss";
 
-export default function TagBadge({ children, id, handleDeleteTags }) {
+const TagBadge = ({ children, id, handleDeleteTags }) => {
   return (
     <div className="tag-badge">
       <span className="tag-badge__inner">{children}</span>
@@ -10,4 +10,6 @@ export default function TagBadge({ children, id, handleDeleteTags }) {
       </button>
     </div>
   );
-}
+};
+
+export default TagBadge;

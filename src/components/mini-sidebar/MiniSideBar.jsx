@@ -3,7 +3,7 @@ import "./MiniSideBar.scss";
 
 import { Link } from "react-router-dom";
 
-export default function MiniSideBar({ arr = [], title = "" }) {
+const MiniSideBar = () => {
   return (
     <div className="mini-sidebar">
       <h3 className="mini-sidebar__title">
@@ -22,4 +22,6 @@ export default function MiniSideBar({ arr = [], title = "" }) {
       </ul>
     </div>
   );
-}
+};
+
+export default MiniSideBar;

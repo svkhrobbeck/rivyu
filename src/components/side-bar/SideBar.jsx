@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { sidebarLinks } from "../../constants";
 
-export default function SideBar() {
+const SideBar = () => {
   const { state, dispatch } = useContext(Context);
   const hanleSidebarClose = () => dispatch({ type: "SITENAV_TOGGLE" });
   const location = useLocation().pathname;
@@ -49,4 +49,6 @@ export default function SideBar() {
       <div className="side-bar__overlay" onClick={hanleSidebarClose} />
     </section>
   );
-}
+};
+
+export default SideBar;
