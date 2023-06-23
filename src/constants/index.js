@@ -16,3 +16,10 @@ export const sidebarLinks = [
   },
   { name: "Dastur haqida", route: "/about", image: "/images/icon-faq.svg" },
 ];
+
+export const aboutIcons = [
+  { imgPath: "/react.svg", alt: "logo react" },
+  { imgPath: "/vite.svg", alt: "logo vite" },
+  { imgPath: "/firebase.svg", alt: "logo firebase" },
+  { imgPath: "/kinoblog.svg", alt: "logo kinoblog" },
+];
