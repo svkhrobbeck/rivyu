@@ -7,7 +7,7 @@ import { auth, db } from "../firebase/firebase";
 import Router from "../router/Router";
 import { Header, Footer, SideBar, Loader } from "../components";
 import { Context } from "../context/Context";
-import { getLocalStorage } from "../utils/utils";
+import { getLocalStorage } from "../utils/SetGetLocalStorage";
 
 const MainLayout = () => {
   const { state, dispatch } = useContext(Context);
@@ -55,7 +55,8 @@ const MainLayout = () => {
           getUserData();
         } else {
           dispatch({ type: "SET_AUTH", payload: false });
-          localStorage.clear();
+          removeLocalStorage("$T$O$K$E$N$");
+          removeLocalStorage("$U$I$D$");
         }
       } else {
         dispatch({ type: "SET_AUTH", payload: false });
