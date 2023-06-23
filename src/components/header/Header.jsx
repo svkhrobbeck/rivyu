@@ -6,14 +6,16 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
+import { removeLocalStorage } from "../../utils/SetGetLocalStorage";
 
-export default function Header() {
+const Header = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useContext(Context);
 
   const signOutUser = () => {
     signOut(auth).then(() => {
-      localStorage.clear();
+      removeLocalStorage("$T$O$K$E$N$");
+      removeLocalStorage("$U$I$D$");
       dispatch({ type: "SET_AUTH", payload: false });
       navigate("/login");
     });
@@ -66,4 +68,6 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;
