@@ -1,17 +1,9 @@
+// style
 import "./Toast.scss";
 
-export default function Toast({
-  children,
-  isSuccess = true,
-  isOpen = false,
-  handleClose,
-}) {
+const Toast = ({ children, isSuccess = true, isOpen = false, handleClose }) => {
   return (
-    <div
-      className={`toast toast--${isSuccess ? "success" : "failure"} ${
-        isOpen && "toast--show"
-      }`}
-    >
+    <div className={`toast toast--${isSuccess ? "success" : "failure"} ${isOpen && "toast--show"}`}>
       <button className="toast__close" onClick={handleClose}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
           <path
@@ -24,4 +16,6 @@ export default function Toast({
       <span className="toast__inner">{children}</span>
     </div>
   );
-}
+};
+
+export default Toast;
