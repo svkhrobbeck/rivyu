@@ -118,7 +118,6 @@ export default function Edit() {
       await updateDoc(postRef, updatePostObj());
     }
     navigate(`/${data.type}`);
-    dispatch({ type: "IS_UPDATED" });
   };
 
   return (
@@ -128,7 +127,7 @@ export default function Edit() {
         <>
           <ul className="create-edit__tags">
             {mytags &&
-              mytags.map((item) => (
+              mytags.map(item => (
                 <li key={item.id} className="create-edit__tag">
                   <TagBadge id={item.id} handleDeleteTags={handleDeleteTags}>
                     {item.value}
