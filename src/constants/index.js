@@ -1,6 +1,10 @@
+// imports
 import { getZero } from "../utils/utils";
 
+// variables
 export const imageNotShown = "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi";
+
+export const youtubeThumb = "https://www.youtube-nocookie.com/embed/";
 
 export const links = [
   { link: "https://tme.to/svkhrobbeck", imgPath: "/images/icon-telegram.svg", alt: "icon telegram" },
