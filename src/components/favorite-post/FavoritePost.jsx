@@ -1,9 +1,9 @@
 // style
-import { useContext } from "react";
 import "./FavoritePost.scss";
 
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
+import { useContext } from "react";
 
 const FavoritePost = () => {
   const { state } = useContext(Context);
