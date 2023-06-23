@@ -1,8 +1,8 @@
 // style
 import "./SearchResults.scss";
 
-import { getZero } from "../../utils/utils";
 import { useContext, useEffect } from "react";
+import getZero from "../../utils/getZero";
 import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
 import filterUniqueObjects from "../../utils/filterUniqueObjects";
