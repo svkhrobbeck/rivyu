@@ -7,11 +7,7 @@ import { Context } from "../../context/Context";
 
 const FavoritePost = () => {
   const { state } = useContext(Context);
-  let data = [];
-
-  if (state.data?.news) {
-    data = state.arr[0] || null;
-  }
+  let data = state?.arr[0] || null;
 
   return (
     <>
