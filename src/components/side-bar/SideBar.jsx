@@ -1,20 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+// style
 import "./SideBar.scss";
+
+import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
+import { sidebarLinks } from "../../constants";
 
 export default function SideBar() {
-  const links = [
-    { name: "Maqolalar", route: "/reviews", image: "/images/icon-pencil.svg" },
-    { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
-    {
-      name: "Treylerlar",
-      route: "/trailers",
-      image: "/images/icon-videplay.svg",
-    },
-    { name: "Dastur haqida", route: "/about", image: "/images/icon-faq.svg" },
-  ];
-
   const { state, dispatch } = useContext(Context);
   const hanleSidebarClose = () => dispatch({ type: "SITENAV_TOGGLE" });
   const location = useLocation().pathname;
@@ -31,8 +23,8 @@ export default function SideBar() {
               </button>
             </Link>
           </li>
-          {links &&
-            links.map(link => (
+          {sidebarLinks &&
+            sidebarLinks.map(link => (
               <li key={link.name} className={"side-bar__item"}>
                 <Link to={link.route}>
                   <button onClick={hanleSidebarClose} className={`side-bar__link ${location.includes(link.route) && "side-bar__link--active"}`}>
@@ -54,7 +46,7 @@ export default function SideBar() {
           )}
         </ul>
       </nav>
-      <div className="side-bar__overflow" onClick={hanleSidebarClose} />
+      <div className="side-bar__overlay" onClick={hanleSidebarClose} />
     </section>
   );
 }
