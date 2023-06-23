@@ -1,9 +1,10 @@
 // style
-import { useNavigate } from "react-router-dom";
 import "./Search.scss";
+
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function Search() {
+const Search = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -13,7 +14,7 @@ export default function Search() {
     navigate(`/search/${searchQuery.trim().toLowerCase()}`);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     handleNavigate();
   };
@@ -29,15 +30,14 @@ export default function Search() {
           aria-label="Search"
           autoComplete="off"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={e => setSearchQuery(e.target.value)}
         />
       </form>
-      <button
-        className="search__button button button--green"
-        onClick={handleNavigate}
-      >
+      <button className="search__button button button--green" onClick={handleNavigate}>
         <img src="/images/icon-magnifier.svg" alt="" />
       </button>
     </section>
   );
-}
+};
+
+export default Search;
