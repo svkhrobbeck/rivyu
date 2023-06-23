@@ -52,36 +52,36 @@
     border-bottom: 1px solid var(--border-color);
   }
 
-  a {
-    color: var(--text-color);
-    font-size: 18px;
-    margin-bottom: 5px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    transition: 0.3s ease color;
-
-    &::before {
-      content: "";
-      display: block;
-      position: absolute;
-      inset: 0;
-    }
-
-    &:hover {
-      color: var(--accent-color);
-    }
-
-    @media only screen and (max-width: 840px) {
-      font-size: inherit;
-    }
-  }
-
   @media only screen and (max-width: 600px) {
     padding: 10px;
+  }
+}
+
+.mini-sidebar__link {
+  color: var(--text-color);
+  font-size: 18px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  transition: 0.3s ease color;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
+
+  &:hover {
+    color: var(--accent-color);
+  }
+
+  @media only screen and (max-width: 840px) {
+    font-size: inherit;
   }
 }
 

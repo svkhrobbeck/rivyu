@@ -1,5 +1,6 @@
 // style
 import "./MiniSideBar.scss";
+
 import { Link } from "react-router-dom";
 
 export default function MiniSideBar({ arr = [], title = "" }) {
@@ -13,7 +14,9 @@ export default function MiniSideBar({ arr = [], title = "" }) {
         {arr &&
           arr.map(item => (
             <li onClick={() => (document.documentElement.scrollTop = 0)} key={item.id} className="mini-sidebar__item">
-              <Link to={`/${item.type}/${item.id}`}>{item.title}</Link>
+              <Link className="mini-sidebar__link" to={`/${item.type}/${item.id}`}>
+                {item.title}
+              </Link>
             </li>
           ))}
       </ul>
