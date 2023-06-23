@@ -9,7 +9,7 @@ import { Header, Footer, SideBar, Loader } from "../components";
 import { Context } from "../context/Context";
 import { getLocalStorage } from "../utils/utils";
 
-export default function MainLayout() {
+const MainLayout = () => {
   const { state, dispatch } = useContext(Context);
   const newsRef = collection(db, "news");
   const reviewsRef = collection(db, "reviews");
@@ -93,4 +93,6 @@ export default function MainLayout() {
       <Footer />
     </>
   );
-}
+};
+
+export default MainLayout;
