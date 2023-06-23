@@ -1,5 +1,3 @@
-export const getZero = num => (num >= 10 ? num : `0${num}`);
-
 export const validatePassword = (e, setErr, setPassword) => {
   const val = e.target.value.toLowerCase();
 
