@@ -10,11 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
-import { getZero } from "../../utils/utils";
 import { useContext } from "react";
+import { createdAt } from "../../constants";
 import { Context } from "../../context/Context";
 
-export default function Create() {
+const Create = () => {
   const { state, dispatch } = useContext(Context);
   const [media, setMedia] = useState(null);
   const [title, setTitle] = useState("");
@@ -42,11 +42,6 @@ export default function Create() {
     setMytags(filteredTags);
   };
 
-  const date = new Date();
-
-  const createdAt = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
-    date.getMinutes()
-  )}`;
   const postsCollectionRef = collection(db, type);
 
   const createPost = async () => {
@@ -92,7 +87,6 @@ export default function Create() {
               });
               navigate("/");
               dispatch({ type: "IS_LOADING", payload: false });
-              dispatch({ type: "IS_UPDATED" });
             });
           }
         );
@@ -114,7 +108,6 @@ export default function Create() {
       });
       navigate("/");
       dispatch({ type: "IS_LOADING", payload: false });
-      dispatch({ type: "IS_UPDATED" });
     }
   };
 
@@ -240,4 +233,6 @@ export default function Create() {
       </div>
     </div>
   );
-}
+};
+
+export default Create;

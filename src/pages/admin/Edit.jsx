@@ -10,10 +10,10 @@ import { v4 as uuidv4 } from "uuid";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { getZero } from "../../utils/utils";
+import { lastEdited } from "../../constants";
 import { Context } from "../../context/Context";
 
-export default function Edit() {
+const Edit = () => {
   const navigate = useNavigate();
   const { type, id } = useParams();
   const { state } = useContext(Context);
@@ -31,11 +31,6 @@ export default function Edit() {
   const [mytags, setMytags] = useState(data.tags ? data.tags.map(value => ({ value, id: uuidv4() })) : []);
   const tags = mytags.map(item => item.value);
   const elTagInput = useRef(null);
-  const date = new Date();
-
-  const lastEdited = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
-    date.getMinutes()
-  )}`;
 
   const handleAddTags = () => {
     if (!elTagInput.current.value || tags.length >= 6) return;
@@ -200,4 +195,6 @@ export default function Edit() {
       </div>
     </div>
   );
-}
+};
+
+export default Edit;

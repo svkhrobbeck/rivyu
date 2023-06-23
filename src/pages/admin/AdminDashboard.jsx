@@ -3,7 +3,7 @@ import "./AdminDashboard.scss";
 
 import { Link } from "react-router-dom";
 
-export default function AdminDashboard() {
+const AdminDashboard = () => {
   return (
     <section className="admin-dashboard">
       <div className="container">
@@ -15,4 +15,6 @@ export default function AdminDashboard() {
       </div>
     </section>
   );
-}
+};
+
+export default AdminDashboard;
