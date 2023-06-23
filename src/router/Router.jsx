@@ -1,24 +1,10 @@
 import { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import {
-  Page404,
-  About,
-  Login,
-  Register,
-  AdminDashboard,
-  CardsList,
-  PostPage,
-  Create,
-  Edit,
-  Settings,
-  Home,
-  Trailers,
-  SearchResults,
-} from "../pages";
+import { Page404, About, Login, Register, AdminDashboard, CardsList, PostPage, Create, Edit, Settings, Home, Trailers, SearchResults } from "../pages";
 import { Context } from "../context/Context";
 
-export default function Router() {
+const Router = () => {
   const { state } = useContext(Context);
 
   return (
@@ -34,24 +20,16 @@ export default function Router() {
       <Route path="/about" element={<About />} />
       <Route path="/settings" element={<Settings />} />
       <Route>
-        <Route
-          path="/register"
-          element={state.isAuth ? <Navigate to={"/"} /> : <Register />}
-        />
-        <Route
-          path="/login"
-          element={state.isAuth ? <Navigate to={"/"} /> : <Login />}
-        />
+        <Route path="/register" element={state.isAuth ? <Navigate to={"/"} /> : <Register />} />
+        <Route path="/login" element={state.isAuth ? <Navigate to={"/"} /> : <Login />} />
       </Route>
 
       {state.isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
-      {state.isAdmin && (
-        <Route path="/admin/create-post" element={<Create />} />
-      )}
-      {state.isAdmin && (
-        <Route path="/admin/edit-post/:type/:id" element={<Edit />} />
-      )}
+      {state.isAdmin && <Route path="/admin/create-post" element={<Create />} />}
+      {state.isAdmin && <Route path="/admin/edit-post/:type/:id" element={<Edit />} />}
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
-}
+};
+
+export default Router;
