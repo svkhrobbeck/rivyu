@@ -3,7 +3,7 @@ import "./MiniSideBar.scss";
 
 import { Link } from "react-router-dom";
 
-const MiniSideBar = () => {
+const MiniSideBar = ({ title, arr }) => {
   return (
     <div className="mini-sidebar">
       <h3 className="mini-sidebar__title">

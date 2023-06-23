@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
 
-const Modal = () => {
+const Modal = ({ children }) => {
   const { state, dispatch } = useContext(Context);
 
   const handleModalClose = () => dispatch({ type: "MODAL_CLOSE" });
