@@ -6,7 +6,8 @@ import { auth } from "../../firebase/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
-import { validateEmail, validatePassword } from "../../utils/utils";
+import { validateEmail, validatePassword } from "../../utils/validateEmailPassword";
+import { setLocalStorage } from "../../utils/SetGetLocalStorage";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,8 +33,8 @@ const Login = () => {
       .then(result => {
         const { accessToken, uid } = result.user;
 
-        localStorage.setItem("$T$O$K$E$N$", accessToken);
-        localStorage.setItem("$U$I$D$", uid);
+        setLocalStorage("$T$O$K$E$N$", accessToken);
+        setLocalStorage("$U$I$D$", uid);
         dispatch({ type: "SET_AUTH", payload: true });
         navigate("/");
       })

@@ -6,8 +6,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
-import { validateEmail, validatePassword } from "../../utils/utils";
+import { validateEmail, validatePassword } from "../../utils/validateEmailPassword";
 import { doc, updateDoc } from "firebase/firestore";
+import { setLocalStorage } from "../../utils/SetGetLocalStorage";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -51,12 +52,12 @@ const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         // Signed in
-        const currentUser = userCredential.user;
-        currentUser.displayName = email.split("@")[0];
-        localStorage.setItem("$T$O$K$E$N$", currentUser?.accessToken);
-        localStorage.setItem("$U$I$D$", currentUser?.uid);
+        const { accessToken, uid, displayName } = userCredential.user;
+        displayName = email.split("@")[0];
+        setLocalStorage("$T$O$K$E$N$", accessToken);
+        setLocalStorage("$U$I$D$", uid);
         dispatch({ type: "SET_AUTH", payload: true });
-        addUser(email, password, currentUser?.uid, currentUser.displayName, currentUser?.accessToken);
+        addUser(email, password, uid, displayName, accessToken);
         navigate("/");
         return;
       })
