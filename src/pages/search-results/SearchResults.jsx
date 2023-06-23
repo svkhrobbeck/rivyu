@@ -5,9 +5,10 @@ import { getZero } from "../../utils/utils";
 import { useContext, useEffect } from "react";
 import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
+import filterUniqueObjects from "../../utils/filterUniqueObjects";
 
-export default function SearchResults() {
-  const query = useParams().query;
+const SearchResults = () => {
+  const { query } = useParams();
   const { state } = useContext(Context);
   const data =
     [
@@ -15,19 +16,6 @@ export default function SearchResults() {
       ...state.arr.filter(item => item.description.toLowerCase().includes(query)),
       ...state.arr.filter(item => item.tags.find(i => i === query)),
     ] || [];
-
-  function filterUniqueObjects(arr, key) {
-    var seen = new Set();
-    return arr.filter(obj => {
-      var value = obj[key];
-      if (!seen.has(value)) {
-        seen.add(value);
-        return true;
-      }
-      return false;
-    });
-    setData(filteredArr);
-  }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -61,4 +49,6 @@ export default function SearchResults() {
       </div>
     </section>
   );
-}
+};
+
+export default SearchResults;
