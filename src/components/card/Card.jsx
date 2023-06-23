@@ -4,9 +4,9 @@ import "./Card.scss";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { Link } from "react-router-dom";
+import { imageNotShown } from "../../constants";
 
 const Card = ({ image, title, createdAt, id, setId = {}, type }) => {
-  const imageNotShown = "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi";
   const { state, dispatch } = useContext(Context);
 
   const handleModalOpen = () => dispatch({ type: "MODAL_OPEN" });
