@@ -7,10 +7,10 @@ import { Search, MiniSideBar, FavoritePost, Card } from "../../components";
 import { useContext, useEffect } from "react";
 import { Context } from "../../context/Context";
 
-export default function Home() {
-  document.title = "Kino Blog | Bosh sahifa";
-
+const Home = () => {
   const { state } = useContext(Context);
+
+  document.title = "Kino Blog | Bosh sahifa";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,4 +34,6 @@ export default function Home() {
       </div>
     </section>
   );
-}
+};
+
+export default Home;
