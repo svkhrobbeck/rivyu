@@ -1,4 +1,6 @@
+// style
 import "./Header.scss";
+
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
@@ -7,7 +9,6 @@ import { Context } from "../../context/Context";
 
 export default function Header() {
   const navigate = useNavigate();
-  const user = auth.currentUser;
   const { state, dispatch } = useContext(Context);
 
   const signOutUser = () => {
