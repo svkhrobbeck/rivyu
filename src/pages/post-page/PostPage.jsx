@@ -11,10 +11,11 @@ import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { Context } from "../../context/Context";
 import { getLocalStorage } from "../../utils/utils";
+import { youtubeThumb } from "../../constants";
 
-export default function PostPage() {
+const PostPage = () => {
   const { state } = useContext(Context);
-  const id = useParams().id;
+  const { id } = useParams();
 
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowFailureToast, setIsShowFailureToast] = useState(false);
@@ -77,7 +78,7 @@ export default function PostPage() {
                 className="post__iframe"
                 width="640"
                 height="355"
-                src={`https://www.youtube-nocookie.com/embed/${data.videoId}`}
+                src={`${youtubeThumb}${data.videoId}`}
                 title={data.title}
                 allow="autoplay; picture-in-picture;"
                 allowFullScreen
@@ -129,4 +130,6 @@ export default function PostPage() {
       </Toast>
     </section>
   );
-}
+};
+
+export default PostPage;
