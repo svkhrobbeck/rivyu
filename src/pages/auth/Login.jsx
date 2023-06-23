@@ -8,7 +8,7 @@ import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import { validateEmail, validatePassword } from "../../utils/utils";
 
-export default function Login() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPassword, setIsPassword] = useState(true);
@@ -27,7 +27,6 @@ export default function Login() {
       setErr("Parolni kiriting!");
       return;
     }
-    let currentUser = "";
 
     signInWithEmailAndPassword(auth, email, password)
       .then(result => {
@@ -38,7 +37,7 @@ export default function Login() {
         dispatch({ type: "SET_AUTH", payload: true });
         navigate("/");
       })
-      .catch(err => setErr("Email yoki Parol xato kiritilgan"));
+      .catch(() => setErr("Email yoki Parol xato kiritilgan"));
   };
 
   return (
@@ -96,4 +95,6 @@ export default function Login() {
       </form>
     </section>
   );
-}
+};
+
+export default Login;

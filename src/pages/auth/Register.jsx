@@ -1,5 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+// style
 import "./LoginRegister.scss";
+
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 import { useContext, useState } from "react";
@@ -7,7 +9,7 @@ import { Context } from "../../context/Context";
 import { validateEmail, validatePassword } from "../../utils/utils";
 import { doc, updateDoc } from "firebase/firestore";
 
-export default function Register() {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
@@ -111,4 +113,6 @@ export default function Register() {
       </form>
     </section>
   );
-}
+};
+
+export default Register;
