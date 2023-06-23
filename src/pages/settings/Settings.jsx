@@ -9,9 +9,9 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 import { doc, updateDoc } from "firebase/firestore";
-import { getLocalStorage } from "../../utils/utils";
+import { getLocalStorage } from "../../utils/SetGetLocalStorage";
 
-export default function Settings() {
+const Settings = () => {
   const { state, dispatch } = useContext(Context);
   const [image, setImage] = useState(state.currentUser.image || null);
   const [media, setMedia] = useState(null);
@@ -203,4 +203,6 @@ export default function Settings() {
       </form>
     </section>
   );
-}
+};
+
+export default Settings;
