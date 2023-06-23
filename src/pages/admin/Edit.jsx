@@ -4,7 +4,7 @@ import "./AdminDashboard.scss";
 // components
 import { TagBadge } from "../../components";
 
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { doc, updateDoc } from "firebase/firestore";
@@ -16,10 +16,8 @@ import { Context } from "../../context/Context";
 export default function Edit() {
   const navigate = useNavigate();
   const { type, id } = useParams();
-  const { state, dispatch } = useContext(Context);
-  const [data, setData] = useState(
-    state.arr.find((item) => item.id === id) || {}
-  );
+  const { state } = useContext(Context);
+  const [data, setData] = useState(state.arr.find(item => item.id === id) || {});
 
   if (!state.arr.length) {
     window.location.pathname = "/";
@@ -30,16 +28,12 @@ export default function Edit() {
   const [title, setTitle] = useState(data.title || "");
   const [shortDesc, setShortDesc] = useState(data.shortDesc || "");
   const [description, setDescription] = useState(data.description || "");
-  const [mytags, setMytags] = useState(
-    data.tags ? data.tags.map((value) => ({ value, id: uuidv4() })) : []
-  );
-  const tags = mytags.map((item) => item.value);
+  const [mytags, setMytags] = useState(data.tags ? data.tags.map(value => ({ value, id: uuidv4() })) : []);
+  const tags = mytags.map(item => item.value);
   const elTagInput = useRef(null);
   const date = new Date();
 
-  const lastEdited = `${getZero(date.getDate())}.${getZero(
-    date.getMonth() + 1
-  )}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
+  const lastEdited = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
     date.getMinutes()
   )}`;
 
@@ -51,8 +45,8 @@ export default function Edit() {
     elTagInput.current.value = "";
   };
 
-  const handleDeleteTags = (id) => {
-    const filteredTags = mytags.filter((item) => item.id !== id);
+  const handleDeleteTags = id => {
+    const filteredTags = mytags.filter(item => item.id !== id);
     setMytags(filteredTags);
   };
 
@@ -86,9 +80,8 @@ export default function Edit() {
         const uploadTask = uploadBytesResumable(mediaRef, media);
         uploadTask.on(
           "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          snapshot => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
             switch (snapshot.state) {
               case "paused":
@@ -99,11 +92,11 @@ export default function Edit() {
                 break;
             }
           },
-          (error) => {
+          error => {
             console.log(error);
           },
           () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               updateDoc(postRef, {
                 ...data,
                 lastEdited,
@@ -153,7 +146,7 @@ export default function Edit() {
         name="title"
         placeholder="sarlavha"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
       />
       {data?.type !== "trailers" && (
         <input
@@ -162,22 +155,12 @@ export default function Edit() {
           name="short_description"
           placeholder="qisqa izoh"
           value={shortDesc}
-          onChange={(e) => setShortDesc(e.target.value)}
+          onChange={e => setShortDesc(e.target.value)}
         />
       )}
       <div className="create-edit__field-wrapper">
-        <input
-          className="main-field create-edit__field create-edit__field--tag"
-          type="text"
-          name="tags"
-          placeholder="teglar"
-          ref={elTagInput}
-        />
-        <button
-          onClick={handleAddTags}
-          className="admin-form__tag-button"
-          type="button"
-        >
+        <input className="main-field create-edit__field create-edit__field--tag" type="text" name="tags" placeholder="teglar" ref={elTagInput} />
+        <button onClick={handleAddTags} className="admin-form__tag-button" type="button">
           Teg qo'shish
         </button>
       </div>
@@ -190,12 +173,9 @@ export default function Edit() {
             accept="image/*"
             placeholder="post rasmi"
             id="image-input-edit"
-            onChange={(e) => setMedia(e.target.files[0])}
+            onChange={e => setMedia(e.target.files[0])}
           />
-          <label
-            className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
-            htmlFor="image-input-edit"
-          >
+          <label className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block" htmlFor="image-input-edit">
             {media ? "rasm tanlandi" : "rasmni tanlang"}
           </label>
         </>
@@ -206,32 +186,16 @@ export default function Edit() {
           name="description"
           placeholder="izoh"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={e => setDescription(e.target.value)}
         />
-        {!media && (
-          <img
-            className="create-edit__img"
-            src={image ? image : "/images/temp-image.svg"}
-            alt=""
-          />
-        )}
-        {media && (
-          <img
-            className="create-edit__img"
-            src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
-            alt=""
-          />
-        )}
+        {!media && <img className="create-edit__img" src={image ? image : "/images/temp-image.svg"} alt="" />}
+        {media && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />}
       </div>
       <div className="create-edit__buttons">
         <Link to={`/${data?.type}`}>
           <button className="button button--blue">Bekor Qilish</button>
         </Link>
-        <button
-          className="button button--green"
-          type="button"
-          onClick={updatePost}
-        >
+        <button className="button button--green" type="button" onClick={updatePost}>
           Yangilash
         </button>
       </div>
