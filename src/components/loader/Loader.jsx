@@ -1,9 +1,12 @@
+// style
 import "./Loader.scss";
 
-export default function Loader() {
+const Loader = () => {
   return (
     <div className="loader">
       <div className="loader__inner"></div>
     </div>
   );
-}
+};
+
+export default Loader;
