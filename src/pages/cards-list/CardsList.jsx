@@ -11,11 +11,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
 import { Context } from "../../context/Context";
 
-export default function CardsList() {
-  const pathName = useLocation().pathname.slice(1);
-  const text = pathName === "news" ? "Yangiliklar" : "Maqolalar";
+const CardsList = () => {
   const { state, dispatch } = useContext(Context);
   const navigate = useNavigate();
+  const pathName = useLocation().pathname.slice(1);
+  const text = pathName === "news" ? "Yangiliklar" : "Maqolalar";
 
   const getData = () => {
     if (pathName === "news") {
@@ -121,4 +121,6 @@ export default function CardsList() {
       </div>
     </section>
   );
-}
+};
+
+export default CardsList;
