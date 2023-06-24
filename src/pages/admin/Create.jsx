@@ -11,7 +11,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
 import { useContext } from "react";
-import { createdAt } from "../../constants";
+import { createdAt, date } from "../../constants";
 import { Context } from "../../context/Context";
 
 const Create = () => {
