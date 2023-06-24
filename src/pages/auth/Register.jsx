@@ -52,7 +52,7 @@ const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         // Signed in
-        const { accessToken, uid, displayName } = userCredential.user;
+        let { accessToken, uid, displayName } = userCredential.user;
         displayName = email.split("@")[0];
         setLocalStorage("$T$O$K$E$N$", accessToken);
         setLocalStorage("$U$I$D$", uid);
