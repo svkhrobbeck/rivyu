@@ -70,6 +70,20 @@ const Register = () => {
     <section className="login-register">
       <h2 className="login-register__title">Ro'yxatdan o'tish</h2>
       <form className="login-register__form form-login-resgister">
+        <label className="form-login-resgister__label" htmlFor="register-username">
+          Foydalanuvchi nomingiz
+        </label>
+        <div className="form-login-register__field">
+          <input
+            className="form-login-resgister__input form-login-resgister__input--username"
+            type="text"
+            name="username"
+            placeholder="Foydalanuvchi nomingizni kiriting"
+            id="register-username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+        </div>
         <label className="form-login-resgister__label" htmlFor="login-register-email">
           Emailingiz
         </label>
