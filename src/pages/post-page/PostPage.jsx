@@ -27,7 +27,7 @@ const PostPage = () => {
   const data = state.arr.find(item => item.id === id) || {};
   const isTrailer = data.type === "trailers";
 
-  const stateText = data.type === "reviews" ? "tahlil" : data.type === "trailers" ? "treyler" : "yangilik";
+  const stateText = data.type === "reviews" ? "maqola" : data.type === "trailers" ? "treyler" : "yangilik";
   const stateTitle = `So'nggi ${stateText}lar`;
 
   const updateLike = async () => {
