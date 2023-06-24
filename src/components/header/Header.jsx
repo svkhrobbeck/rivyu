@@ -7,6 +7,7 @@ import { auth } from "../../firebase/firebase";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { removeLocalStorage } from "../../utils/SetGetLocalStorage";
+import { firebaseLink, imageKitLink } from "../../constants";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -37,7 +38,11 @@ const Header = () => {
         </div>
         <div className="site-header__actions">
           <button className="button user-account">
-            <img className="user-account__img" src={state.currentUser?.image ? state.currentUser?.image : "/images/icon-account.svg"} alt="icon account" />
+            <img
+              className="user-account__img"
+              src={state.currentUser?.image ? state.currentUser?.image?.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"}
+              alt="icon account"
+            />
             <ul className="user-account__list">
               {state.isAuth && (
                 <>
