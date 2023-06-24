@@ -37,7 +37,7 @@ const Card = ({ image, title, createdAt, id, setId = {}, type }) => {
           >
             <img src="/images/icon-trash.svg" />
           </button>
-          <Link className="card__button" to={`/admin/edit-post/${type}/${id}`}>
+          <Link className="card__button" to={`/admin/edit/${type}/${id}`}>
             <img src="/images/icon-edit.svg" />
           </Link>
         </div>
