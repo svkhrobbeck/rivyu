@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { lastEdited } from "../../constants";
+import { firebaseLink, imageKitLink, lastEdited } from "../../constants";
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const Edit = () => {
   }, []);
 
   function updatePostObj() {
-    if (atype === "trailers") {
+    if (type === "trailers") {
       return {
         title,
         tags,
@@ -189,7 +189,7 @@ const Edit = () => {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-        {!media && <img className="create-edit__img" src={image ? image : "/images/temp-image.svg"} alt="" />}
+        {!media && <img className="create-edit__img" src={image ? image?.replace(firebaseLink, imageKitLink) : "/images/temp-image.svg"} alt="" />}
         {media && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />}
       </div>
       <div className="create-edit__buttons">
