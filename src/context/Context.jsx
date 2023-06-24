@@ -2,7 +2,6 @@ import { createContext, useReducer } from "react";
 
 const initialValue = {
   data: {},
-  reviews: [],
   arr: [],
   users: {},
   currentUser: {},
