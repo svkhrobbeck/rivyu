@@ -54,20 +54,12 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {!!state.users?.admins?.length &&
-              state.users.admins.map(({ email, name, token }) => (
-                <tr className="users__table-row" key={token}>
+            {!![...Object.keys(state.users)]?.length &&
+              [...state.users.admins, ...state.users.users].map(({ email, name, uid, isAdmin }) => (
+                <tr className="users__table-row" key={uid}>
                   <td className="users__table-desc">{name}</td>
                   <td className="users__table-desc">{email}</td>
-                  <td className="users__table-desc">Admin</td>
-                </tr>
-              ))}
-            {!!state.users?.users?.length &&
-              state.users.users.map(({ email, name, token }) => (
-                <tr className="users__table-row" key={token}>
-                  <td className="users__table-desc">{name}</td>
-                  <td className="users__table-desc">{email}</td>
-                  <td className="users__table-desc">Foydalanuvchi</td>
+                  <td className="users__table-desc">{isAdmin ? "Admin" : "Foydalanuvchi"}</td>
                 </tr>
               ))}
             <tr className="users__table-row">
