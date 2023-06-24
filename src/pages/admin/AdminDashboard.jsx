@@ -7,9 +7,12 @@ const AdminDashboard = () => {
   return (
     <section className="admin-dashboard">
       <div className="container">
-        <div className="admin-dashboard__btn-wrapper">
-          <Link className="button button--green" to={"/admin/create-post"}>
+        <div className="admin-dashboard__btns-wrapper">
+          <Link className="button button--green" to="/admin/create-post">
             Yangi Post
+          </Link>
+          <Link className="button button--green" to="/admin/users">
+            Foydalanuvchilar
           </Link>
         </div>
       </div>
