@@ -3,20 +3,19 @@ import "./Trailers.scss";
 
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
-import { Card, Modal } from "../../components";
+import { Card, Modal, ModalInner } from "../../components";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
 const Trailers = () => {
   const { state, dispatch } = useContext(Context);
   const [id, setId] = useState("");
-
-  const handleModalClose = () => dispatch({ type: "MODAL_CLOSE" });
+  const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
 
   const handleTrailerDelete = () => {
     const postDoc = doc(db, "trailers", id);
     deleteDoc(postDoc);
-    handleModalClose();
+    dispatch({ type: "MODAL_CLOSE" });
   };
 
   useEffect(() => {
