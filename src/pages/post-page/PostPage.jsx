@@ -5,7 +5,7 @@ import "./PostPage.scss";
 import { MiniSideBar, Toast } from "../../components";
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, query, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { Context } from "../../context/Context";
@@ -29,12 +29,13 @@ const PostPage = () => {
   const stateText = type === "reviews" ? "maqola" : type === "trailers" ? "treyler" : "yangilik";
   const stateTitle = `So'nggi ${stateText}lar`;
 
+  const getData = async () => {
+    const data = (await getDoc(dataRef)).data();
+    setData(data);
+  };
+
   useEffect(() => {
-    const getData = async () => {
-      const data = (await getDoc(dataRef)).data();
-      setData(data);
-    };
-    getData();
+    onSnapshot(dataRef, getData);
   }, []);
 
   const updateLike = () => {
