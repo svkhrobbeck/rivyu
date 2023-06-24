@@ -73,21 +73,11 @@ const MainLayout = () => {
 
   useEffect(() => {
     dispatch({ type: "IS_LOADING", payload: true });
-    onSnapshot(query(newsRef), () => {
-      getData();
-    });
 
-    onSnapshot(query(trailersRef), () => {
-      getData();
-    });
-
-    onSnapshot(query(reviewsRef), () => {
-      getData();
-    });
-
-    onSnapshot(usersRef, () => {
-      getData();
-    });
+    onSnapshot(query(newsRef), getData);
+    onSnapshot(query(trailersRef), getData);
+    onSnapshot(query(reviewsRef), getData);
+    onSnapshot(usersRef, getData);
   }, []);
 
   return (
