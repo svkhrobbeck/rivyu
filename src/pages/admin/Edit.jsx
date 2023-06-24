@@ -55,7 +55,7 @@ const Edit = () => {
   }, []);
 
   function updatePostObj() {
-    if (data.type === "trailers") {
+    if (type === "trailers") {
       return {
         title,
         tags,
@@ -65,7 +65,6 @@ const Edit = () => {
       };
     } else {
       return {
-        ...data,
         title,
         shortDesc,
         tags,
@@ -102,7 +101,6 @@ const Edit = () => {
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               updateDoc(postRef, {
-                ...data,
                 lastEdited,
                 title,
                 shortDesc,
@@ -121,7 +119,7 @@ const Edit = () => {
     } else {
       await updateDoc(postRef, updatePostObj());
     }
-    navigate(`/${data.type}`);
+    navigate(`/${type}`);
   };
 
   return (
