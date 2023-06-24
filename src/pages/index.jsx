@@ -11,3 +11,4 @@ export { default as SearchResults } from "./search-results/SearchResults";
 export { default as Settings } from "./settings/Settings";
 export { default as Home } from "./home/Home";
 export { default as Trailers } from "./trailers/Trailers";
+export { default as Users } from "./users/Users";
