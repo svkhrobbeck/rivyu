@@ -3,26 +3,44 @@ import "./Settings.scss";
 
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { deleteUser } from "firebase/auth";
-import { db, storage } from "../../firebase/firebase";
+import { auth, db, storage } from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
-import { doc, updateDoc } from "firebase/firestore";
-import { getLocalStorage } from "../../utils/SetGetLocalStorage";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { getLocalStorage, removeLocalStorage } from "../../utils/SetGetLocalStorage";
+import { useEffect } from "react";
+import { firebaseLink, imageKitLink } from "../../constants";
 
 const Settings = () => {
-  const { state, dispatch } = useContext(Context);
-  const [image, setImage] = useState(state.currentUser.image || null);
-  const [media, setMedia] = useState(null);
-  const [fullName, setFullName] = useState(state.currentUser.name || "");
+  const { state } = useContext(Context);
   const navigate = useNavigate();
-  const oldImageRef = ref(storage, image);
-  const updateRef = doc(db, "users", "users");
 
-  if (!Object.keys(state.currentUser).length) {
-    window.location.pathname = "/";
-  }
+  const [user, setUser] = useState({});
+
+  const [role, setRole] = useState("admins");
+  const [image, setImage] = useState(null);
+  const [media, setMedia] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const oldImageRef = ref(storage, image);
+  const usersRef = doc(db, "users", "users");
+
+  const getData = async () => {
+    const users = (await getDoc(usersRef)).data();
+    const arr = [...users.users, ...users?.admins];
+    const user = arr.find(item => item.uid === getLocalStorage("$U$I$D$"));
+
+    // sets
+    setUser(user);
+    setImage(user?.image || null);
+    setFullName(user?.name || "");
+    setRole(user?.isAdmin ? "admins" : "users");
+  };
+
+  useEffect(() => {
+    onSnapshot(usersRef, getData);
+  }, []);
 
   const deleteOldImage = (state = true) => {
     deleteObject(oldImageRef).then(() => {
@@ -32,9 +50,9 @@ const Settings = () => {
   };
 
   const setProfileData = async () => {
-    if (state.isAuth === false || !!!getLocalStorage("$U$I$D$")) return;
+    if (!state.isAuth || !getLocalStorage("$U$I$D$")) return;
 
-    if (media !== null) {
+    if (!!media) {
       const mediaRef = ref(storage, `profiles/${media.name + uuidv4()}`);
       try {
         const uploadTask = uploadBytesResumable(mediaRef, media);
@@ -48,107 +66,43 @@ const Settings = () => {
             console.log(error);
           },
           () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-              if (state.isAdmin) {
-                const idx = state.users.admins.findIndex(item => item?.uid === state.currentUser?.uid);
-                const arr = [...state.users.admins];
-                arr.splice(idx, 1);
-                updateDoc(updateRef, {
-                  admins: [
-                    ...arr,
-                    {
-                      ...state.currentUser,
-                      name: fullName,
-                      image: downloadURL,
-                    },
-                  ],
-                });
-              } else {
-                const idx = state.users.users.findIndex(item => item.uid === state.currentUser.uid);
-                const arr = [...state.users.users];
-                arr.splice(idx, 1);
-                updateDoc(updateRef, {
-                  users: [
-                    ...arr,
-                    {
-                      ...state.currentUser,
-                      name: fullName,
-                      image: downloadURL,
-                    },
-                  ],
-                });
-              }
-
-              // currentUser
-              dispatch({
-                type: "GET_USER",
-                payload: {
-                  ...state.currentUser,
-                  name: fullName,
-                  image: downloadURL,
-                },
-              });
+            getDownloadURL(uploadTask.snapshot.ref).then(image => {
+              updateDoc(usersRef, { [role]: [...state.users[role].filter(item => item.uid !== user.uid), { ...user, name: fullName, image }] });
             });
           }
         );
-      } catch {
-        console.log("error");
       } finally {
         console.log("image uploaded");
       }
-      if (image !== null) {
-        deleteOldImage(false);
-      }
+      if (!!image) deleteOldImage(false);
     } else {
-      if (state.isAuth) {
-        const idx = state.users.admins.findIndex(({ uid }) => uid === state.currentUser.uid);
-        const arr = [...state.users.admins];
-        arr.splice(idx, 1);
-        await updateDoc(updateRef, {
-          admins: [...arr, { ...state.currentUser, name: fullName, image }],
-        });
-      } else {
-        const idx = state.users.users.findIndex(item => item.uid === state.currentUser.uid);
-        const arr = [...state.users.users];
-        arr.splice(idx, 1);
-        await updateDoc(updateRef, {
-          users: [...arr, { ...state.currentUser, name: fullName, image }],
-        });
-      }
-      // currentUser
-      dispatch({
-        type: "GET_USER",
-        payload: {
-          ...state.currentUser,
-          name: fullName,
-          image,
-        },
-      });
+      updateDoc(usersRef, { [role]: [...state.users[role].filter(item => item.uid !== user.uid), { ...user, name: fullName, image }] });
     }
     navigate("/");
   };
 
   const deletingUser = async () => {
-    if (!user) return;
-    const fileRef = ref(storage, user.photoURL);
-    if (user.photoURL) {
-      deleteObject(fileRef)
+    onAuthStateChanged(auth, user => {
+      if (!user) return;
+      const fileRef = ref(storage, user.photoURL);
+      if (user.photoURL) {
+        deleteObject(fileRef)
+          .then(() => {
+            console.log("File deleted successfully");
+          })
+          .catch(() => {
+            console.log("Something went wrong");
+          });
+      }
+      deleteUser(user)
         .then(() => {
-          console.log("File deleted successfully");
+          console.log("User deleted");
+          removeLocalStorage("$T$O$K$E$N$");
+          removeLocalStorage("$U$I$D$");
+          navigate("/login");
         })
-        .catch(error => {
-          console.log("Something went wrong");
-        });
-    }
-    deleteUser(user)
-      .then(() => {
-        console.log("User deleted");
-        localStorage.clear();
-        navigate("/login");
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        .catch(err => console.log(err));
+    });
   };
 
   return (
@@ -157,7 +111,15 @@ const Settings = () => {
       <form className="form-settings">
         <div className="form-settings__inner">
           <div className="form-settings__image-wrapper">
-            {!media && <img className="form-settings__image" src={image ? image : "/images/temp-image.svg"} alt="profile image" width={130} height={130} />}
+            {!media && (
+              <img
+                className="form-settings__image"
+                src={image ? image?.replace(firebaseLink, imageKitLink) : "/images/temp-image.svg"}
+                alt="profile image"
+                width={130}
+                height={130}
+              />
+            )}
             {media && (
               <img
                 className="form-settings__image"
