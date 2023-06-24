@@ -5,16 +5,18 @@ import "./PostPage.scss";
 import { MiniSideBar, Toast } from "../../components";
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { Context } from "../../context/Context";
 import { getLocalStorage } from "../../utils/SetGetLocalStorage";
-import { youtubeThumb } from "../../constants";
+import { firebaseLink, imageKitLink, youtubeThumb } from "../../constants";
+import { copyLink } from "../../utils/copyLink";
 
 const PostPage = () => {
   const { state } = useContext(Context);
-  const { id } = useParams();
+  const { type, id } = useParams();
+  const dataRef = doc(db, type, id);
 
   const [isShowToast, setIsShowToast] = useState(false);
   const [isShowFailureToast, setIsShowFailureToast] = useState(false);
@@ -22,42 +24,35 @@ const PostPage = () => {
   const handleOpenSuccessToast = () => setIsShowToast(true);
   const handleCloseFailureToast = () => setIsShowFailureToast(false);
   const handleOpenFailureToast = () => setIsShowFailureToast(true);
-
-  const filteredArr = state.arr.filter(item => item.id !== id);
-  const data = state.arr.find(item => item.id === id) || {};
-  const isTrailer = data.type === "trailers";
-
-  const stateText = data.type === "reviews" ? "maqola" : data.type === "trailers" ? "treyler" : "yangilik";
+  const [{ image, title, tags, videoId, createdAt, likesList, ...data }, setData] = useState({});
+  const isTrailer = type === "trailers";
+  const stateText = type === "reviews" ? "maqola" : type === "trailers" ? "treyler" : "yangilik";
   const stateTitle = `So'nggi ${stateText}lar`;
 
-  const updateLike = async () => {
-    const docRef = doc(db, data.type, id);
+  useEffect(() => {
+    const getData = async () => {
+      const data = (await getDoc(dataRef)).data();
+      setData(data);
+    };
+    getData();
+  }, []);
 
+  const updateLike = () => {
     onAuthStateChanged(auth, user => {
       if (state.isAuth) {
-        if (user) {
-          if (!data.likesList.includes(user.uid)) {
-            updateDoc(docRef, {
-              likesList: [...data.likesList, user.uid],
-            });
-          } else {
-            data.likesList = data.likesList.filter(item => item !== user.uid);
-            updateDoc(docRef, {
-              likesList: [...data.likesList],
-            });
-          }
+        if (!likesList.includes(user.uid)) {
+          updateDoc(dataRef, {
+            likesList: [...likesList, user.uid],
+          });
+        } else {
+          updateDoc(dataRef, {
+            likesList: [...likesList.filter(uid => uid !== user.uid)],
+          });
         }
       } else {
         handleOpenFailureToast();
         setTimeout(handleCloseFailureToast, 3000);
       }
-    });
-  };
-
-  const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      handleOpenSuccessToast();
-      setTimeout(handleCloseSuccessToast, 3000);
     });
   };
 
@@ -70,45 +65,45 @@ const PostPage = () => {
       <div className="post-page__inner container">
         <div className="post-page__post post">
           <div className="post__inner">
-            {data.image && <span className="post__badge">{stateText}</span>}
-            {!isTrailer && <>{data.image && <img className="post__image" src={data.image} alt={data.title} />}</>}
+            {image && <span className="post__badge">{stateText}</span>}
+            {!isTrailer && <>{image && <img className="post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={title} />}</>}
             {isTrailer && (
               <iframe
                 className="post__iframe"
                 width="640"
                 height="355"
-                src={`${youtubeThumb}${data.videoId}`}
-                title={data.title}
+                src={`${youtubeThumb}${videoId}`}
+                title={title}
                 allow="autoplay; picture-in-picture;"
                 allowFullScreen
               ></iframe>
             )}
 
             <div className="post__time-like-wrapper">
-              <time className="post__time" dateTime={data.createdAt}>
-                {data.image ? data.createdAt : "yuklanmoqda..."}
+              <time className="post__time" dateTime={createdAt}>
+                {image ? createdAt : "yuklanmoqda..."}
               </time>
               <div className="post__buttons-wrapper">
-                <button onClick={copyLink} className="post__button">
+                <button onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)} className="post__button">
                   <img src="/images/icon-link.svg" />
                 </button>
                 <button onClick={updateLike} className="post__button">
-                  {data?.likesList && <span>{data?.likesList?.length}</span>}
-                  {!data?.likesList && <img src="/images/rolling-spinner.svg" />}
-                  <img src={`/images/icon-${data.likesList?.includes(getLocalStorage("$U$I$D$")) ? "like" : "unlike"}.svg`} />
+                  {likesList && <span>{likesList?.length}</span>}
+                  {!likesList && <img src="/images/rolling-spinner.svg" />}
+                  <img src={`/images/icon-${likesList?.includes(getLocalStorage("$U$I$D$")) ? "like" : "unlike"}.svg`} />
                 </button>
               </div>
             </div>
-            {data.image && (
+            {image && (
               <>
-                <h2 className="post__title">{data.title}</h2>
+                <h2 className="post__title">{title}</h2>
                 <p className="post__description">{data.description}</p>
-                {data.tags.length ? (
+                {tags.length ? (
                   <ul className="post__tags">
-                    {data.tags &&
-                      data.tags.map(item => (
-                        <li key={item} className="post__tag">
-                          <Link to={`/search/${item.toLowerCase()}`}>{item}</Link>
+                    {tags &&
+                      tags.map(tag => (
+                        <li key={tag} className="post__tag">
+                          <Link to={`/search/${tag.toLowerCase()}`}>{tag}</Link>
                         </li>
                       ))}
                   </ul>
@@ -118,7 +113,7 @@ const PostPage = () => {
           </div>
         </div>
         <div className="post-page__side-bar">
-          <MiniSideBar arr={filteredArr.filter(({ type }) => type === data?.type).slice(0, 6)} title={stateTitle} />
+          <MiniSideBar arr={state.arr.filter(item => item.type === type && item.id !== id).slice(0, 6)} title={stateTitle} />
         </div>
       </div>
       <Toast handleClose={handleCloseSuccessToast} isOpen={isShowToast}>
