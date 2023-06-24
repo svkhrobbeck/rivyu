@@ -17,6 +17,7 @@ const Header = () => {
       removeLocalStorage("$T$O$K$E$N$");
       removeLocalStorage("$U$I$D$");
       dispatch({ type: "SET_AUTH", payload: false });
+      dispatch({ type: "SET_ADMIN", payload: false });
       navigate("/login");
     });
   };
