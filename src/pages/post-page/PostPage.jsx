@@ -24,7 +24,7 @@ const PostPage = () => {
   const handleOpenSuccessToast = () => setIsShowToast(true);
   const handleCloseFailureToast = () => setIsShowFailureToast(false);
   const handleOpenFailureToast = () => setIsShowFailureToast(true);
-  const [{ image, title, tags, videoId, createdAt, likesList, ...data }, setData] = useState({});
+  const [{ image, title, tags, videoId, createdAt, likesList, description }, setData] = useState({});
   const isTrailer = type === "trailers";
   const stateText = type === "reviews" ? "maqola" : type === "trailers" ? "treyler" : "yangilik";
   const stateTitle = `So'nggi ${stateText}lar`;
@@ -66,8 +66,8 @@ const PostPage = () => {
       <div className="post-page__inner container">
         <div className="post-page__post post">
           <div className="post__inner">
-            {image && <span className="post__badge">{stateText}</span>}
-            {!isTrailer && <>{image && <img className="post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={title} />}</>}
+            {!!image && <span className="post__badge">{stateText}</span>}
+            {!isTrailer && <>{!!image && <img className="post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={title} />}</>}
             {isTrailer && (
               <iframe
                 className="post__iframe"
@@ -82,7 +82,7 @@ const PostPage = () => {
 
             <div className="post__time-like-wrapper">
               <time className="post__time" dateTime={createdAt}>
-                {image ? createdAt : "yuklanmoqda..."}
+                {!!image ? createdAt : "yuklanmoqda..."}
               </time>
               <div className="post__buttons-wrapper">
                 <button onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)} className="post__button">
@@ -98,7 +98,7 @@ const PostPage = () => {
             {image && (
               <>
                 <h2 className="post__title">{title}</h2>
-                <p className="post__description">{data.description}</p>
+                <p className="post__description">{description}</p>
                 {tags.length ? (
                   <ul className="post__tags">
                     {tags &&
