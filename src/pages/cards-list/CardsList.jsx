@@ -5,9 +5,9 @@ import "./CardsList.scss";
 import { Modal, ModalInner } from "../../components";
 
 import { useContext, useEffect, useState } from "react";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
 import { Context } from "../../context/Context";
 import { firebaseLink, imageKitLink } from "../../constants";
@@ -15,37 +15,24 @@ import { firebaseLink, imageKitLink } from "../../constants";
 const CardsList = () => {
   const { state, dispatch } = useContext(Context);
   const navigate = useNavigate();
-  const pathName = useLocation().pathname.slice(1);
-  const text = pathName === "news" ? "Yangiliklar" : "Maqolalar";
+  const { type } = useParams();
+  const text = type === "news" ? "Yangiliklar" : "Maqolalar";
   const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
-
-  const getData = () => {
-    if (pathName === "news") {
-      return state.data.news;
-    } else if (pathName === "reviews") {
-      return state.data.reviews;
-    } else if (pathName === "trailers") {
-      return state.data.trailers;
-    }
-  };
 
   const [id, setId] = useState("");
 
   const deletePost = async id => {
-    const postDoc = doc(db, pathName, id);
-    const item = getData().find(item => item.id === id);
+    const postDoc = doc(db, type, id);
+    const { image } = (await getDoc(postDoc)).data();
 
-    if (item.image) {
-      const desertRef = ref(storage, item.image);
-      console.log(item.image);
+    if (image) {
+      const desertRef = ref(storage, image);
       deleteObject(desertRef)
         .then(() => {
           console.log("File deleted successfully");
           deleteDoc(postDoc);
         })
-        .catch(() => {
-          console.log("Uh-oh, an error occurred!");
-        });
+        .catch(err => console.log(err));
     } else {
       deleteDoc(postDoc);
     }
@@ -68,13 +55,13 @@ const CardsList = () => {
           <h2 className="cards__title main-title">{text}</h2>
           <ul className="cards-list">
             {!state.arr.length && <li className="card-item">{text} topilmadi!</li>}
-            {getData() &&
-              getData().map(({ id, lastEdited, image, title, shortDesc, createdAt }) => (
+            {state?.data[type] &&
+              state?.data[type]?.map(({ id, lastEdited, image, title, shortDesc, createdAt }) => (
                 <li key={id} className="card-item">
                   <img className="card-item__image" src={image?.replace(firebaseLink, imageKitLink)} alt={title} width="246" />
                   <div className="card-item__content">
                     <h3 className="card-item__title">
-                      <Link to={`/${pathName}/${id}`}>{title}</Link>
+                      <Link to={`/${type}/${id}`}>{title}</Link>
                     </h3>
                     <p className="card-item__desc">{shortDesc}</p>
                     <div className="card-item__times">
@@ -98,7 +85,7 @@ const CardsList = () => {
                         >
                           <img src="/images/icon-trash.svg" alt="icon trash" />
                         </button>
-                        <Link to={`/admin/edit/${pathName}/${id}`}>
+                        <Link to={`/admin/edit/${type}/${id}`}>
                           <button className="card-item__button">
                             <img src="/images/icon-edit.svg" alt="icon edit" />
                           </button>
