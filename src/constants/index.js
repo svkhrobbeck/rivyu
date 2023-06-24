@@ -30,7 +30,8 @@ export const aboutIcons = [
   { imgPath: "/kinoblog.svg", alt: "logo kinoblog" },
 ];
 
-const date = new Date();
+export const date = new Date();
+
 export const createdAt = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
   date.getMinutes()
 )}`;
