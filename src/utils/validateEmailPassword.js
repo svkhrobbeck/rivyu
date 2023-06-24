@@ -1,3 +1,16 @@
+export const validateEmailAndPassword = (email, password, setErr) => {
+  if (email.trim() === "" && password.trim() === "") {
+    setErr("Email va parolni kiriting!");
+    return;
+  } else if (email.trim() === "") {
+    setErr("Emailni kiriting!");
+    return;
+  } else if (password.trim() === "") {
+    setErr("Parolni kiriting!");
+    return;
+  }
+};
+
 export const validatePassword = (e, setErr, setPassword) => {
   const val = e.target.value.toLowerCase();
 
