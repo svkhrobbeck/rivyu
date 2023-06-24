@@ -37,17 +37,7 @@ const Trailers = () => {
       </ul>
 
       <Modal>
-        <div className="modal-inner">
-          <h3 className="modal-inner__title">Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?</h3>
-          <div className="modal-inner__buttons">
-            <button className="button button--green" onClick={handleModalClose}>
-              Yo'q
-            </button>
-            <button className="button button--blue" onClick={handleTrailerDelete}>
-              Ha
-            </button>
-          </div>
-        </div>
+        <ModalInner title={title} func={handleTrailerDelete} />
       </Modal>
     </section>
   );
