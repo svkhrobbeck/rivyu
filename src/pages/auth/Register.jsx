@@ -6,58 +6,30 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
-import { validateEmail, validatePassword } from "../../utils/validateEmailPassword";
-import { doc, updateDoc } from "firebase/firestore";
+import { validateEmail, validateEmailAndPassword, validatePassword } from "../../utils/validateEmailPassword";
 import { setLocalStorage } from "../../utils/SetGetLocalStorage";
+import { addUser } from "../../utils/addUser";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(null);
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [isPassword, setIsPassword] = useState(true);
   const { state, dispatch } = useContext(Context);
 
-  const addUser = async (email, password, uid, name, token) => {
-    if (!state.users.admins.some(item => item.email.includes(email)) && !state.users.users.some(item => item.email.includes(email))) {
-      const ref = doc(db, "users", "users");
-
-      const user = {
-        email,
-        password,
-        uid,
-        name,
-        token,
-        image: null,
-      };
-      console.log(user);
-      await updateDoc(ref, {
-        users: [...state.users.users, user],
-      });
-    }
-  };
-
   const signUpWithEmail = () => {
-    if (email === "" && password === "") {
-      setErr("Email va parolni kiriting!");
-      return;
-    } else if (email === "") {
-      setErr("Emailni kiriting!");
-      return;
-    } else if (password === "") {
-      setErr("Parolni kiriting!");
-      return;
-    }
+    validateEmailAndPassword(email, password, setErr);
 
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        // Signed in
         let { accessToken, uid, displayName } = userCredential.user;
-        displayName = email.split("@")[0];
+        displayName = username;
         setLocalStorage("$T$O$K$E$N$", accessToken);
         setLocalStorage("$U$I$D$", uid);
         dispatch({ type: "SET_AUTH", payload: true });
-        addUser(email, password, uid, displayName, accessToken);
+        addUser(state, "users", email, password, uid, displayName, accessToken);
         navigate("/");
         return;
       })
