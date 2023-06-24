@@ -18,9 +18,30 @@ const MainLayout = () => {
 
   const getUserData = async () => {
     const data = (await getDoc(usersRef)).data();
+    const uidLocal = getLocalStorage("$U$I$D$");
 
-    data.admins.forEach(({ uid }) => {
-      if (getLocalStorage("$U$I$D$") === uid) dispatch({ type: "SET_ADMIN", payload: true });
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        const { accessToken } = user;
+        if (getLocalStorage("$T$O$K$E$N$") === accessToken) {
+          data.users.forEach(({ uid }) => {
+            if (uid === uidLocal) dispatch({ type: "SET_AUTH", payload: true });
+          });
+
+          data.admins.forEach(({ uid }) => {
+            if (uidLocal === uid) {
+              dispatch({ type: "SET_AUTH", payload: true });
+              dispatch({ type: "SET_ADMIN", payload: true });
+            }
+          });
+        } else {
+          dispatch({ type: "SET_AUTH", payload: false });
+          removeLocalStorage("$T$O$K$E$N$");
+          removeLocalStorage("$U$I$D$");
+        }
+      } else {
+        dispatch({ type: "SET_AUTH", payload: false });
+      }
     });
   };
 
@@ -47,21 +68,7 @@ const MainLayout = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        const { accessToken } = user;
-        if (getLocalStorage("$T$O$K$E$N$") === accessToken) {
-          dispatch({ type: "SET_AUTH", payload: true });
-          getUserData();
-        } else {
-          dispatch({ type: "SET_AUTH", payload: false });
-          removeLocalStorage("$T$O$K$E$N$");
-          removeLocalStorage("$U$I$D$");
-        }
-      } else {
-        dispatch({ type: "SET_AUTH", payload: false });
-      }
-    });
+    getUserData();
   }, [state.isAuth]);
 
   useEffect(() => {
