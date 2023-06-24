@@ -39,3 +39,7 @@ export const createdAt = `${getZero(date.getDate())}.${getZero(date.getMonth() +
 export const lastEdited = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(date.getHours())}:${getZero(
   date.getMinutes()
 )}`;
+
+export const firebaseLink = "https://firebasestorage.googleapis.com/v0/b/kino-blog.appspot.com";
+
+export const imageKitLink = "https://ik.imagekit.io/fj0u394lay/images-kinoblog";
