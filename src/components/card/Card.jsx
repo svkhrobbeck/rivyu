@@ -4,7 +4,7 @@ import "./Card.scss";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { Link } from "react-router-dom";
-import { imageNotShown } from "../../constants";
+import { firebaseLink, imageKitLink, imageNotShown } from "../../constants";
 
 const Card = ({ image, title, createdAt, id, setId = {}, type }) => {
   const { state, dispatch } = useContext(Context);
@@ -13,7 +13,7 @@ const Card = ({ image, title, createdAt, id, setId = {}, type }) => {
 
   return (
     <div className="card">
-      <img className="card__img" src={image ? image : imageNotShown} alt={title} width={300} />
+      <img className="card__img" src={image ? image?.replace(firebaseLink, imageKitLink) : imageNotShown} alt={title} width={300} />
       <div className="card__content">
         <h3 className="card__heading">
           <Link className="card__link" to={`/${type}/${id}`}>
