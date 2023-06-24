@@ -10,6 +10,7 @@ import { db, storage } from "../../firebase/firebase";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
 import { Context } from "../../context/Context";
+import { firebaseLink, imageKitLink } from "../../constants";
 
 const CardsList = () => {
   const { state, dispatch } = useContext(Context);
@@ -36,6 +37,7 @@ const CardsList = () => {
 
     if (item.image) {
       const desertRef = ref(storage, item.image);
+      console.log(item.image);
       deleteObject(desertRef)
         .then(() => {
           console.log("File deleted successfully");
@@ -67,21 +69,21 @@ const CardsList = () => {
           <ul className="cards-list">
             {!state.arr.length && <li className="card-item">{text} topilmadi!</li>}
             {getData() &&
-              getData().map(item => (
-                <li key={item.id} className="card-item">
-                  <img className="card-item__image" src={item.image} alt={item.title} width="246" />
+              getData().map(({ id, lastEdited, image, title, shortDesc, createdAt }) => (
+                <li key={id} className="card-item">
+                  <img className="card-item__image" src={image?.replace(firebaseLink, imageKitLink)} alt={title} width="246" />
                   <div className="card-item__content">
                     <h3 className="card-item__title">
-                      <Link to={`/${pathName}/${item.id}`}>{item.title}</Link>
+                      <Link to={`/${pathName}/${id}`}>{title}</Link>
                     </h3>
-                    <p className="card-item__desc">{item.shortDesc}</p>
+                    <p className="card-item__desc">{shortDesc}</p>
                     <div className="card-item__times">
-                      <time className="card-item__time main-time" dateTime={item.createdAt}>
-                        {item.createdAt}
+                      <time className="card-item__time main-time" dateTime={createdAt}>
+                        {createdAt}
                       </time>
-                      {item.lastEdited && (
-                        <time className="card-item__time main-time card-item__time--edited" dateTime={item.lastEdited}>
-                          {item.lastEdited}
+                      {lastEdited && (
+                        <time className="card-item__time main-time card-item__time--edited" dateTime={lastEdited}>
+                          {lastEdited}
                         </time>
                       )}
                     </div>
@@ -90,13 +92,13 @@ const CardsList = () => {
                         <button
                           className="card-item__button"
                           onClick={() => {
-                            setId(item.id);
+                            setId(id);
                             dispatch({ type: "MODAL_OPEN" });
                           }}
                         >
                           <img src="/images/icon-trash.svg" alt="icon trash" />
                         </button>
-                        <Link to={`/admin/edit/${pathName}/${item.id}`}>
+                        <Link to={`/admin/edit/${pathName}/${id}`}>
                           <button className="card-item__button">
                             <img src="/images/icon-edit.svg" alt="icon edit" />
                           </button>
