@@ -2,7 +2,7 @@
 import "./CardsList.scss";
 
 // components
-import { Modal } from "../../components";
+import { Modal, ModalInner } from "../../components";
 
 import { useContext, useEffect, useState } from "react";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -16,6 +16,7 @@ const CardsList = () => {
   const navigate = useNavigate();
   const pathName = useLocation().pathname.slice(1);
   const text = pathName === "news" ? "Yangiliklar" : "Maqolalar";
+  const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
 
   const getData = () => {
     if (pathName === "news") {
@@ -28,8 +29,6 @@ const CardsList = () => {
   };
 
   const [id, setId] = useState("");
-  const handleModalClose = () => dispatch({ type: "MODAL_CLOSE" });
-  const handleModalOpen = () => dispatch({ type: "MODAL_OPEN" });
 
   const deletePost = async id => {
     const postDoc = doc(db, pathName, id);
@@ -49,7 +48,7 @@ const CardsList = () => {
       deleteDoc(postDoc);
     }
     navigate("/");
-    handleModalClose();
+    dispatch({ type: "MODAL_CLOSE" });
   };
 
   useEffect(() => {
@@ -92,7 +91,7 @@ const CardsList = () => {
                           className="card-item__button"
                           onClick={() => {
                             setId(item.id);
-                            handleModalOpen();
+                            dispatch({ type: "MODAL_OPEN" });
                           }}
                         >
                           <img src="/images/icon-trash.svg" alt="icon trash" />
