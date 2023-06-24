@@ -133,7 +133,7 @@ const Edit = () => {
             {myTags &&
               myTags.map(item => (
                 <li key={item.id} className="create-edit__tag">
-                  <TagBadge id={item.id} handleDelTags={handleDelTags}>
+                  <TagBadge id={item.id} handleDeleteTags={handleDelTags}>
                     {item.value}
                   </TagBadge>
                 </li>
