@@ -13,7 +13,7 @@ import { addUser } from "../../utils/addUser";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState("");
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const [isPassword, setIsPassword] = useState(true);
