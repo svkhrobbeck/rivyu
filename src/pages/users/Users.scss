@@ -1,0 +1,76 @@
+/* USERS */
+.users {
+  overflow-x: auto;
+}
+
+.users__title {
+  text-align: center;
+}
+
+.users__table,
+.users__table-row,
+.users__table-heading,
+.users__table-desc {
+  border: 1px solid var(--text-color);
+  border-collapse: collapse;
+}
+
+.users__table {
+  width: 100%;
+}
+
+.users__table-heading {
+  text-align: left;
+  font-weight: 600;
+}
+
+.users__table-desc--error {
+  color: red;
+}
+
+.users__table-heading,
+.users__table-desc {
+  padding: 5px 10px;
+}
+
+.users__table-delete {
+  padding: 0px;
+  border-radius: 2px;
+  display: flex;
+}
+
+/* USERS FIELD */
+.users__table-fields {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.users__table-field {
+  flex-grow: 1;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  color: var(--text-color);
+  font-size: inherit;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.users__table-select {
+  background-color: var(--border-color);
+  border-radius: 5px;
+  padding: 4px 0;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  color: var(--text-color);
+  flex-grow: 1;
+}
+
+.users__table-add {
+  padding: 7px;
+  background-color: var(--border-color);
+}
