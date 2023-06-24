@@ -7,20 +7,18 @@ import { useContext } from "react";
 
 const FavoritePost = () => {
   const { state } = useContext(Context);
-  let data = state?.arr[0] || null;
+  let { image, title, id, type } = state?.arr[0] || {};
 
   return (
     <>
-      {!!data?.image && (
+      {!!image && (
         <section className="favorite-post">
-          <img className="favorite-post__img" src={data.image} alt={data.title} width="640" title={data.title} />
+          <img className="favorite-post__img" src={image} alt={title} width="640" title={title} />
           <h4 className="favorite-post__title">Eng so'ngi xabar</h4>
-
-          <h5 className="favorite-post__subtitle" title={data.title}>
-            {data.title}
+          <h5 className="favorite-post__subtitle" title={title}>
+            {title}
           </h5>
-
-          <Link className="button button--green" to={`/${data.type}/${data.id}`}>
+          <Link className="favorite-post__btn button button--green" to={`/${type}/${id}`}>
             Batafsil
           </Link>
         </section>
