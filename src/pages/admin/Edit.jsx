@@ -43,6 +43,15 @@ const Edit = () => {
   const handleDeleteTags = id => {
     const filteredTags = mytags.filter(item => item.id !== id);
     setMytags(filteredTags);
+  const getData = async () => {
+    const data = (await getDoc(dataRef)).data();
+
+    // sets
+    setImage(data.image);
+    setTitle(data.title);
+    setShortDesc(data.shortDesc);
+    setDescription(data.description);
+    setMyTags(data.tags.map(item => ({ value: item, id: uuidv4() })));
   };
 
   function updatePostObj() {
