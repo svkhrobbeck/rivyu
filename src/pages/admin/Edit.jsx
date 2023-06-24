@@ -55,7 +55,7 @@ const Edit = () => {
   }, []);
 
   function updatePostObj() {
-    if (type === "trailers") {
+    if (atype === "trailers") {
       return {
         title,
         tags,
