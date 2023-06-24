@@ -25,6 +25,7 @@ const Router = () => {
       </Route>
 
       {state.isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
+      {state.isAdmin && <Route path="/admin/users" element={<Users />} />}
       {state.isAdmin && <Route path="/admin/create-post" element={<Create />} />}
       {state.isAdmin && <Route path="/admin/edit-post/:type/:id" element={<Edit />} />}
       <Route path="*" element={<Page404 />} />
