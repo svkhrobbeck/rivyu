@@ -24,11 +24,11 @@ const MainLayout = () => {
       if (user) {
         const { accessToken } = user;
         if (getLocalStorage("$T$O$K$E$N$") === accessToken) {
-          data.users.forEach(({ uid }) => {
+          data?.users.forEach(({ uid }) => {
             if (uid === uidLocal) dispatch({ type: "SET_AUTH", payload: true });
           });
 
-          data.admins.forEach(({ uid }) => {
+          data?.admins?.forEach(({ uid }) => {
             if (uidLocal === uid) {
               dispatch({ type: "SET_AUTH", payload: true });
               dispatch({ type: "SET_ADMIN", payload: true });
@@ -56,7 +56,7 @@ const MainLayout = () => {
     const reviews = reviewsArr.docs.map(doc => ({ ...doc.data(), id: doc.id })).sort((a, b) => b.time - a.time);
     const trailers = trailersArr.docs.map(doc => ({ ...doc.data(), id: doc.id })).sort((a, b) => b.time - a.time);
 
-    const user = [...users, ...admins].find(({ uid }) => uid === getLocalStorage("$U$I$D$")) || {};
+    const user = [...users, ...admins]?.find(({ uid }) => uid === getLocalStorage("$U$I$D$")) || {};
     const data = { news, reviews, trailers };
     const arr = [...news, ...reviews, ...trailers].sort((a, b) => b.time - a.time);
 
