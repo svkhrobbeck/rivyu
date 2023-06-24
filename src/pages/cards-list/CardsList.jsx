@@ -60,18 +60,9 @@ const CardsList = () => {
     <section className="cards">
       <div className="container">
         <Modal>
-          <div className="modal-inner">
-            <h3 className="modal-inner__title">Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?</h3>
-            <div className="modal-inner__buttons">
-              <button className="button button--green" onClick={handleModalClose}>
-                Yo'q
-              </button>
-              <button className="button button--blue" onClick={() => deletePost(id)}>
-                Ha
-              </button>
-            </div>
-          </div>
+          <ModalInner title={title} func={() => deletePost(id)} />
         </Modal>
+
         <div className="cards__inner">
           <h2 className="cards__title main-title">{text}</h2>
           <ul className="cards-list">
