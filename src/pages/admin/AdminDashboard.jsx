@@ -8,7 +8,7 @@ const AdminDashboard = () => {
     <section className="admin-dashboard">
       <div className="container">
         <div className="admin-dashboard__btns-wrapper">
-          <Link className="button button--green" to="/admin/create-post">
+          <Link className="button button--green" to="/admin/create">
             Yangi Post
           </Link>
           <Link className="button button--green" to="/admin/users">

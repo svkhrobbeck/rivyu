@@ -96,7 +96,7 @@ const CardsList = () => {
                         >
                           <img src="/images/icon-trash.svg" alt="icon trash" />
                         </button>
-                        <Link to={`/admin/edit-post/${pathName}/${item.id}`}>
+                        <Link to={`/admin/edit/${pathName}/${item.id}`}>
                           <button className="card-item__button">
                             <img src="/images/icon-edit.svg" alt="icon edit" />
                           </button>
