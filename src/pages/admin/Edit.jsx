@@ -4,45 +4,41 @@ import "./AdminDashboard.scss";
 // components
 import { TagBadge } from "../../components";
 
-import { useContext, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { lastEdited } from "../../constants";
-import { Context } from "../../context/Context";
 
 const Edit = () => {
   const navigate = useNavigate();
   const { type, id } = useParams();
-  const { state } = useContext(Context);
-  const [data, setData] = useState(state.arr.find(item => item.id === id) || {});
-
-  if (!state.arr.length) {
-    window.location.pathname = "/";
-  }
+  const dataRef = doc(db, type, id);
 
   const [media, setMedia] = useState(null);
-  const [image, setImage] = useState(data.image || null);
-  const [title, setTitle] = useState(data.title || "");
-  const [shortDesc, setShortDesc] = useState(data.shortDesc || "");
-  const [description, setDescription] = useState(data.description || "");
-  const [mytags, setMytags] = useState(data.tags ? data.tags.map(value => ({ value, id: uuidv4() })) : []);
-  const tags = mytags.map(item => item.value);
+  const [image, setImage] = useState(null);
+  const [title, setTitle] = useState("");
+  const [shortDesc, setShortDesc] = useState("");
+  const [description, setDescription] = useState("");
+  const [myTags, setMyTags] = useState([]);
+  const tags = myTags.map(item => item.value);
   const elTagInput = useRef(null);
 
   const handleAddTags = () => {
     if (!elTagInput.current.value || tags.length >= 6) return;
-    const val = elTagInput.current.value.split(" ").join("").trim(" ");
-    const newTags = [...mytags, { value: val, id: uuidv4() }];
-    setMytags(newTags);
+    const val = elTagInput.current.value.split(" ").join("").trim("");
+    const newTags = [...myTags, { value: val, id: uuidv4() }];
+    setMyTags(newTags);
     elTagInput.current.value = "";
   };
 
-  const handleDeleteTags = id => {
-    const filteredTags = mytags.filter(item => item.id !== id);
-    setMytags(filteredTags);
+  const handleDelTags = id => {
+    const tags = myTags.filter(item => item.id !== id);
+    setMyTags(tags);
+  };
+
   const getData = async () => {
     const data = (await getDoc(dataRef)).data();
 
@@ -53,6 +49,10 @@ const Edit = () => {
     setDescription(data.description);
     setMyTags(data.tags.map(item => ({ value: item, id: uuidv4() })));
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   function updatePostObj() {
     if (data.type === "trailers") {
@@ -127,13 +127,13 @@ const Edit = () => {
   return (
     <div className="create-edit container">
       <h2 className="create-edit__title">Postni Yangilash</h2>
-      {tags.length ? (
+      {!!tags.length ? (
         <>
           <ul className="create-edit__tags">
-            {mytags &&
-              mytags.map(item => (
+            {myTags &&
+              myTags.map(item => (
                 <li key={item.id} className="create-edit__tag">
-                  <TagBadge id={item.id} handleDeleteTags={handleDeleteTags}>
+                  <TagBadge id={item.id} handleDelTags={handleDelTags}>
                     {item.value}
                   </TagBadge>
                 </li>
@@ -151,7 +151,7 @@ const Edit = () => {
         value={title}
         onChange={e => setTitle(e.target.value)}
       />
-      {data?.type !== "trailers" && (
+      {type !== "trailers" && (
         <input
           className="main-field create-edit__field create-edit__field--short-desc"
           type="text"
@@ -167,7 +167,7 @@ const Edit = () => {
           Teg qo'shish
         </button>
       </div>
-      {data?.type !== "trailers" && (
+      {type !== "trailers" && (
         <>
           <input
             className="create-edit__field create-edit__field--image visually-hidden"
@@ -195,7 +195,7 @@ const Edit = () => {
         {media && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />}
       </div>
       <div className="create-edit__buttons">
-        <Link to={`/${data?.type}`}>
+        <Link to={`/${type}`}>
           <button className="button button--blue">Bekor Qilish</button>
         </Link>
         <button className="button button--green" type="button" onClick={updatePost}>
