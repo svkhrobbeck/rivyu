@@ -1,6 +1,9 @@
 /* ADMIN DASHBOARD */
-.admin-dashboard__btn-wrapper {
-  text-align: center;
+.admin-dashboard__btns-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 40px;
 }
 
 .create-edit {
