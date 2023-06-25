@@ -56,7 +56,7 @@ const Header = () => {
           <button className="button user-account">
             <img
               className="user-account__img"
-              src={!!user.image ? user.image?.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"}
+              src={!!user?.image ? user?.image?.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"}
               alt="icon account"
             />
             <ul className="user-account__list">
