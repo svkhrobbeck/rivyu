@@ -69,7 +69,7 @@ const CardsList = () => {
                         {createdAt}
                       </time>
                       {lastEdited && (
-                        <time className="card-item__time main-time card-item__time--edited" dateTime={lastEdited}>
+                        <time className="card-item__time main-time main-time--edited" dateTime={lastEdited}>
                           {lastEdited}
                         </time>
                       )}
