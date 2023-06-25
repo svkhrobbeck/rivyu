@@ -3,15 +3,31 @@ import "./Header.scss";
 
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
-import { removeLocalStorage } from "../../utils/SetGetLocalStorage";
+import { getLocalStorage, removeLocalStorage } from "../../utils/SetGetLocalStorage";
 import { firebaseLink, imageKitLink } from "../../constants";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
   const { state, dispatch } = useContext(Context);
+  const usersRef = doc(db, "users", "users");
+  const [{ image }, setUser] = useState({});
+
+  const getUser = async () => {
+    const data = (await getDoc(usersRef)).data();
+    const users = [...data?.users, ...data?.admins];
+    const user = users.find(item => item.uid === getLocalStorage("$U$I$D$"));
+    setUser(user);
+  };
+
+  useEffect(() => {
+    onSnapshot(usersRef, getUser);
+  }, []);
 
   const signOutUser = () => {
     signOut(auth).then(() => {
@@ -38,11 +54,7 @@ const Header = () => {
         </div>
         <div className="site-header__actions">
           <button className="button user-account">
-            <img
-              className="user-account__img"
-              src={state.currentUser?.image ? state.currentUser?.image?.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"}
-              alt="icon account"
-            />
+            <img className="user-account__img" src={image ? image.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"} alt="icon account" />
             <ul className="user-account__list">
               {state.isAuth && (
                 <>

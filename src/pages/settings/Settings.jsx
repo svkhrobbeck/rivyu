@@ -2,7 +2,7 @@
 import "./Settings.scss";
 
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { deleteUser } from "firebase/auth";
+import { deleteUser, onAuthStateChanged } from "firebase/auth";
 import { auth, db, storage } from "../../firebase/firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useContext, useState } from "react";
@@ -12,9 +12,10 @@ import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { getLocalStorage, removeLocalStorage } from "../../utils/SetGetLocalStorage";
 import { useEffect } from "react";
 import { firebaseLink, imageKitLink } from "../../constants";
+import { Modal, ModalInner } from "../../components";
 
 const Settings = () => {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const navigate = useNavigate();
 
   const [user, setUser] = useState({});
@@ -158,11 +159,14 @@ const Settings = () => {
           <button onClick={deleteOldImage} className="button button--green" type="button">
             Profil rasmini o'chirish
           </button>
-          <button onClick={deletingUser} className="button button--blue" type="button">
+          <button onClick={() => dispatch({ type: "MODAL_OPEN" })} className="button button--blue" type="button">
             Hisobni o'chirish
           </button>
         </div>
       </form>
+      <Modal>
+        <ModalInner title="Chindan ham foydalanuvchini o'chirishni xohlaysizmI?" func={deletingUser} />
+      </Modal>
     </section>
   );
 };
