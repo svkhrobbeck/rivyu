@@ -54,7 +54,7 @@ const Header = () => {
         </div>
         <div className="site-header__actions">
           <button className="button user-account">
-            <img className="user-account__img" src={image ? image.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"} alt="icon account" />
+            <img className="user-account__img" src={!!image ? image?.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"} alt="icon account" />
             <ul className="user-account__list">
               {state.isAuth && (
                 <>
