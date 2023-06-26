@@ -51,6 +51,7 @@
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 24px;
+  margin-bottom: 24px;
 
   @media only screen and (max-width: 1040px) {
     grid-template-columns: auto auto;
@@ -59,4 +60,8 @@
   @media only screen and (max-width: 576px) {
     grid-template-columns: auto;
   }
+}
+
+.home-post__btn-wrapper {
+  text-align: center;
 }
