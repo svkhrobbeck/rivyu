@@ -29,8 +29,6 @@ const Home = () => {
     }
   };
 
-  document.title = "Kino Blog | Bosh sahifa";
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
