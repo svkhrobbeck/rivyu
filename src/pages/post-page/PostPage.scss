@@ -85,10 +85,15 @@
 }
 
 .post__iframe {
-  aspect-ratio: 16 / 9;
   width: 100%;
   height: auto;
-  border: none;
+
+  iframe {
+    width: 100%;
+    height: auto;
+    border: none;
+    aspect-ratio: 16 / 9;
+  }
 }
 
 .post__time-like-wrapper {

@@ -5,13 +5,14 @@ import "./PostPage.scss";
 import { MiniSideBar, Toast } from "../../components";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { doc, getDoc, onSnapshot, query, updateDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { Context } from "../../context/Context";
 import { getLocalStorage } from "../../utils/SetGetLocalStorage";
-import { firebaseLink, imageKitLink, youtubeThumb } from "../../constants";
+import { firebaseLink, imageKitLink } from "../../constants";
 import { copyLink } from "../../utils/copyLink";
+import YouTube from "react-youtube";
 
 const PostPage = () => {
   const { state } = useContext(Context);
@@ -27,7 +28,6 @@ const PostPage = () => {
   const [{ image, title, tags, videoId, createdAt, likesList, description }, setData] = useState({});
   const isTrailer = type === "trailers";
   const stateText = type === "reviews" ? "maqola" : type === "trailers" ? "treyler" : "yangilik";
-  const stateTitle = `So'nggi ${stateText}lar`;
 
   const getData = useCallback(async () => {
     const data = (await getDoc(dataRef)).data();
@@ -68,17 +68,7 @@ const PostPage = () => {
           <div className="post__inner">
             {!!image && <span className="post__badge">{stateText}</span>}
             {!isTrailer && <>{!!image && <img className="post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={title} />}</>}
-            {isTrailer && (
-              <iframe
-                className="post__iframe"
-                width="640"
-                height="355"
-                src={`${youtubeThumb}${videoId}`}
-                title={title}
-                allow="autoplay; picture-in-picture;"
-                allowFullScreen
-              ></iframe>
-            )}
+            {isTrailer && <YouTube videoId={videoId} className="post__iframe" />}
 
             <div className="post__time-like-wrapper">
               <time className="post__time" dateTime={createdAt}>
@@ -114,7 +104,7 @@ const PostPage = () => {
           </div>
         </div>
         <div className="post-page__side-bar">
-          <MiniSideBar arr={state.arr.filter(item => item.type === type && item.id !== id).slice(0, 6)} title={stateTitle} />
+          <MiniSideBar arr={state.arr.filter(item => item.type === type && item.id !== id).slice(0, 6)} title={`So'nggi ${stateText}lar`} />
         </div>
       </div>
       <Toast handleClose={handleCloseSuccessToast} isOpen={isShowToast}>
