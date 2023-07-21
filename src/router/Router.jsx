@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Context } from "../context/Context";
 
 // Pages
-import { Page404, About, Login, Register, AdminDashboard, CardsList, PostPage, Create, Edit, Settings, Home, Trailers, SearchResults, Users } from "../pages";
+import { Page404, About, Posts, Post, Admin, Create, Edit, Home, Trailers, SearchResults, Users } from "../pages";
 
 const Router = () => {
   const { state } = useContext(Context);
@@ -11,15 +11,16 @@ const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/:type" element={<CardsList />} />
+      <Route path="/news" element={<Posts />} />
+      <Route path="/reviews" element={<Posts />} />
       <Route path="/trailers" element={<Trailers />} />
-      <Route path="/:type/:id" element={<PostPage />} />
+      <Route path="/:type/:id" element={<Post />} />
       <Route path={"/search/:query"} element={<SearchResults />} />
       <Route path="/about" element={<About />} />
-      {state.isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
-      {state.isAdmin && <Route path="/admin/users" element={<Users />} />}
-      {state.isAdmin && <Route path="/admin/create" element={<Create />} />}
-      {state.isAdmin && <Route path="/admin/edit/:type/:id" element={<Edit />} />}
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/admin/users" element={<Users />} />
+      <Route path="/admin/create" element={<Create />} />
+      <Route path="/admin/edit/:type/:id" element={<Edit />} />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
