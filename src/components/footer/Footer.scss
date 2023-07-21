@@ -2,11 +2,6 @@
 .site-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.16);
   background-color: var(--component-color);
-  padding-left: 230px;
-
-  @media only screen and (max-width: 1140px) {
-    padding-left: 0;
-  }
 }
 
 .site-footer__container {

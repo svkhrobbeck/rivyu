@@ -1,15 +1,14 @@
 .site-header {
-  padding: 20px 120px;
+  padding: 14px 120px;
   border-bottom: 1px solid var(--border-color);
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
   z-index: 110;
   width: 100%;
   background-color: var(--component-color);
 
   @media only screen and (max-width: 1140px) {
-    padding: 14px 20px;
+    padding: 12px 20px;
   }
 
   @media only screen and (max-width: 840px) {
@@ -45,21 +44,21 @@
   padding: 5px;
   border-radius: 5px;
   transition: 0.2s ease background-color;
-  display: none;
   flex-direction: column;
+  display: none;
   justify-content: center;
   align-items: center;
   gap: 4px 0;
   width: 35px;
   height: 35px;
+  position: absolute;
+  left: 20px;
 
   &:hover {
     background-color: var(--primary-bg-color);
   }
 
   &.sitenav-toggler--show {
-    position: relative;
-
     .sitenav-toggler__inner {
       position: absolute;
       left: 5px;
@@ -80,6 +79,8 @@
 
   @media only screen and (max-width: 1140px) {
     display: flex;
+    position: relative;
+    left: auto;
   }
 }
 
@@ -111,93 +112,5 @@
 
   @media only screen and (max-width: 840px) {
     max-width: 108px;
-  }
-}
-
-/* ACTIONS */
-.site-header__actions {
-  display: flex;
-  align-items: center;
-}
-
-.user-account {
-  display: flex;
-}
-
-.user-account__img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--accent-color);
-  object-fit: cover;
-}
-
-.user-account {
-  border-radius: 50%;
-  padding: 0;
-  position: relative;
-  display: flex;
-}
-
-.user-account__list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  overflow: hidden;
-  width: 240px;
-  position: absolute;
-  transform: scale(0);
-  top: 85%;
-  right: 85%;
-  transform-origin: top right;
-  transition: transform 0.2s ease 0.3s;
-}
-
-.user-account:focus .user-account__list {
-  transform: scale(1);
-}
-
-.item-account-user {
-  background-color: var(--primary-bg-color);
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  position: relative;
-
-  &:hover {
-    background-color: #1b253a;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  a {
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
-.item-account-user__img {
-  margin-right: 10px;
-}
-
-.item-account-user__inner--red {
-  font-family: inherit;
-  color: #f05252;
-}
-
-.item-account-user__link {
-  color: inherit;
-
-  &::before {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    inset: 0;
   }
 }
