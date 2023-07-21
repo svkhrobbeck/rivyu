@@ -13,6 +13,7 @@ export const links = [
 ];
 
 export const sidebarLinks = [
+  { name: "Bosh Sahifa", route: "/", image: "/images/icon-home.svg" },
   { name: "Maqolalar", route: "/reviews", image: "/images/icon-pencil.svg" },
   { name: "Yangiliklar", route: "/news", image: "/images/icon-news.svg" },
   {
