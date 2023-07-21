@@ -1,7 +1,5 @@
 export { default as Page404 } from "./404/404";
 export { default as About } from "./about/About";
-export { default as Login } from "./auth/Login";
-export { default as Register } from "./auth/Register";
 export { default as AdminDashboard } from "./admin/AdminDashboard";
 export { default as CardsList } from "./cards-list/CardsList";
 export { default as PostPage } from "./post-page/PostPage";

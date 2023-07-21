@@ -16,13 +16,6 @@ const Router = () => {
       <Route path="/:type/:id" element={<PostPage />} />
       <Route path={"/search/:query"} element={<SearchResults />} />
       <Route path="/about" element={<About />} />
-      <Route path="/settings" element={<Settings />} />
-      {!state.isAuth && (
-        <Route>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-        </Route>
-      )}
       {state.isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
       {state.isAdmin && <Route path="/admin/users" element={<Users />} />}
       {state.isAdmin && <Route path="/admin/create" element={<Create />} />}
