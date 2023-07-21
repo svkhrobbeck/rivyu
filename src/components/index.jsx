@@ -10,3 +10,4 @@ export { default as Loader } from "./loader/Loader";
 export { default as Modal } from "./modal/Modal";
 export { default as Search } from "./search/Search";
 export { default as TagBadge } from "./tag-badge/TagBadge";
+export { default as PostItem } from "./post-item/PostItem";
