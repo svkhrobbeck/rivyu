@@ -9,6 +9,7 @@ const initialValue = {
   isAdmin: false,
   isAuth: false,
   siteNavOpen: false,
+  siteNavMini: true,
   modalOpen: false,
 };
 
@@ -41,6 +42,12 @@ const reducer = (state = initialValue, action) => {
 
     case "SITENAV_TOGGLE":
       return { ...state, siteNavOpen: !state.siteNavOpen };
+
+    case "SITENAV_CLOSE":
+      return { ...state, siteNavOpen: false };
+
+    case "SITENAV_MINI_TOGGLE":
+      return { ...state, siteNavMini: !state.siteNavMini };
 
     case "MODAL_OPEN":
       return { ...state, modalOpen: true };
