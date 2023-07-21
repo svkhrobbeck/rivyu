@@ -47,11 +47,10 @@
 }
 
 /* POSTS HOME */
-.posts-home__inner {
+.posts-home {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 24px;
-  margin-bottom: 24px;
 
   @media only screen and (max-width: 1040px) {
     grid-template-columns: auto auto;

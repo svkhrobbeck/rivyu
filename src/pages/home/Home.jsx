@@ -6,10 +6,10 @@ import { Search, MiniSideBar, FavoritePost, Card } from "../../components";
 
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   const { state } = useContext(Context);
-
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,6 +17,10 @@ const Home = () => {
 
   return (
     <section className="home">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Rivyu | Kino Yangiliklari</title>
+      </Helmet>
       <div className="container">
         <div className="home__inner">
           <div className="home__content">
@@ -28,18 +32,13 @@ const Home = () => {
           </div>
         </div>
         <div className="home__posts posts-home">
-          <div className="posts-home__inner">
-            {!!state.arr?.length &&
-              state.arr
-                ?.slice(0, postsNum)
-                .filter((_, i) => i !== 0)
-                .map(item => <Card key={item.id} {...item} />)}
-          </div>
-          <div className="home-post__btn-wrapper">
-            <button className="home-post__btn button button--green" onClick={updatePostNum}>
-              {buttonText}
-            </button>
-          </div>
+          {
+            !!state.arr
+              .filter((_, i) => i !== 0)
+              ?.length ? state.arr.filter((_, i) => i !== 0)
+              .map(item => <Card key={item.id} {...item} />)
+              : <>Maqolalar topilmadi</>
+          }
         </div>
       </div>
     </section>
