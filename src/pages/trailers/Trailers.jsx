@@ -6,6 +6,7 @@ import { Context } from "../../context/Context";
 import { Card, Modal, ModalInner } from "../../components";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import { Helmet } from "react-helmet";
 
 const Trailers = () => {
   const { state, dispatch } = useContext(Context);
@@ -24,6 +25,10 @@ const Trailers = () => {
 
   return (
     <section className="trailers">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Rivyu | Treylerlar</title>
+      </Helmet>
       <h2 className="trailers__title main-title">Treylerlar</h2>
       <ul className="trailers__list">
         {!!!state.arr?.length && <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>}

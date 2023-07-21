@@ -6,6 +6,7 @@ import getZero from "../../utils/getZero";
 import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
 import filterUniqueObjects from "../../utils/filterUniqueObjects";
+import { Helmet } from "react-helmet";
 
 const SearchResults = () => {
   const { query } = useParams();
@@ -23,6 +24,10 @@ const SearchResults = () => {
 
   return (
     <section className="tags">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Qidiruv Natijalari | {query}</title>
+      </Helmet>
       <div className="container">
         <h2 className="tags__title">
           Qidiruv natijalari: <span className="tags__title-inner">{query}</span>
