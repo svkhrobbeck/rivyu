@@ -1,5 +1,5 @@
 // style
-import "./AdminDashboard.scss";
+import "./Admin.scss";
 
 // components
 import { TagBadge } from "../../components";
@@ -25,6 +25,7 @@ const Edit = () => {
   const [myTags, setMyTags] = useState([]);
   const tags = myTags.map(item => item.value);
   const elTagInput = useRef(null);
+  // const descs = description?.map(desc => (desc += "\n")) || []
 
   const handleAddTags = () => {
     if (!elTagInput.current.value || tags.length >= 6) return;
@@ -160,7 +161,13 @@ const Edit = () => {
         />
       )}
       <div className="create-edit__field-wrapper">
-        <input className="main-field create-edit__field create-edit__field--tag" type="text" name="tags" placeholder="teglar" ref={elTagInput} />
+        <input
+          className="main-field create-edit__field create-edit__field--tag"
+          type="text"
+          name="tags"
+          placeholder="teglar"
+          ref={elTagInput}
+        />
         <button onClick={handleAddTags} className="admin-form__tag-button" type="button">
           Teg qo'shish
         </button>
@@ -176,7 +183,10 @@ const Edit = () => {
             id="image-input-edit"
             onChange={e => setMedia(e.target.files[0])}
           />
-          <label className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block" htmlFor="image-input-edit">
+          <label
+            className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
+            htmlFor="image-input-edit"
+          >
             {media ? "rasm tanlandi" : "rasmni tanlang"}
           </label>
         </>
@@ -189,7 +199,9 @@ const Edit = () => {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-        {!media && <img className="create-edit__img" src={image ? image?.replace(firebaseLink, imageKitLink) : "/images/temp-image.svg"} alt="" />}
+        {!media && (
+          <img className="create-edit__img" src={image ? image?.replace(firebaseLink, imageKitLink) : "/images/temp-image.svg"} alt="" />
+        )}
         {media && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />}
       </div>
       <div className="create-edit__buttons">

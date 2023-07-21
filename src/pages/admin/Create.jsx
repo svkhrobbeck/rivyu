@@ -1,5 +1,5 @@
 // style
-import "./AdminDashboard.scss";
+import "./Admin.scss";
 
 // components
 import { TagBadge } from "../../components";
@@ -189,7 +189,13 @@ const Create = () => {
       )}
       <div className="create-edit__fields">
         <div className="create-edit__field-wrapper">
-          <input className="main-field create-edit__field create-edit__field--tag" type="text" name="tags" placeholder="teglar" ref={elTagInput} />
+          <input
+            className="main-field create-edit__field create-edit__field--tag"
+            type="text"
+            name="tags"
+            placeholder="teglar"
+            ref={elTagInput}
+          />
           <button onClick={handleAddTags} className="admin-form__tag-button" type="button">
             Teg qo'shish
           </button>
@@ -220,7 +226,9 @@ const Create = () => {
           onChange={e => setDescription(e.target.value)}
         />
 
-        {type !== "trailers" && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />}
+        {type !== "trailers" && (
+          <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />
+        )}
       </div>
       <div className="create-edit__buttons">
         <Link className="button button--green" to={"/admin"}>
