@@ -10,7 +10,6 @@ import { getLocalStorage, removeLocalStorage } from "../../utils/SetGetLocalStor
 import { firebaseLink, imageKitLink } from "../../constants";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { useEffect } from "react";
-import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -42,49 +41,17 @@ const Header = () => {
     <header className="site-header">
       <div className="site-header__container">
         <div className="site-header__left">
-          <button className={`sitenav-toggler ${state.siteNavOpen && "sitenav-toggler--show"}`} onClick={() => dispatch({ type: "SITENAV_TOGGLE" })}>
+          <button
+            className={`sitenav-toggler ${state.siteNavOpen ? "sitenav-toggler--show" : ""}`}
+            onClick={() => dispatch({ type: "SITENAV_TOGGLE" })}
+          >
             <span className="sitenav-toggler__inner"></span>
             <span className="sitenav-toggler__inner"></span>
             <span className="sitenav-toggler__inner"></span>
           </button>
           <Link to="/">
-            <img className="logo" src="/images/logo.svg" alt="kino blog logo" width={45} height={45} />
+            <img className="logo" src="/images/logo.svg" alt="kino blog logo" width={175} height={45} />
           </Link>
-        </div>
-        <div className="site-header__actions">
-          <button className="button user-account">
-            <img
-              className="user-account__img"
-              src={state?.currentUser?.image ? state?.currentUser?.image.replace(firebaseLink, imageKitLink) : "/images/icon-account.svg"}
-              alt="icon account"
-            />
-            <ul className="user-account__list">
-              {state.isAuth && (
-                <>
-                  <li className="user-account__item item-account-user">
-                    <img className="item-account-user__img" src="/images/icon-settings.svg" />
-                    <Link className="item-account-user__link" to={"/settings"}>
-                      Sozlamalar
-                    </Link>
-                  </li>
-                  <li className="user-account__item item-account-user">
-                    <img className="item-account-user__img" src="/images/icon-sign-out.svg" />
-                    <span className="item-account-user__inner item-account-user__inner--red" onClick={signOutUser}>
-                      Chiqish
-                    </span>
-                  </li>
-                </>
-              )}
-              {!state.isAuth && (
-                <li className="user-account__item item-account-user">
-                  <img className="item-account-user__img" src="/images/icon-login.svg" />
-                  <Link className="item-account-user__link" to={"/login"}>
-                    kirish
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </button>
         </div>
       </div>
     </header>
