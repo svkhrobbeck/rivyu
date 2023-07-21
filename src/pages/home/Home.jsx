@@ -10,24 +10,6 @@ import { Context } from "../../context/Context";
 const Home = () => {
   const { state } = useContext(Context);
 
-  const [postsNum, setPostsNum] = useState(13);
-  const [buttonText, setButtonText] = useState("Ko'proq");
-
-  const updatePostNum = () => {
-    const length = state.arr.length;
-
-    if (length - postsNum < 10) {
-      setPostsNum(length);
-      console.log(length);
-      setButtonText("Kamroq");
-    } else if (length - postsNum >= 10) {
-      setPostsNum(p => (p += 10));
-    }
-    if (postsNum === length) {
-      setPostsNum(13);
-      setButtonText("Ko'proq");
-    }
-  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
