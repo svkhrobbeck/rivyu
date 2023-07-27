@@ -1,29 +1,25 @@
 .favorite-post {
   max-width: 100%;
-  padding: 15px;
   flex-grow: 1;
   background-color: var(--component-color);
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--border-color);
   display: flex;
+  overflow: hidden;
   flex-direction: column;
+}
 
-  @media only screen and (max-width: 768px) {
-    padding: 12px;
-  }
-
-  @media only screen and (max-width: 576px) {
-    padding: 10px;
-  }
+.favorite-post__img-wrapper {
+  position: relative;
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .favorite-post__img {
   width: 100%;
   aspect-ratio: 16 /9;
   object-fit: cover;
-  border-radius: 4px;
-  object-position: top;
-  margin-bottom: 10px;
+  object-position: center;
 
   @media only screen and (max-width: 1320px) {
     height: 443px;
@@ -35,26 +31,34 @@
   }
 }
 
-.favorite-post__title {
-  display: flex;
-  align-items: center;
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 22px;
-  font-weight: 600;
+.favorite-post__content {
+  padding: 15px;
+  padding-top: 0;
 
-  @media only screen and (max-width: 920px) {
-    font-size: 20px;
-  }
-
-  @media only screen and (max-width: 840px) {
-    font-size: 19px;
-    font-weight: 500;
+  @media only screen and (max-width: 768px) {
+    padding: 12px;
+    padding-top: 0;
   }
 
   @media only screen and (max-width: 576px) {
-    font-size: 18px;
+    padding: 10px;
+    padding-top: 0;
   }
+}
+
+.favorite-post__buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.favorite-post__button {
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 3px;
+  display: flex;
 }
 
 .favorite-post__subtitle {
