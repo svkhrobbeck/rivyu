@@ -53,10 +53,6 @@
 
 /* POSTS HOME */
 .posts-home {
-  border: 1px solid var(--border-color);
-  border-top: none;
-  border-radius: 0 0 5px 5px;
-  padding: 5px;
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 14px 10px;
