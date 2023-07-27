@@ -1,0 +1,22 @@
+.tabs {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.tabs__item {
+  padding: 7px 10px;
+  font-size: 24px;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    align-self: flex-end;
+    flex-grow: 1;
+  }
+
+  &--active {
+    border-radius: 5px 5px 0 0;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+  }
+}
