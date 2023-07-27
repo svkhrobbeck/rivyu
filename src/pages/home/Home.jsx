@@ -41,7 +41,7 @@ const Home = () => {
       <div className="container">
         <div className="home__inner">
           <div className="home__content">
-            <FavoritePost />
+            <FavoritePost click={setId} />
           </div>
           <div className="home__side-bar">
             <MiniSideBar arr={posts.slice(1, 8)} title="So'nggi yangiliklar" state="news" />
