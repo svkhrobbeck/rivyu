@@ -4,10 +4,10 @@
   position: relative;
 
   &:not(:last-child) {
-    margin-bottom: 75px;
+    margin-bottom: 25px;
   }
 
-  @media only screen and (max-width: 840px) {
+  @media only screen and (max-width: 1140px) {
     flex-direction: column;
   }
 }
@@ -19,7 +19,7 @@
   width: 100%;
   margin-right: 10px;
 
-  @media only screen and (max-width: 840px) {
+  @media only screen and (max-width: 1140px) {
     max-width: none;
     margin-right: 0;
     margin-bottom: 25px;
@@ -31,13 +31,18 @@
 }
 
 .home__side-bar {
-  max-width: 320px;
+  max-width: 400px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transition: max-width 0.4s ease;
 
-  @media only screen and (max-width: 840px) {
+  @media only screen and (max-width: 1500px) {
+    max-width: 320px;
+  }
+
+  @media only screen and (max-width: 1140px) {
     max-width: none;
   }
 
@@ -48,15 +53,20 @@
 
 /* POSTS HOME */
 .posts-home {
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  padding: 5px;
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-gap: 24px;
+  grid-gap: 14px 10px;
 
   @media only screen and (max-width: 1040px) {
     grid-template-columns: auto auto;
+    grid-gap: 10px;
   }
 
-  @media only screen and (max-width: 576px) {
+  @media only screen and (max-width: 680px) {
     grid-template-columns: auto;
   }
 }
