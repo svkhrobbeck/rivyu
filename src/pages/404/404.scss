@@ -22,27 +22,29 @@
 
 .page-404__title {
   font-weight: 600;
-  font-size: 42px;
+  font-size: 36px;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   @media only screen and (max-width: 920px) {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   @media only screen and (max-width: 840px) {
-    font-size: 32px;
+    font-size: 28px;
     margin-bottom: 10px;
     font-weight: 500;
   }
 
   @media only screen and (max-width: 600px) {
-    font-size: 28px;
+    font-size: 24px;
   }
 }
 
 .page-404__desc {
-  font-size: 24px;
+  max-width: 900px;
+  font-size: 20px;
+  margin-top: 0;
   margin-bottom: 15px;
 
   @media only screen and (max-width: 920px) {

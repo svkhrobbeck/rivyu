@@ -18,8 +18,8 @@ const Page404 = () => {
           "Uzr! Siz yaroqsiz sahifaga tashrif buyurgan ko'rinasiz. Agarda bu bizning xatoyimiz ekanligiga ishonchingiz komil bo'lsa, bizga
           xabar bering."
         </p>
-        <Link to={"/"}>
-          <button className="button button--green">Bosh sahifaga qaytish</button>
+        <Link className="button button--green" to={"/"}>
+          Bosh sahifaga qaytish
         </Link>
       </div>
     </section>
