@@ -1,46 +1,35 @@
 // style
 import "./Users.scss";
 
-import { useContext, useState } from "react";
-import { Context } from "../../context/Context";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
-import { addUser } from "../../utils/addUser";
-import { useNavigate } from "react-router-dom";
-import { validateEmail, validateEmailAndPassword, validatePassword } from "../../utils/validateEmailPassword";
-import { removeLocalStorage } from "../../utils/SetGetLocalStorage";
 import { Helmet } from "react-helmet";
 
 const Users = () => {
-  const { state, dispatch } = useContext(Context);
-  const navigate = useNavigate();
+  // const [err, setErr] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [role, setRole] = useState("users");
 
-  const [err, setErr] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("users");
+  // const createNewUser = () => {
+  //   validateEmailAndPassword(email, password, setErr);
 
-  const createNewUser = () => {
-    validateEmailAndPassword(email, password, setErr);
+  //   createUserWithEmailAndPassword(auth, email, password)
+  //     .then(userCredential => {
+  //       let { accessToken, uid, displayName } = userCredential.user;
+  //       displayName = username;
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        let { accessToken, uid, displayName } = userCredential.user;
-        displayName = username;
-
-        addUser(state, role, email, password, uid, username, accessToken);
-        removeLocalStorage("$T$O$K$E$N$");
-        removeLocalStorage("$U$I$D$");
-        dispatch({ type: "SET_AUTH", payload: false });
-        dispatch({ type: "SET_ADMIN", payload: false });
-        navigate("/login");
-        return;
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
-  };
+  //       addUser(state, role, email, password, uid, username, accessToken);
+  //       removeLocalStorage("$T$O$K$E$N$");
+  //       removeLocalStorage("$U$I$D$");
+  //       dispatch({ type: "SET_AUTH", payload: false });
+  //       dispatch({ type: "SET_ADMIN", payload: false });
+  //       navigate("/login");
+  //       return;
+  //     })
+  //     .catch(error => {
+  //       console.log(error.message);
+  //     });
+  // };
 
   return (
     <section className="users">
@@ -59,7 +48,7 @@ const Users = () => {
                 <th className="users__table-heading">Rol</th>
               </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
               {!![...Object.keys(state.users)]?.length &&
                 [...state.users.admins, ...state.users.users].map(({ email, name, uid, isAdmin }) => (
                   <tr className="users__table-row" key={uid}>
@@ -118,7 +107,7 @@ const Users = () => {
                   </td>
                 </tr>
               )}
-            </tbody>
+            </tbody> */}
           </table>
         </div>
       </div>
