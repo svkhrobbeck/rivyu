@@ -1,19 +1,22 @@
 // style
 import "./SearchResults.scss";
 
+import { useEffect } from "react";
 import getZero from "../../utils/getZero";
 import { Link, useParams } from "react-router-dom";
 import filterUniqueObjects from "../../utils/filterUniqueObjects";
 import { Helmet } from "react-helmet";
+import usePostsStore from "../../store/posts.store";
 
 const SearchResults = () => {
   const { query } = useParams();
-  const { state } = useContext(Context);
+  const { posts } = usePostsStore();
+
   const data =
     [
-      ...state.arr.filter(item => item.title.toLowerCase().includes(query)),
-      ...state.arr.filter(item => item.description.toLowerCase().includes(query)),
-      ...state.arr.filter(item => item.tags.find(i => i === query)),
+      ...posts.filter(i => i.title.toLowerCase().includes(query)),
+      ...posts.filter(i => i.description.toLowerCase().includes(query)),
+      ...posts.filter(i => i.tags.find(c => c === query)),
     ] || [];
 
   useEffect(() => {
@@ -31,19 +34,19 @@ const SearchResults = () => {
           Qidiruv natijalari: <span className="tags__title-inner">{query}</span>
         </h2>
         <ul className="tags__list">
-          {data &&
-            filterUniqueObjects(data, "id").map((item, i) => (
-              <li className="tags__item" key={item.id}>
+          {!!data.length ? (
+            filterUniqueObjects(data, "id").map(({ id, type, title, createdAt }, i) => (
+              <li className="tags__item" key={id}>
                 <span className="tags__item-badge">{getZero(++i)}</span>
                 <span className="tags__item-inner">
-                  <Link className="tags__link" to={`/${item.type}/${item.id}`}>
-                    {item.title}
+                  <Link className="tags__link" to={`/${type}/${id}`}>
+                    {title}
                   </Link>
                 </span>
-                <span className="tags__item-time">{item.createdAt}</span>
+                <span className="tags__item-time">{createdAt}</span>
               </li>
-            ))}
-          {!!!data.length && (
+            ))
+          ) : (
             <li className="tags__item">
               <span className="tags__item-inner">Natijalar topilmadi</span>
             </li>

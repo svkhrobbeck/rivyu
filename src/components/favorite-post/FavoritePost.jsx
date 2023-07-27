@@ -3,9 +3,11 @@ import "./FavoritePost.scss";
 
 import { Link } from "react-router-dom";
 import { firebaseLink, imageKitLink } from "../../constants";
+import usePostsStore from "../../store/posts.store";
 
 const FavoritePost = () => {
-  let { image, title, id, type } = state?.arr[0] || {};
+  const { posts } = usePostsStore();
+  let { image, title, id, type } = posts[0] || {};
 
   return (
     <>
@@ -13,9 +15,7 @@ const FavoritePost = () => {
         <section className="favorite-post">
           <img className="favorite-post__img" src={image?.replace(firebaseLink, imageKitLink)} alt={title} width="640" title={title} />
           <h4 className="favorite-post__title">Eng so'ngi post</h4>
-          <h5 className="favorite-post__subtitle" title={title}>
-            {title}
-          </h5>
+          <h5 className="favorite-post__subtitle">{title}</h5>
           <Link className="favorite-post__btn button button--green" to={`/${type}/${id}`}>
             Batafsil
           </Link>

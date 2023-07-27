@@ -3,8 +3,10 @@ import "./PostItem.scss";
 
 import { firebaseLink, imageKitLink } from "../../constants";
 import { Link } from "react-router-dom";
+import usePosts from "../../hooks/usePosts";
 
 const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, setId }) => {
+  const { deletePost } = usePosts();
 
   return (
     <li className="post-item">
@@ -39,6 +41,8 @@ const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, se
             <button className="post-item__button">
               <img src="/images/icon-edit.svg" alt="icon edit" />
             </button>
+          <Link className="post-item__button" to={`/admin/edit/${type}/${id}`}>
+            <img src="/images/icon-edit.svg" alt="icon edit" />
           </Link>
         </div>
       </div>

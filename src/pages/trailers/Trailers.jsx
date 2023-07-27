@@ -1,24 +1,26 @@
 // style
 import "./Trailers.scss";
 
+import { useEffect, useState } from "react";
 import { Card, Modal, ModalInner } from "../../components";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
 import { Helmet } from "react-helmet";
+import usePostsStore from "../../store/posts.store";
+import useUiStore from "../../store/ui.store";
+import usePosts from "../../hooks/usePosts";
 
 const Trailers = () => {
+  const { deletePost } = usePosts();
+  const { posts } = usePostsStore();
+  const { dispatch } = useUiStore();
   const [id, setId] = useState("");
   const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
 
-  const handleTrailerDelete = () => {
-    const postDoc = doc(db, "trailers", id);
-    deleteDoc(postDoc);
-    dispatch({ type: "MODAL_CLOSE" });
+  const handleDelete = () => {
+    deletePost("trailers", id);
+    dispatch({ type: "modal", payload: false });
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect(() => window.scrollTo(0, 0), []);
 
   return (
     <section className="trailers">
@@ -26,19 +28,21 @@ const Trailers = () => {
         <meta charSet="utf-8" />
         <title>Rivyu | Treylerlar</title>
       </Helmet>
+
       <h2 className="trailers__title main-title">Treylerlar</h2>
       <ul className="trailers__list">
-        {!!!state.arr?.length && <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>}
-        {!!state.data?.trailers?.length &&
-          state.data?.trailers.map(item => (
+        {!!posts.length ? (
+          posts.map(item => (
             <li className="trailers__item" key={item.id}>
-              <Card {...item} setId={setId} />
+              <Card {...item} click={() => setId(item.id)} />
             </li>
-          ))}
+          ))
+        ) : (
+          <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>
+        )}
       </ul>
-
       <Modal>
-        <ModalInner title={title} func={handleTrailerDelete} />
+        <ModalInner title={title} func={handleDelete} />
       </Modal>
     </section>
   );
