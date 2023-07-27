@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="container site-footer__container">
-        <p className="site-footer__copyright">© 2023 Kino Blog. Barcha huquqlar himoyalangan!</p>
+        <p className="site-footer__copyright">© 2023 Rivyu. Barcha huquqlar himoyalangan!</p>
         <div className="site-footer__actions">
           {!!links.length &&
             links.map(({ link, imgPath, alt }) => (
