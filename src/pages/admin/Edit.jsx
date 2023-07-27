@@ -11,6 +11,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseLink, imageKitLink, lastEdited } from "../../constants";
+import { Helmet } from "react-helmet";
 
 const Edit = () => {
   const navigate = useNavigate();
@@ -124,6 +125,10 @@ const Edit = () => {
 
   return (
     <div className="create-edit container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Rivyu | {title}</title>
+      </Helmet>
       <h2 className="create-edit__title">Postni Yangilash</h2>
       {!!tags.length ? (
         <>

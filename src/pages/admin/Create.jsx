@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
+import { Helmet } from "react-helmet";
 
 const Create = () => {
   const [media, setMedia] = useState(null);
@@ -106,6 +107,10 @@ const Create = () => {
 
   return (
     <div className="create-edit container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Rivyu | Maqola yaratish</title>
+      </Helmet>
       <h2 className="create-edit__title">Yangi Post Yaratish</h2>
       <div className="create-edit__fields">
         <label className="create-edit__label">
