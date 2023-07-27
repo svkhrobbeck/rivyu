@@ -33,12 +33,12 @@ const Post = () => {
     <section className="post">
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{data.title}</title>
+        <title>{`Rivyu | ${data.title}`}</title>
       </Helmet>
       <div className="post__wrapper container">
         <div className="post__article article-post">
           <div className="article-post__inner">
-            {!!data.image && <span className="article-post__badge">{stateText}</span>}
+            {!!data.image && <span className="post-badge">{stateText}</span>}
             {!isTrailer ? (
               <>
                 {!!data.image && (
@@ -49,38 +49,40 @@ const Post = () => {
               <YouTube videoId={data.videoId} className="article-post__iframe" />
             )}
 
-            <div className="article-post__time-like-wrapper">
-              <time className="article-post__time" dateTime={data.createdAt}>
-                {!!data.image ? data.createdAt : "yuklanmoqda..."}
-              </time>
-              <div className="article-post__buttons-wrapper">
-                <button onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)} className="article-post__button">
-                  <img src="/images/icon-link.svg" />
-                </button>
-              </div>
-            </div>
-            {data.image && (
-              <>
-                <h2 className="article-post__title">{data.title}</h2>
-                <div className="article-post__descs">
-                  {data.description.split("\n").map(desc => (
-                    <p key={v4()} className="article-post__desc">
-                      {desc}
-                    </p>
-                  ))}
+            <div className="article-post__content">
+              <div className="article-post__time-like-wrapper">
+                <time className="article-post__time" dateTime={data.createdAt}>
+                  {!!data.image ? data.createdAt : "yuklanmoqda..."}
+                </time>
+                <div className="article-post__buttons-wrapper">
+                  <button onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)} className="article-post__button">
+                    <img src="/images/icon-link.svg" />
+                  </button>
                 </div>
-                {data.tags.length ? (
-                  <ul className="article-post__tags">
-                    {data.tags &&
-                      data.tags.map(tag => (
-                        <li key={tag} className="article-post__tag">
-                          <Link to={`/search/${tag.toLowerCase()}`}>{tag}</Link>
-                        </li>
-                      ))}
-                  </ul>
-                ) : null}
-              </>
-            )}
+              </div>
+              {data.image && (
+                <>
+                  <h2 className="secondary-title">{data.title}</h2>
+                  <div className="article-post__descs">
+                    {data.description.split("\n").map(desc => (
+                      <p key={v4()} className="article-post__desc">
+                        {desc}
+                      </p>
+                    ))}
+                  </div>
+                  {!!data.tags.length && (
+                    <div className="article-post__tags">
+                      {data.tags &&
+                        data.tags.map(tag => (
+                          <Link className="article-post__tag" to={`/search/${tag.toLowerCase()}`} key={tag}>
+                            {tag}
+                          </Link>
+                        ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
         <div className="post__side-bar">
