@@ -31,6 +31,9 @@
   max-width: 246px;
   width: 100%;
   height: auto;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  object-position: center;
   margin-right: 20px;
   border-radius: 8px;
 
@@ -80,6 +83,7 @@
 .post-item__link {
   color: var(--text-color);
   display: inline-block;
+  box-shadow: none;
 
   &::before {
     content: "";
@@ -90,10 +94,6 @@
 
   &:hover {
     color: var(--accent-color);
-  }
-
-  &:focus {
-    outline: none;
   }
 }
 

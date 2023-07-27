@@ -20,10 +20,6 @@
   font-weight: 500;
   margin-left: 16px;
 
-  img {
-    margin-left: 5px;
-  }
-
   @media only screen and (max-width: 840px) {
     font-size: 22px;
   }
@@ -68,6 +64,7 @@
   line-clamp: 3;
   -webkit-box-orient: vertical;
   transition: 0.3s ease color;
+  box-shadow: none;
 
   &::before {
     content: "";
