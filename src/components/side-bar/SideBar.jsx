@@ -32,12 +32,6 @@ const SideBar = () => {
                 </NavLink>
               </li>
             ))}
-          <li className="side-bar__item" onClick={hanleSidebarClose}>
-            <NavLink className={`side-bar__link ${!sitenavMini && "side-bar__link--mini"}`} to={"/admin"}>
-              <img className="side-bar__link-icon" src="/images/icon-admin.svg" alt="icon" aria-hidden="true" />
-              <span className="side-bar__link-text">Admin</span>
-            </NavLink>
-          </li>
         </ul>
       </nav>
       <div className={`side-bar__overlay ${sitenav ? "side-bar__overlay--show" : ""}`} onClick={hanleSidebarClose} />
