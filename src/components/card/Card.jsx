@@ -3,11 +3,15 @@ import "./Card.scss";
 
 import { Link } from "react-router-dom";
 import { firebaseLink, imageKitLink, imageNotShown } from "../../constants";
+import useUiStore from "../../store/ui.store";
 
-const Card = ({ image, title, createdAt, id, setId = {}, type }) => {
-  const { state, dispatch } = useContext(Context);
+const Card = ({ image, title, createdAt, id, click, type }) => {
+  const { dispatch } = useUiStore();
 
-  const handleModalOpen = () => dispatch({ type: "MODAL_OPEN" });
+  const handleModalOpen = () => {
+    click();
+    dispatch({ type: "modal", payload: true });
+  };
 
   return (
     <div className="card">
@@ -24,22 +28,14 @@ const Card = ({ image, title, createdAt, id, setId = {}, type }) => {
           </time>
         </div>
       </div>
-      {state.isAdmin && (
-        <div className="card__buttons">
-          <button
-            className="card__button"
-            onClick={() => {
-              setId(id);
-              handleModalOpen();
-            }}
-          >
-            <img src="/images/icon-trash.svg" />
-          </button>
-          <Link className="card__button" to={`/admin/edit/${type}/${id}`}>
-            <img src="/images/icon-edit.svg" />
-          </Link>
-        </div>
-      )}
+      <div className="card__buttons">
+        <button className="card__button" onClick={handleModalOpen}>
+          <img src="/images/icon-trash.svg" />
+        </button>
+        <Link className="card__button" to={`/admin/edit/${type}/${id}`}>
+          <img src="/images/icon-edit.svg" />
+        </Link>
+      </div>
     </div>
   );
 };
