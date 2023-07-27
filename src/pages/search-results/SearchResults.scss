@@ -52,6 +52,14 @@
 
 .tags__link {
   color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-bottom: 5px;
+  box-shadow: none;
   transition: color 0.5s ease;
 
   &::before {
@@ -77,18 +85,6 @@
   border-left: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   border-bottom-left-radius: 6px;
-}
-
-.tags__item-inner {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  margin-bottom: 5px;
 }
 
 .tags__item-inner,
