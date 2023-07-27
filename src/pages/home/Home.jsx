@@ -34,6 +34,10 @@ const Home = () => {
         <meta charSet="utf-8" />
         <title>Rivyu | Kino Yangiliklari</title>
       </Helmet>
+      <Modal>
+        <ModalInner title={title} func={func} />
+      </Modal>
+
       <div className="container">
         <div className="home__inner">
           <div className="home__content">
