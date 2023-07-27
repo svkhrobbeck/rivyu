@@ -33,12 +33,16 @@
 
 .post__side-bar {
   position: sticky;
-  top: 96px;
+  top: 80px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 320px;
+  max-width: 400px;
   width: 100%;
+
+  @media only screen and (max-width: 1500px) {
+    max-width: 320px;
+  }
 
   @media only screen and (max-width: 840px) {
     max-width: none;
@@ -99,7 +103,9 @@
 }
 
 .article-post__image {
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 16 / 9;
   width: 100%;
   height: auto;
   border-radius: 6px;

@@ -120,17 +120,14 @@
 
     @media only screen and (min-width: 1140px) {
       .side-bar__link-text {
-        transform: translateX(100px);
-        opacity: 0;
-        pointer-events: none;
-        position: absolute;
-        white-space: nowrap;
+        display: none;
       }
     }
   }
 }
 
 .side-bar__link-text {
+  white-space: nowrap;
   margin-left: 5px;
   transition: opacity 0.5s ease, transform 0.5s ease;
 }

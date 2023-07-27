@@ -1,5 +1,5 @@
 .site-header {
-  padding: 14px 120px;
+  padding: 14px 0;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -8,11 +8,11 @@
   background-color: var(--component-color);
 
   @media only screen and (max-width: 1140px) {
-    padding: 12px 20px;
+    padding: 12px 0;
   }
 
   @media only screen and (max-width: 840px) {
-    padding: 10px 20px;
+    padding: 10px 0;
   }
 }
 
@@ -93,15 +93,12 @@
 }
 
 /* LOGO */
-.site-header__left a {
-  display: flex;
-
-  &:focus {
-    outline: none;
-  }
+.logo {
+  display: inline-flex;
+  box-shadow: none;
 }
 
-.logo {
+.logo__img {
   max-width: 175px;
   width: 100%;
   height: auto;
