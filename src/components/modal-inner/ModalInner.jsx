@@ -1,8 +1,12 @@
 // style
 import "./ModalInner.scss";
 
+import useUiStore from "../../store/ui.store";
 
 const ModalInner = ({ func, title = "" }) => {
+  const { dispatch } = useUiStore();
+
+  const handleModalClose = () => dispatch({ type: "modal", payload: false });
 
   return (
     <div className="modal-inner">

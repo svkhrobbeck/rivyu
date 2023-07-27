@@ -4,8 +4,10 @@ import "./PostItem.scss";
 import { firebaseLink, imageKitLink } from "../../constants";
 import { Link } from "react-router-dom";
 import usePosts from "../../hooks/usePosts";
+import useUiStore from "../../store/ui.store";
 
 const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, setId }) => {
+  const { dispatch } = useUiStore();
   const { deletePost } = usePosts();
 
   return (
@@ -33,14 +35,11 @@ const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, se
             className="post-item__button"
             onClick={() => {
               setId(id);
+              dispatch({ type: "modal", payload: true });
             }}
           >
             <img src="/images/icon-trash.svg" alt="icon trash" />
           </button>
-          <Link to={`/admin/edit/${type}/${id}`}>
-            <button className="post-item__button">
-              <img src="/images/icon-edit.svg" alt="icon edit" />
-            </button>
           <Link className="post-item__button" to={`/admin/edit/${type}/${id}`}>
             <img src="/images/icon-edit.svg" alt="icon edit" />
           </Link>
