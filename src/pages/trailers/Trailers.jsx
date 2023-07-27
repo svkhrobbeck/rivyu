@@ -1,15 +1,12 @@
 // style
 import "./Trailers.scss";
 
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../../context/Context";
 import { Card, Modal, ModalInner } from "../../components";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { Helmet } from "react-helmet";
 
 const Trailers = () => {
-  const { state, dispatch } = useContext(Context);
   const [id, setId] = useState("");
   const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
 

@@ -2,14 +2,9 @@
 import "./SideBar.scss";
 
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
-import { Context } from "../../context/Context";
 import { sidebarLinks } from "../../constants";
 
 const SideBar = () => {
-  const { state, dispatch } = useContext(Context);
-  const hanleSidebarClose = () => dispatch({ type: "SITENAV_CLOSE" });
-  const hanleSidebarMiniToggle = () => dispatch({ type: "SITENAV_MINI_TOGGLE" });
 
   return (
     <section className="side-bar">

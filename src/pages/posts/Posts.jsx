@@ -4,16 +4,13 @@ import "./Posts.scss";
 // components
 import { Modal, ModalInner, PostItem } from "../../components";
 
-import { useContext, useEffect, useState } from "react";
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
 import { deleteObject, ref } from "firebase/storage";
-import { Context } from "../../context/Context";
 import { Helmet } from "react-helmet";
 
 const Posts = () => {
-  const { state, dispatch } = useContext(Context);
   const navigate = useNavigate();
   const type = useLocation().pathname.substring(1);
   const text = type === "news" ? "Yangiliklar" : "Maqolalar";

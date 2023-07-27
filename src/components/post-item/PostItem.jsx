@@ -2,12 +2,9 @@
 import "./PostItem.scss";
 
 import { firebaseLink, imageKitLink } from "../../constants";
-import { Context } from "../../context/Context";
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, setId }) => {
-  const { state, dispatch } = useContext(Context);
 
   return (
     <li className="post-item">
@@ -34,7 +31,6 @@ const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, se
             className="post-item__button"
             onClick={() => {
               setId(id);
-              dispatch({ type: "MODAL_OPEN" });
             }}
           >
             <img src="/images/icon-trash.svg" alt="icon trash" />

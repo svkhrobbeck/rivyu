@@ -1,12 +1,8 @@
 // style
 import "./ModalInner.scss";
 
-import { useContext } from "react";
-import { Context } from "../../context/Context";
 
 const ModalInner = ({ func, title = "" }) => {
-  const { dispatch } = useContext(Context);
-  const handleModalClose = () => dispatch({ type: "MODAL_CLOSE" });
 
   return (
     <div className="modal-inner">

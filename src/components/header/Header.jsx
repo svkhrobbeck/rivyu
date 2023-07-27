@@ -4,8 +4,6 @@ import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
-import { useContext } from "react";
-import { Context } from "../../context/Context";
 import { getLocalStorage, removeLocalStorage } from "../../utils/SetGetLocalStorage";
 import { firebaseLink, imageKitLink } from "../../constants";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
@@ -13,7 +11,6 @@ import { useEffect } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { state, dispatch } = useContext(Context);
   const usersRef = doc(db, "users", "users");
 
   const getUser = async () => {

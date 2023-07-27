@@ -1,8 +1,6 @@
 // style
 import "./Card.scss";
 
-import { useContext } from "react";
-import { Context } from "../../context/Context";
 import { Link } from "react-router-dom";
 import { firebaseLink, imageKitLink, imageNotShown } from "../../constants";
 

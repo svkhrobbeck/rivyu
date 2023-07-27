@@ -25,7 +25,6 @@ const Edit = () => {
   const [myTags, setMyTags] = useState([]);
   const tags = myTags.map(item => item.value);
   const elTagInput = useRef(null);
-  // const descs = description?.map(desc => (desc += "\n")) || []
 
   const handleAddTags = () => {
     if (!elTagInput.current.value || tags.length >= 6) return;

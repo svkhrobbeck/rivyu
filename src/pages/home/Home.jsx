@@ -4,12 +4,9 @@ import "./Home.scss";
 // components
 import { Search, MiniSideBar, FavoritePost, Card } from "../../components";
 
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../../context/Context";
 import { Helmet } from "react-helmet";
 
 const Home = () => {
-  const { state } = useContext(Context);
 
   useEffect(() => {
     window.scrollTo(0, 0);

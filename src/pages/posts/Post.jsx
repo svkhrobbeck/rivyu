@@ -3,11 +3,9 @@ import "./Posts.scss";
 
 // components
 import { MiniSideBar, Toast } from "../../components";
-import { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
-import { Context } from "../../context/Context";
 import { firebaseLink, imageKitLink } from "../../constants";
 import { copyLink } from "../../utils/copyLink";
 import YouTube from "react-youtube";
@@ -15,7 +13,6 @@ import { Helmet } from "react-helmet";
 import { v4 as uuidv4 } from "uuid";
 
 const Post = () => {
-  const { state } = useContext(Context);
   const { type, id } = useParams();
   const dataRef = doc(db, type, id);
 

@@ -1,13 +1,9 @@
-import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Context } from "../context/Context";
 
 // Pages
 import { Page404, About, Posts, Post, Admin, Create, Edit, Home, Trailers, SearchResults, Users } from "../pages";
 
 const Router = () => {
-  const { state } = useContext(Context);
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />

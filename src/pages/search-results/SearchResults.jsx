@@ -1,9 +1,7 @@
 // style
 import "./SearchResults.scss";
 
-import { useContext, useEffect } from "react";
 import getZero from "../../utils/getZero";
-import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
 import filterUniqueObjects from "../../utils/filterUniqueObjects";
 import { Helmet } from "react-helmet";

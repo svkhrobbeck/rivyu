@@ -10,12 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
-import { useContext } from "react";
-import { createdAt, date } from "../../constants";
-import { Context } from "../../context/Context";
 
 const Create = () => {
-  const { state, dispatch } = useContext(Context);
   const [media, setMedia] = useState(null);
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
@@ -52,7 +48,6 @@ const Create = () => {
     if (type !== "trailers") {
       const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
       try {
-        dispatch({ type: "IS_LOADING", payload: true });
         const uploadTask = uploadBytesResumable(mediaRef, media);
         uploadTask.on(
           "state_changed",
@@ -86,7 +81,6 @@ const Create = () => {
                 image: downloadURL,
               });
               navigate("/");
-              dispatch({ type: "IS_LOADING", payload: false });
             });
           }
         );
@@ -107,7 +101,6 @@ const Create = () => {
         type,
       });
       navigate("/");
-      dispatch({ type: "IS_LOADING", payload: false });
     }
   };
 

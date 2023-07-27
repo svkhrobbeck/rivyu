@@ -2,12 +2,9 @@
 import "./FavoritePost.scss";
 
 import { Link } from "react-router-dom";
-import { Context } from "../../context/Context";
-import { useContext } from "react";
 import { firebaseLink, imageKitLink } from "../../constants";
 
 const FavoritePost = () => {
-  const { state } = useContext(Context);
   let { image, title, id, type } = state?.arr[0] || {};
 
   return (
