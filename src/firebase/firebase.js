@@ -5,7 +5,7 @@ import { getStorage } from "firebase/storage";
 
 // Main
 const firebaseConfig = {
-  apiKey: "AIzaSyC5lLl2Ah18jjF2mohPBhk-HaYVQVwPh3g",
+  apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
   authDomain: "kino-blog.firebaseapp.com",
   projectId: "kino-blog",
   storageBucket: "kino-blog.appspot.com",
