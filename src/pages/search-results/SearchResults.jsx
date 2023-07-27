@@ -38,18 +38,14 @@ const SearchResults = () => {
             filterUniqueObjects(data, "id").map(({ id, type, title, createdAt }, i) => (
               <li className="tags__item" key={id}>
                 <span className="tags__item-badge">{getZero(++i)}</span>
-                <span className="tags__item-inner">
-                  <Link className="tags__link" to={`/${type}/${id}`}>
-                    {title}
-                  </Link>
-                </span>
+                <Link className="tags__link" to={`/${type}/${id}`}>
+                  {title}
+                </Link>
                 <span className="tags__item-time">{createdAt}</span>
               </li>
             ))
           ) : (
-            <li className="tags__item">
-              <span className="tags__item-inner">Natijalar topilmadi</span>
-            </li>
+            <li className="tags__item">Natijalar topilmadi</li>
           )}
         </ul>
       </div>
