@@ -204,13 +204,17 @@ const Edit = () => {
           onChange={e => setDescription(e.target.value)}
         />
         {!media && (
-          <img className="create-edit__img" src={image ? image?.replace(firebaseLink, imageKitLink) : "/images/temp-image.svg"} alt="" />
+          <img
+            className="create-edit__img"
+            src={image ? image?.replace(firebaseLink, imageKitLink) : "/images/temp-image.svg"}
+            alt="post image"
+          />
         )}
-        {media && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />}
+        {media && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="post image" />}
       </div>
       <div className="create-edit__buttons">
-        <Link to={`/${type}`}>
-          <button className="button button--blue">Bekor Qilish</button>
+        <Link className="button button--blue" to="/">
+          Bekor Qilish
         </Link>
         <button className="button button--green" type="button" onClick={updatePost}>
           Yangilash
