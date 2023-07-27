@@ -199,6 +199,27 @@ body {
   }
 }
 
+.secondary-title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 15px;
+
+  @media only screen and (max-width: 920px) {
+    font-size: 23px;
+  }
+
+  @media only screen and (max-width: 840px) {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  @media only screen and (max-width: 576px) {
+    font-size: 21px;
+  }
+}
+
 /* TIME */
 .main-time {
   color: #6c757d;
