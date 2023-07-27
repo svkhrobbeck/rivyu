@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
+import { createdAt } from "../../constants";
 import { Helmet } from "react-helmet";
 
 const Create = () => {
@@ -68,7 +69,7 @@ const Create = () => {
             console.log(error);
           },
           () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+            getDownloadURL(uploadTask.snapshot.ref).then(image => {
               addDoc(postsCollectionRef, {
                 lastEdited: "",
                 title,
@@ -76,10 +77,9 @@ const Create = () => {
                 description,
                 tags,
                 createdAt,
-                likesList: [],
-                time: date.getTime(),
+                time: Date.now(),
                 type,
-                image: downloadURL,
+                image,
               });
               navigate("/");
             });
@@ -97,8 +97,7 @@ const Create = () => {
         image: `https://i.ytimg.com/vi/${videoId}/hq720.jpg`,
         tags,
         createdAt,
-        likesList: [],
-        time: date.getTime(),
+        time: Date.now(),
         type,
       });
       navigate("/");
@@ -233,8 +232,9 @@ const Create = () => {
           Bekor Qilish
         </Link>
         <button className="create-edit__button button button--blue" type="button" onClick={createPost}>
-          <span>{state.isLoading && <img src="/images/rolling-spinner.svg" />}</span>
-          {!state.isLoading ? "Yaratish" : "Yaratilmoqda..."}
+          {/* <span>{isLoading && <img src="/images/rolling-spinner.svg" />}</span>
+          {isLoading ? "Yaratish" : "Yaratilmoqda..."} */}
+          Yaratish
         </button>
       </div>
     </div>
