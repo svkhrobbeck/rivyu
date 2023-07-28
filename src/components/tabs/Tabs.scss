@@ -3,11 +3,12 @@
   width: 100%;
   align-items: center;
   margin-bottom: 5px;
+  overflow-x: auto;
 }
 
 .tabs__item {
   padding: 7px 10px;
-  font-size: 24px;
+  font-size: 21px;
   border-bottom: 1px solid var(--border-color);
 
   &:last-child {
@@ -16,8 +17,23 @@
   }
 
   &--active {
-    border-radius: 5px 5px 0 0;
+    border-radius: 3px 3px 0 0;
     border: 1px solid var(--border-color);
     border-bottom: none;
+  }
+
+  @media only screen and (max-width: 1140px) {
+    font-size: 19px;
+    padding: 6px 9px;
+  }
+
+  @media only screen and (max-width: 840px) {
+    font-size: 18px;
+    padding: 5px 8px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    font-size: 16px;
+    padding: 4px 7px;
   }
 }
