@@ -20,19 +20,17 @@ const Search = () => {
   return (
     <section className="search">
       <form className="search__form" onSubmit={handleSubmit}>
-        <div className={`search__input-wrapper ${search ? "" : "search__input-wrapper--close"}`}>
-          <input
-            className="main-field main-field--mini search__input"
-            type="search"
-            name="search"
-            placeholder="Qidirish"
-            aria-label="Search"
-            autoComplete="off"
-            value={query}
-            onFocus={() => dispatch({ type: "search", payload: false })}
-            onChange={e => setQuery(e.target.value)}
-          />
-        </div>
+        <input
+          className={`main-field main-field--mini search__input ${search ? "" : "search__input--close"}`}
+          type="search"
+          name="search"
+          placeholder="Qidirish"
+          aria-label="Search"
+          autoComplete="off"
+          value={query}
+          onFocus={() => dispatch({ type: "search", payload: true })}
+          onChange={e => setQuery(e.target.value)}
+        />
         <button
           className={`button button--green search__button ${search ? "search__button--open" : ""}`}
           type="submit"
