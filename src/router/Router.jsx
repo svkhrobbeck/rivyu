@@ -15,8 +15,8 @@ const Router = () => {
       <Route path="/about" element={<About />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/users" element={<Users />} />
-      <Route path="/admin/create" element={<Create />} />
-      <Route path="/admin/edit/:type/:id" element={<Edit />} />
+      <Route path="/create" element={<Create />} />
+      <Route path="/edit/:type/:id" element={<Edit />} />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
