@@ -2,7 +2,7 @@
 import "./Footer.scss";
 
 import { FC } from "react";
-import { links } from "../../constants";
+import { links } from "../../helpers/constants";
 
 const Footer: FC = (): JSX.Element => {
   return (

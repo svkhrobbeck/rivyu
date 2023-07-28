@@ -3,7 +3,7 @@ import "./FavoritePost.scss";
 
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { firebaseLink, imageKitLink } from "../../constants";
+import { firebaseLink, imageKitLink } from "../../helpers/constants";
 import usePostsStore from "../../store/posts.store";
 import { IPost } from "../../interfaces/posts.interface";
 

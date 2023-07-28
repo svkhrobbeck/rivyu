@@ -3,7 +3,7 @@ import "./Tabs.scss";
 
 import { FC } from "react";
 import usePostsStore from "../../store/posts.store";
-import { tabs } from "../../constants";
+import { tabs } from "../../helpers/constants";
 
 const Tabs: FC = (): JSX.Element => {
   const { type, setType } = usePostsStore();

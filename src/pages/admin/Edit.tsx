@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { firebaseLink, imageKitLink } from "../../constants";
+import { firebaseLink, imageKitLink } from "../../helpers/constants";
 import { Helmet } from "react-helmet";
 import usePosts from "../../hooks/usePosts";
 import usePostsStore from "../../store/posts.store";

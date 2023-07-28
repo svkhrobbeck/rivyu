@@ -3,7 +3,7 @@ import "./About.scss";
 
 import { FC, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { aboutIcons } from "../../constants";
+import { aboutIcons } from "../../helpers/constants";
 
 const About: FC = (): JSX.Element => {
   useEffect(() => window.scrollTo(0, 0), []);

@@ -2,9 +2,9 @@
 import "./SearchResults.scss";
 
 import { useEffect, FC } from "react";
-import getZero from "../../utils/getZero";
+import getZero from "../../helpers/getZero";
 import { Link, useParams } from "react-router-dom";
-import filterUniqueObjects from "../../utils/filterUniqueObjects";
+import filterUniqueObjects from "../../helpers/filterUniqueObjects";
 import { Helmet } from "react-helmet";
 import usePostsStore from "../../store/posts.store";
 

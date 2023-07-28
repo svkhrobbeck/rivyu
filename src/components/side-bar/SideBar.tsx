@@ -3,7 +3,7 @@ import "./SideBar.scss";
 
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import { sidebarLinks } from "../../constants";
+import { sidebarLinks } from "../../helpers/constants";
 import useUiStore from "../../store/ui.store";
 
 const SideBar: FC = (): JSX.Element => {

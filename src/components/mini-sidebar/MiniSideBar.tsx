@@ -2,7 +2,7 @@
 import "./MiniSideBar.scss";
 
 import { FC } from "react";
-import getTime from "../../utils/getTime";
+import getTime from "../../helpers/getTime";
 import { Link } from "react-router-dom";
 import usePostsStore from "../../store/posts.store";
 

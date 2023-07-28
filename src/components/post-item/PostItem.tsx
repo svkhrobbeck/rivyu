@@ -2,10 +2,10 @@
 import "./PostItem.scss";
 
 import { FC } from "react";
-import { firebaseLink, imageKitLink } from "../../constants";
+import { firebaseLink, imageKitLink } from "../../helpers/constants";
 import { Link } from "react-router-dom";
 import useUiStore from "../../store/ui.store";
-import getTime from "../../utils/getTime";
+import getTime from "../../helpers/getTime";
 import { IPost } from "../../interfaces/posts.interface";
 
 interface IPostItem extends IPost {

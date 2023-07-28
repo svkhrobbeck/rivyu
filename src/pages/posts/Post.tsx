@@ -5,14 +5,14 @@ import "./Posts.scss";
 import { MiniSideBar, Toast } from "../../components";
 import { useEffect, useState, FC } from "react";
 import { Link, useParams } from "react-router-dom";
-import { firebaseLink, imageKitLink } from "../../constants";
-import { copyLink } from "../../utils/copyLink";
+import { firebaseLink, imageKitLink } from "../../helpers/constants";
+import { copyLink } from "../../helpers/copyLink";
 import YouTube from "react-youtube";
 import { Helmet } from "react-helmet";
 import { v4 } from "uuid";
 import usePostsStore from "../../store/posts.store";
 import usePosts from "../../hooks/usePosts";
-import getTime from "../../utils/getTime";
+import getTime from "../../helpers/getTime";
 import { IPost } from "../../interfaces/posts.interface";
 
 type IParams = {

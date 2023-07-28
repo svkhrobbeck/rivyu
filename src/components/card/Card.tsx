@@ -3,9 +3,9 @@ import "./Card.scss";
 
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { firebaseLink, imageKitLink, imageNotShown } from "../../constants";
+import { firebaseLink, imageKitLink, imageNotShown } from "../../helpers/constants";
 import useUiStore from "../../store/ui.store";
-import getTime from "../../utils/getTime";
+import getTime from "../../helpers/getTime";
 import { IPost } from "../../interfaces/posts.interface";
 
 interface ICard extends IPost {
