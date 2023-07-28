@@ -250,6 +250,20 @@ body {
 }
 
 /* TIME */
+.main-times {
+  display: flex;
+  align-items: center;
+  gap: 0 25px;
+
+  @media only screen and (max-width: 576px) {
+    gap: 0 10px;
+
+    &:not(:last-child) {
+      margin-bottom: 22px;
+    }
+  }
+}
+
 .main-time {
   color: #6c757d;
   font-size: 14px;
