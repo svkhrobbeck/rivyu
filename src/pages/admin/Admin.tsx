@@ -1,10 +1,11 @@
 // style
 import "./Admin.scss";
 
+import { FC } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
-const Admin = () => {
+const Admin: FC = (): JSX.Element => {
   return (
     <section className="admin">
       <Helmet>

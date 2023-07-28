@@ -1,7 +1,7 @@
 // style
 import "./Posts.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import usePostsStore from "../../store/posts.store";
@@ -10,17 +10,15 @@ import usePosts from "../../hooks/usePosts";
 // components
 import { Modal, ModalInner, PostItem } from "../../components";
 
-const Posts = () => {
+const Posts: FC = (): JSX.Element => {
   const { posts } = usePostsStore();
   const { deletePost } = usePosts();
-  const type = useLocation().pathname.substring(1);
-  const text = type === "news" ? "Yangiliklar" : "Maqolalar";
-  const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
-  const [id, setId] = useState("");
+  const type: string = useLocation().pathname.substring(1);
+  const text: string = type === "news" ? "Yangiliklar" : "Maqolalar";
+  const title: string = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
+  const [id, setId] = useState<string>("");
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect(() => window.scrollTo(0, 0), []);
 
   return (
     <section className="posts">

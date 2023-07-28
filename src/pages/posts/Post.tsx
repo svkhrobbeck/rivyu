@@ -3,7 +3,7 @@ import "./Posts.scss";
 
 // components
 import { MiniSideBar, Toast } from "../../components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { firebaseLink, imageKitLink } from "../../constants";
 import { copyLink } from "../../utils/copyLink";
@@ -13,22 +13,28 @@ import { v4 } from "uuid";
 import usePostsStore from "../../store/posts.store";
 import usePosts from "../../hooks/usePosts";
 import getTime from "../../utils/getTime";
+import { IPost } from "../../interfaces/posts.interface";
 
-const Post = () => {
-  const { currentPost } = usePostsStore();
+type IParams = {
+  type: "reviews" | "trailers" | "news";
+  id: string;
+};
+
+const Post: FC = (): JSX.Element => {
+  const { post } = usePostsStore();
   const { getPost } = usePosts();
-  const { type, id } = useParams();
+  const { type, id } = useParams() as IParams;
 
-  const [isShowToast, setIsShowToast] = useState(false);
-  const handleCloseSuccessToast = () => setIsShowToast(false);
-  const handleOpenSuccessToast = () => setIsShowToast(true);
-  const [data, setData] = useState({});
-  const isTrailer = type === "trailers";
-  const image = isTrailer ? `https://i.ytimg.com/vi/${data?.videoId}/hq720.jpg` : data?.image;
-  const stateText = type === "reviews" ? "maqola" : type === "trailers" ? "treyler" : "yangilik";
+  const [isShowToast, setIsShowToast] = useState<boolean>(false);
+  const handleCloseSuccessToast = (): void => setIsShowToast(false);
+  const handleOpenSuccessToast = (): void => setIsShowToast(true);
+  const [data, setData] = useState<IPost>({} as IPost);
+  const isTrailer: boolean = type === "trailers";
+  const image: string = isTrailer ? `https://i.ytimg.com/vi/${data?.videoId}/hq720.jpg` : data?.image;
+  const stateText: string = type === "reviews" ? "maqola" : type === "trailers" ? "treyler" : "yangilik";
 
   getPost(type, id);
-  useEffect(() => setData(currentPost), [currentPost]);
+  useEffect(() => setData(post), [post]);
   useEffect(() => window.scrollTo(0, 0), []);
 
   return (
@@ -49,7 +55,7 @@ const Post = () => {
 
             <div className="article-post__content">
               <div className="article-post__time-like-wrapper">
-                <time className="article-post__time" dateTime={getTime(data.createdAt)}>
+                <time className="article-post__time" dateTime={getTime(data?.createdAt)}>
                   {!!image ? getTime(data.createdAt) : "yuklanmoqda..."}
                 </time>
                 <div className="article-post__buttons-wrapper">
