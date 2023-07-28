@@ -14,7 +14,7 @@ import usePostsStore from "../../store/posts.store";
 import usePosts from "../../hooks/usePosts";
 
 const Post = () => {
-  const { currentPost, posts } = usePostsStore();
+  const { currentPost } = usePostsStore();
   const { getPost } = usePosts();
   const { type, id } = useParams();
 
@@ -85,7 +85,7 @@ const Post = () => {
           </div>
         </div>
         <div className="post__side-bar">
-          <MiniSideBar arr={posts.filter(item => item.type === type && item.id !== id).slice(0, 6)} title={`So'nggi ${stateText}lar`} />
+          <MiniSideBar title={`So'nggi ${stateText}lar`} />
         </div>
       </div>
       <Toast handleClose={handleCloseSuccessToast} isOpen={isShowToast}>

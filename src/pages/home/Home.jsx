@@ -15,7 +15,6 @@ const Home = () => {
   const { posts, type } = usePostsStore();
   const { dispatch } = useUiStore();
   const { deletePost } = usePosts();
-  const filteredPosts = posts.filter((_, i) => i !== 0);
   const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
   const [id, setId] = useState("");
 
@@ -44,16 +43,12 @@ const Home = () => {
             <FavoritePost click={setId} />
           </div>
           <div className="home__side-bar">
-            <MiniSideBar arr={posts.slice(1, 8)} title="So'nggi yangiliklar" state="news" />
+            <MiniSideBar title="So'nggi yangiliklar" state="news" />
           </div>
         </div>
         <Tabs />
         <div className="posts-home">
-          {!!filteredPosts.length ? (
-            filteredPosts.map(item => <Card key={item.id} click={() => setId(item.id)} {...item} />)
-          ) : (
-            <>Maqolalar topilmadi</>
-          )}
+          {!!posts.length ? posts.map(item => <Card key={item.id} click={() => setId(item.id)} {...item} />) : <>Maqolalar topilmadi</>}
         </div>
       </div>
     </section>

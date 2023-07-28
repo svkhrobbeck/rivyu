@@ -31,14 +31,6 @@ const FavoritePost = ({ click }) => {
       )}
       <div className="favorite-post__content">
         <h3 className="secondary-title">{title}</h3>
-        <div className="favorite-post__buttons crud-buttons">
-          <button className="crud-button" onClick={handleModalOpen}>
-            <img src="/images/icon-trash.svg" />
-          </button>
-          <Link className="crud-button" to={`/edit/${type}/${id}`}>
-            <img src="/images/icon-edit.svg" />
-          </Link>
-        </div>
         <Link className="favorite-post__btn button button--mini button--green" to={`/${type}/${id}`}>
           Batafsil
         </Link>

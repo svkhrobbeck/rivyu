@@ -3,15 +3,16 @@ import "./MiniSideBar.scss";
 
 import getTime from "../../utils/getTime";
 import { Link } from "react-router-dom";
+import usePostsStore from "../../store/posts.store";
 
-const MiniSideBar = ({ title, arr }) => {
-  if (!!!arr.length) return;
+const MiniSideBar = ({ title }) => {
+  const { posts } = usePostsStore();
 
   return (
     <div className="mini-sidebar">
       <h3 className="mini-sidebar__heading">{title}</h3>
       <ul className="mini-sidebar__list">
-        {arr.map(item => (
+        {posts.slice(0, 8).map(item => (
           <li key={item.id} className="mini-sidebar__item">
             <Link className="mini-sidebar__link" to={`/${item.type}/${item.id}`}>
               {item.title}
