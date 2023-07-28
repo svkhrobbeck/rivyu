@@ -21,7 +21,7 @@ const Home = () => {
 
   const func = () => {
     deletePost(type, id, "image");
-    dispatch({ type: "modal", payload: true });
+    dispatch({ type: "modal", payload: false });
   };
 
   useEffect(() => {

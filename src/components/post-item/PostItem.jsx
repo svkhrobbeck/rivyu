@@ -3,12 +3,13 @@ import "./PostItem.scss";
 
 import { firebaseLink, imageKitLink } from "../../constants";
 import { Link } from "react-router-dom";
-import usePosts from "../../hooks/usePosts";
 import useUiStore from "../../store/ui.store";
+import getTime from "../../utils/getTime";
 
 const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, setId }) => {
   const { dispatch } = useUiStore();
-  const { deletePost } = usePosts();
+  const createdTime = getTime(createdAt);
+  const updatedTime = getTime(lastEdited);
 
   return (
     <li className="post-item">
@@ -20,13 +21,13 @@ const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, se
           </Link>
         </h3>
         <p className="post-item__desc">{shortDesc}</p>
-        <div className="post-item__times">
-          <time className="post-item__time main-time" dateTime={createdAt}>
-            {createdAt}
+        <div className="main-times">
+          <time className="main-time" dateTime={createdTime}>
+            {createdTime}
           </time>
           {lastEdited && (
-            <time className="post-item__time main-time main-time--edited" dateTime={lastEdited}>
-              {lastEdited}
+            <time className="main-time main-time--edited" dateTime={updatedTime}>
+              {updatedTime}
             </time>
           )}
         </div>
@@ -40,7 +41,7 @@ const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, se
           >
             <img src="/images/icon-trash.svg" alt="icon trash" />
           </button>
-          <Link className="post-item__button" to={`/admin/edit/${type}/${id}`}>
+          <Link className="post-item__button" to={`/edit/${type}/${id}`}>
             <img src="/images/icon-edit.svg" alt="icon edit" />
           </Link>
         </div>

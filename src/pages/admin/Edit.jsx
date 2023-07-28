@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { firebaseLink, imageKitLink, lastEdited } from "../../constants";
+import { firebaseLink, imageKitLink } from "../../constants";
 import { Helmet } from "react-helmet";
 
 const Edit = () => {
@@ -43,7 +43,6 @@ const Edit = () => {
   const getData = async () => {
     const data = (await getDoc(dataRef)).data();
 
-    // sets
     setImage(data.image);
     setTitle(data.title);
     setShortDesc(data.shortDesc);
@@ -55,26 +54,16 @@ const Edit = () => {
     getData();
   }, []);
 
-  function updatePostObj() {
-    if (type === "trailers") {
-      return {
-        title,
-        tags,
-        description,
-        lastEdited,
-        image,
-      };
-    } else {
-      return {
-        title,
-        shortDesc,
-        tags,
-        description,
-        lastEdited,
-        image,
-      };
-    }
-  }
+  const updatePostObj = () => {
+    return {
+      title,
+      shortDesc,
+      tags,
+      description,
+      lastEdited: Date.now(),
+      image,
+    };
+  };
 
   const postRef = doc(db, type, id);
   const updatePost = async () => {
@@ -102,7 +91,7 @@ const Edit = () => {
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
               updateDoc(postRef, {
-                lastEdited,
+                lastEdited: Date.now(),
                 title,
                 shortDesc,
                 tags,
@@ -120,7 +109,7 @@ const Edit = () => {
     } else {
       await updateDoc(postRef, updatePostObj());
     }
-    navigate(`/${type}`);
+    navigate("/");
   };
 
   return (
@@ -130,7 +119,7 @@ const Edit = () => {
         <title>Rivyu | {title}</title>
       </Helmet>
       <h2 className="create-edit__title">Postni Yangilash</h2>
-      {!!tags.length ? (
+      {!!tags.length && (
         <>
           <ul className="create-edit__tags">
             {myTags &&
@@ -143,8 +132,6 @@ const Edit = () => {
               ))}
           </ul>
         </>
-      ) : (
-        ""
       )}
       <input
         className="main-field create-edit__field create-edit__field--title"
@@ -154,16 +141,15 @@ const Edit = () => {
         value={title}
         onChange={e => setTitle(e.target.value)}
       />
-      {type !== "trailers" && (
-        <input
-          className="main-field create-edit__field create-edit__field--short-desc"
-          type="text"
-          name="short_description"
-          placeholder="qisqa izoh"
-          value={shortDesc}
-          onChange={e => setShortDesc(e.target.value)}
-        />
-      )}
+      <input
+        className="main-field create-edit__field create-edit__field--short-desc"
+        type="text"
+        name="short_description"
+        placeholder="qisqa izoh"
+        value={shortDesc}
+        onChange={e => setShortDesc(e.target.value)}
+      />
+
       <div className="create-edit__field-wrapper">
         <input
           className="main-field create-edit__field create-edit__field--tag"

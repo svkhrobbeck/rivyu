@@ -13,7 +13,7 @@ const Admin = () => {
       </Helmet>
       <div className="container">
         <div className="admin__btns-wrapper">
-          <Link className="button button--green" to="/admin/create">
+          <Link className="button button--green" to="/create">
             Yangi Post
           </Link>
           <Link className="button button--green" to="/admin/users">

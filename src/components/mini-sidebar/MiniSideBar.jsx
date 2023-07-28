@@ -1,6 +1,7 @@
 // style
 import "./MiniSideBar.scss";
 
+import getTime from "../../utils/getTime";
 import { Link } from "react-router-dom";
 
 const MiniSideBar = ({ title, arr }) => {
@@ -8,19 +9,18 @@ const MiniSideBar = ({ title, arr }) => {
 
   return (
     <div className="mini-sidebar">
-      <h3 className="mini-sidebar__title">
-        {title}
-        {!arr.length && <img src="/images/rolling-spinner.svg" />}
-      </h3>
+      <h3 className="mini-sidebar__heading">{title}</h3>
       <ul className="mini-sidebar__list">
-        {arr &&
-          arr.map(item => (
-            <li onClick={() => (document.documentElement.scrollTop = 0)} key={item.id} className="mini-sidebar__item">
-              <Link className="mini-sidebar__link" to={`/${item.type}/${item.id}`}>
-                {item.title}
-              </Link>
-            </li>
-          ))}
+        {arr.map(item => (
+          <li key={item.id} className="mini-sidebar__item">
+            <Link className="mini-sidebar__link" to={`/${item.type}/${item.id}`}>
+              {item.title}
+            </Link>
+            <time className="main-time" dateTime={getTime(item.createdAt)}>
+              {getTime(item.createdAt)}
+            </time>
+          </li>
+        ))}
       </ul>
     </div>
   );

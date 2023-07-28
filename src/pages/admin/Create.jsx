@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
-import { createdAt } from "../../constants";
 import { Helmet } from "react-helmet";
 
 const Create = () => {
@@ -27,6 +26,8 @@ const Create = () => {
   const elTagInput = useRef(null);
   const navigate = useNavigate();
 
+  const newPostData = () => ({ lastEdited: "", title, shortDesc, description, tags, createdAt: Date.now(), type });
+
   const handleAddTags = () => {
     if (!elTagInput.current.value.trim() || tags.length >= 6) return;
     const val = elTagInput.current.value.split(" ").join("").trim(" ");
@@ -40,12 +41,11 @@ const Create = () => {
     setMytags(filteredTags);
   };
 
-  const postsCollectionRef = collection(db, type);
+  const postsRef = collection(db, type);
 
   const createPost = async () => {
-    if (type !== "trailers") {
-      if (media === null) return;
-    } else if (title === "") return;
+    if (type !== "trailers" && media === null) return;
+    else if (title === "") return;
 
     if (type !== "trailers") {
       const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
@@ -68,40 +68,13 @@ const Create = () => {
           error => {
             console.log(error);
           },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(image => {
-              addDoc(postsCollectionRef, {
-                lastEdited: "",
-                title,
-                shortDesc,
-                description,
-                tags,
-                createdAt,
-                time: Date.now(),
-                type,
-                image,
-              });
-              navigate("/");
-            });
-          }
+          () => getDownloadURL(uploadTask.snapshot.ref).then(image => addDoc(postsRef, { image, ...newPostData() }))
         );
       } catch {
         console.log("error");
       }
-    } else {
-      addDoc(postsCollectionRef, {
-        lastEdited: "",
-        title,
-        description,
-        videoId,
-        image: `https://i.ytimg.com/vi/${videoId}/hq720.jpg`,
-        tags,
-        createdAt,
-        time: Date.now(),
-        type,
-      });
-      navigate("/");
-    }
+    } else addDoc(postsRef, { videoId, ...newPostData() });
+    navigate("/");
   };
 
   return (
@@ -136,21 +109,17 @@ const Create = () => {
           <span className="create-edit__label-inner">Treyler</span>
         </label>
       </div>
-      {tags.length ? (
-        <>
-          <ul className="create-edit__tags">
-            {mytags &&
-              mytags.map(item => (
-                <li key={item.id} className="create-edit__tag">
-                  <TagBadge id={item.id} handleDeleteTags={handleDeleteTags}>
-                    {item.value}
-                  </TagBadge>
-                </li>
-              ))}
-          </ul>
-        </>
-      ) : (
-        ""
+      {!!tags.length && (
+        <ul className="create-edit__tags">
+          {mytags &&
+            mytags.map(item => (
+              <li key={item.id} className="create-edit__tag">
+                <TagBadge id={item.id} handleDeleteTags={handleDeleteTags}>
+                  {item.value}
+                </TagBadge>
+              </li>
+            ))}
+        </ul>
       )}
       <div className="create-edit__fields">
         <input
@@ -161,16 +130,14 @@ const Create = () => {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
-        {type !== "trailers" && (
-          <input
-            className="main-field create-edit__field create-edit__field--short-desc"
-            type="text"
-            name="short_description"
-            placeholder="qisqa izoh"
-            value={shortDesc}
-            onChange={e => setShortDesc(e.target.value)}
-          />
-        )}
+        <input
+          className="main-field create-edit__field create-edit__field--short-desc"
+          type="text"
+          name="short_description"
+          placeholder="qisqa izoh"
+          value={shortDesc}
+          onChange={e => setShortDesc(e.target.value)}
+        />
       </div>
       {type === "trailers" && (
         <div className="create-edit__fields">

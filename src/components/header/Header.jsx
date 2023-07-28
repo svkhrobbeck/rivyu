@@ -6,7 +6,8 @@ import { Search } from "../";
 import useUiStore from "../../store/ui.store";
 
 const Header = () => {
-  const { sitenav, dispatch } = useUiStore();
+  const { sitenav, search, dispatch } = useUiStore();
+  let isLogo = window.innerWidth <= 840 && search;
 
   return (
     <header className="site-header">
@@ -20,9 +21,11 @@ const Header = () => {
             <span className="sitenav-toggler__inner"></span>
             <span className="sitenav-toggler__inner"></span>
           </button>
-          <Link className="logo" to="/">
-            <img className="logo__img" src="/images/logo.svg" alt="rivyu logo" width={175} height={45} />
-          </Link>
+          {!isLogo && (
+            <Link className="logo" to="/">
+              <img className="logo__img" src="/images/logo.svg" alt="rivyu logo" width={120} height={45} />
+            </Link>
+          )}
         </div>
         <Search />
       </div>

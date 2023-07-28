@@ -2,7 +2,7 @@
 .mini-sidebar {
   background-color: var(--component-color);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 3px;
   padding-top: 16px;
 
   @media only screen and (max-width: 840px) {
@@ -10,14 +10,15 @@
   }
 }
 
-.mini-sidebar__title {
+.mini-sidebar__heading {
   display: flex;
   align-items: center;
   margin-top: 0;
   margin-bottom: 12px;
   font-size: 24px;
   line-height: 1.2;
-  font-weight: 500;
+  font-weight: 700;
+  text-transform: capitalize;
   margin-left: 16px;
 
   @media only screen and (max-width: 840px) {
@@ -30,6 +31,7 @@
 }
 
 .mini-sidebar__list {
+  border-top: 1px solid var(--border-color);
   padding: 0;
   margin: 0;
 }
@@ -39,10 +41,6 @@
   flex-direction: column;
   padding: 15px;
   position: relative;
-
-  &:first-child {
-    border-top: 1px solid var(--border-color);
-  }
 
   &:not(:last-child) {
     border-bottom: 1px solid var(--border-color);
@@ -54,16 +52,19 @@
 }
 
 .mini-sidebar__link {
+  display: block;
+  font-size: 20px;
+  font-weight: 500;
   color: var(--text-color);
-  font-size: 18px;
+  margin-bottom: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
-  transition: 0.3s ease color;
   box-shadow: none;
+  transition: 0.3s ease color;
 
   &::before {
     content: "";
@@ -74,20 +75,5 @@
 
   &:hover {
     color: var(--accent-color);
-  }
-
-  @media only screen and (max-width: 840px) {
-    font-size: inherit;
-  }
-}
-
-.mini-sidebar__time {
-  display: inline-block;
-  color: #6c757d;
-  font-weight: 300;
-  font-size: 16px;
-
-  @media only screen and (max-width: 576px) {
-    font-size: 14px;
   }
 }

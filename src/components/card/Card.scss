@@ -6,8 +6,8 @@
   flex-grow: 1;
   background-color: var(--component-color);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  padding: 10px;
+  overflow: hidden;
+  border-radius: 3px;
 
   @media only screen and (max-width: 700px) {
     max-width: 100%;
@@ -15,22 +15,23 @@
 }
 
 .card__img {
+  display: block;
   width: 100%;
   height: auto;
   object-fit: cover;
   object-position: center;
   aspect-ratio: 16 / 9;
-  margin-bottom: 10px;
 }
 
 .card__content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  padding: 6px 10px 10px;
 }
 
 .card__heading {
-  font-size: 17px;
+  font-size: 21px;
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 10px;
@@ -53,6 +54,7 @@
 
 .card__times {
   margin-top: auto;
+  margin-bottom: 8px;
 }
 
 .card__link {
@@ -74,18 +76,5 @@
 }
 
 .card__buttons {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-top: 5px;
   z-index: 5;
-}
-
-.card__button {
-  background-color: transparent;
-  border: none;
-  display: inline-flex;
-  padding: 5px;
-  cursor: pointer;
 }

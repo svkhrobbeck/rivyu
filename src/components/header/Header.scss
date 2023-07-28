@@ -1,5 +1,5 @@
 .site-header {
-  padding: 14px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -8,11 +8,11 @@
   background-color: var(--component-color);
 
   @media only screen and (max-width: 1140px) {
-    padding: 12px 0;
+    padding: 8px 0;
   }
 
   @media only screen and (max-width: 840px) {
-    padding: 10px 0;
+    padding: 6px 0;
   }
 }
 
@@ -38,6 +38,7 @@
 
 /* SITENAV TOGGLER */
 .sitenav-toggler {
+  flex-shrink: 0;
   border: none;
   background-color: transparent;
   color: var(--text-color);
@@ -94,20 +95,23 @@
 
 /* LOGO */
 .logo {
+  flex-shrink: 0;
   display: inline-flex;
   box-shadow: none;
 }
 
 .logo__img {
-  max-width: 175px;
+  max-width: 100px;
   width: 100%;
-  height: auto;
+  height: 38px;
 
   @media only screen and (max-width: 1140px) {
-    max-width: 112px;
+    max-width: 90px;
+    height: 34px;
   }
 
   @media only screen and (max-width: 840px) {
-    max-width: 108px;
+    max-width: 75px;
+    height: 28px;
   }
 }

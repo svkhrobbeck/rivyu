@@ -23,6 +23,7 @@ const Post = () => {
   const handleOpenSuccessToast = () => setIsShowToast(true);
   const [data, setData] = useState({});
   const isTrailer = type === "trailers";
+  const image = isTrailer ? `https://i.ytimg.com/vi/${data?.videoId}/hq720.jpg` : data?.image;
   const stateText = type === "reviews" ? "maqola" : type === "trailers" ? "treyler" : "yangilik";
 
   getPost(type, id);
@@ -38,13 +39,9 @@ const Post = () => {
       <div className="post__wrapper container">
         <div className="post__article article-post">
           <div className="article-post__inner">
-            {!!data.image && <span className="post-badge">{stateText}</span>}
+            {!!image && <span className="post-badge">{stateText}</span>}
             {!isTrailer ? (
-              <>
-                {!!data.image && (
-                  <img className="article-post__image" src={data.image?.replace(firebaseLink, imageKitLink)} alt={data.title} />
-                )}
-              </>
+              <>{!!image && <img className="article-post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={data.title} />}</>
             ) : (
               <YouTube videoId={data.videoId} className="article-post__iframe" />
             )}
@@ -52,7 +49,7 @@ const Post = () => {
             <div className="article-post__content">
               <div className="article-post__time-like-wrapper">
                 <time className="article-post__time" dateTime={data.createdAt}>
-                  {!!data.image ? data.createdAt : "yuklanmoqda..."}
+                  {!!image ? data.createdAt : "yuklanmoqda..."}
                 </time>
                 <div className="article-post__buttons-wrapper">
                   <button onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)} className="article-post__button">
@@ -60,17 +57,19 @@ const Post = () => {
                   </button>
                 </div>
               </div>
-              {data.image && (
+              {image && (
                 <>
                   <h2 className="secondary-title">{data.title}</h2>
-                  <div className="article-post__descs">
-                    {data.description.split("\n").map(desc => (
-                      <p key={v4()} className="article-post__desc">
-                        {desc}
-                      </p>
-                    ))}
-                  </div>
-                  {!!data.tags.length && (
+                  {data.description && (
+                    <div className="article-post__descs">
+                      {data.description.split("\n").map(desc => (
+                        <p key={v4()} className="article-post__desc">
+                          {desc}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                  {!!data?.tags?.length && (
                     <div className="article-post__tags">
                       {data.tags &&
                         data.tags.map(tag => (
