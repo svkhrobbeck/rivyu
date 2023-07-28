@@ -1,1 +1,1 @@
-# Rivyu - My Main Pet Project
+# Rivyu - Pet Project
