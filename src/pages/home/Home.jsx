@@ -40,7 +40,7 @@ const Home = () => {
       <div className="container">
         <div className="home__inner">
           <div className="home__content">
-            <FavoritePost click={setId} />
+            <FavoritePost />
           </div>
           <div className="home__side-bar">
             <MiniSideBar title="So'nggi yangiliklar" state="news" />
