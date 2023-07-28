@@ -1,10 +1,7 @@
-// imports
-import getZero from "../utils/getZero";
-
-// variables
 export const imageNotShown = "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi";
-
 export const youtubeThumb = "https://www.youtube-nocookie.com/embed/";
+export const firebaseLink = "https://firebasestorage.googleapis.com/v0/b/kino-blog.appspot.com";
+export const imageKitLink = "https://ik.imagekit.io/fj0u394lay/images-kinoblog";
 
 export const links = [
   { link: "https://tme.to/svkhrobbeck", imgPath: "/images/icon-telegram.svg", alt: "icon telegram" },
@@ -26,17 +23,3 @@ export const aboutIcons = [
   { imgPath: "/vite.svg", alt: "logo vite" },
   { imgPath: "/firebase.svg", alt: "logo firebase" },
 ];
-
-export const date = new Date();
-
-export const createdAt = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(
-  date.getHours()
-)}:${getZero(date.getMinutes())}`;
-
-export const lastEdited = `${getZero(date.getDate())}.${getZero(date.getMonth() + 1)}.${date.getFullYear()} / ${getZero(
-  date.getHours()
-)}:${getZero(date.getMinutes())}`;
-
-export const firebaseLink = "https://firebasestorage.googleapis.com/v0/b/kino-blog.appspot.com";
-
-export const imageKitLink = "https://ik.imagekit.io/fj0u394lay/images-kinoblog";
