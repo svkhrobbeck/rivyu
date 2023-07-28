@@ -3,12 +3,12 @@ import { useCallback, useEffect } from "react";
 import { db, storage } from "../firebase/firebase";
 import { deleteObject, ref } from "firebase/storage";
 import usePostsStore from "../store/posts.store";
-import sortData from "../utils/sortData";
+import { IPost } from "../interfaces/posts.interface";
 
 const usePosts = () => {
-  const { setError, dispatch, setIsLoading, setCurrentPost } = usePostsStore();
+  const { setError, setPosts, setIsLoading, setPost } = usePostsStore();
 
-  const getPosts = type => {
+  const getPosts = (type: string) => {
     const dataRef = collection(db, type);
 
     const fetchData = useCallback(async () => {
@@ -16,11 +16,12 @@ const usePosts = () => {
 
       try {
         const data = await getDocs(dataRef);
-        const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-        const payload = sortData(posts, "createdAt");
-        dispatch({ type, payload });
-      } catch (err) {
-        setError(err);
+        const posts: IPost[] = data.docs.map(doc => ({ ...doc.data(), id: doc.id })) as IPost[];
+        const payload = posts.sort((a, b) => b.createdAt - a.createdAt);
+        setPosts(payload);
+      } catch (error) {
+        const err = error as Error;
+        setError(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -32,16 +33,17 @@ const usePosts = () => {
     }, [fetchData]);
   };
 
-  const getPost = (type, id) => {
+  const getPost = (type: string, id: string) => {
     const postDoc = doc(db, type, id);
 
     const fetchData = useCallback(async () => {
       try {
         const data = await getDoc(postDoc);
-        const post = data.data();
-        setCurrentPost(post);
-      } catch (err) {
-        setError(err);
+        const post = data.data() as IPost;
+        setPost(post);
+      } catch (error) {
+        const err = error as Error;
+        setError(err.message);
       }
     }, [id]);
 
@@ -50,12 +52,13 @@ const usePosts = () => {
     }, [fetchData]);
   };
 
-  const deletePost = async (type, id, media) => {
+  const deletePost = async (type: string, id: string, media?: keyof IPost) => {
     const postDoc = doc(db, type, id);
-    const post = (await getDoc(postDoc)).data();
+    const post = (await getDoc(postDoc)).data() as IPost;
+    const mediaData = post[media as keyof IPost];
 
-    if (post[media]) {
-      const mediaRef = ref(storage, post[media]);
+    if (mediaData) {
+      const mediaRef = ref(storage, mediaData as string);
       deleteObject(mediaRef)
         .then(() => deleteDoc(postDoc))
         .catch(err => console.log(err));
