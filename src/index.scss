@@ -137,10 +137,26 @@ body {
 
   @media only screen and (max-width: 920px) {
     font-size: 16px;
+    padding: 8px 15px;
   }
 
   @media only screen and (max-width: 600px) {
     font-size: 15px;
+    padding: 6px 9px;
+  }
+
+  &--mini {
+    padding: 7px 14px;
+
+    @media only screen and (max-width: 920px) {
+      font-size: 16px;
+      padding: 6px 12px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      font-size: 15px;
+      padding: 5px 9px;
+    }
   }
 }
 
@@ -178,8 +194,16 @@ body {
   border: 1px solid var(--accent-color);
   flex-grow: 1;
 
+  @media only screen and (max-width: 1140px) {
+    padding: 10px 12px;
+  }
+
   &--mini {
-    padding: 10px 14px;
+    padding: 7px 14px;
+
+    @media only screen and (max-width: 1140px) {
+      padding: 5px 6px;
+    }
   }
 }
 
