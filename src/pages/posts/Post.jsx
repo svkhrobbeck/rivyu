@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet";
 import { v4 } from "uuid";
 import usePostsStore from "../../store/posts.store";
 import usePosts from "../../hooks/usePosts";
+import getTime from "../../utils/getTime";
 
 const Post = () => {
   const { currentPost } = usePostsStore();
@@ -34,22 +35,22 @@ const Post = () => {
     <section className="post">
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{`Rivyu | ${data.title}`}</title>
+        <title>{`Rivyu | ${data?.title}`}</title>
       </Helmet>
       <div className="post__wrapper container">
         <div className="post__article article-post">
           <div className="article-post__inner">
             {!!image && <span className="post-badge">{stateText}</span>}
             {!isTrailer ? (
-              <>{!!image && <img className="article-post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={data.title} />}</>
+              <>{!!image && <img className="article-post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={data?.title} />}</>
             ) : (
               <YouTube videoId={data.videoId} className="article-post__iframe" />
             )}
 
             <div className="article-post__content">
               <div className="article-post__time-like-wrapper">
-                <time className="article-post__time" dateTime={data.createdAt}>
-                  {!!image ? data.createdAt : "yuklanmoqda..."}
+                <time className="article-post__time" dateTime={getTime(data.createdAt)}>
+                  {!!image ? getTime(data.createdAt) : "yuklanmoqda..."}
                 </time>
                 <div className="article-post__buttons-wrapper">
                   <button onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)} className="article-post__button">
