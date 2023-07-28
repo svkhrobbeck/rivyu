@@ -21,14 +21,17 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.17",
+    "@types/react-dom": "^18.2.7",
+    "@types/react-helmet": "^6.1.6",
+    "@types/uuid": "^9.0.2",
     "@vitejs/plugin-react": "^4.0.0-beta.0",
     "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "sass": "^1.62.0",
+    "typescript": "^5.1.6",
     "vite": "^4.3.9"
   }
 }
