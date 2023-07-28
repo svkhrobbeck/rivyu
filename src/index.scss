@@ -307,3 +307,18 @@ body {
     font-size: 16px;
   }
 }
+
+/* CRUD BUTTONS */
+.crud-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.crud-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 3px;
+  display: flex;
+}
