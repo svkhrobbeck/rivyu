@@ -19,7 +19,7 @@ export const sidebarLinks = [
 ];
 
 export const aboutIcons = [
+  { imgPath: "/rivyu.svg", alt: "logo rivyu" },
   { imgPath: "/react.svg", alt: "logo react" },
-  { imgPath: "/vite.svg", alt: "logo vite" },
   { imgPath: "/firebase.svg", alt: "logo firebase" },
 ];
