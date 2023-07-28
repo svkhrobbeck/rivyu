@@ -10,7 +10,8 @@ const FavoritePost = ({ click }) => {
   const { posts } = usePostsStore();
   const { dispatch } = useUiStore();
   let { image, title, id, type, videoId } = posts[0] || {};
-
+  const isTrailer = type === "trailers";
+  const postImage = isTrailer ? `https://i.ytimg.com/vi/${videoId}/hq720.jpg` : image;
   const handleModalOpen = () => {
     click(id);
     dispatch({ type: "modal", payload: true });
@@ -18,15 +19,16 @@ const FavoritePost = ({ click }) => {
 
   return (
     <section className="favorite-post">
-      <div className="favorite-post__img-wrapper">
-        {type === "trailers" ? (
-          <img className="favorite-post__img" src={`https://i.ytimg.com/vi/${videoId}/hq720.jpg`} alt={title} width="640" title={title} />
-        ) : (
-          <img className="favorite-post__img" src={image?.replace(firebaseLink, imageKitLink)} alt={title} width="640" title={title} />
-        )}
-        <img className="favorite-post__img" src={image?.replace(firebaseLink, imageKitLink)} alt={title} width="640" title={title} />
-        <span className="post-badge">Eng so'nggi post</span>
-      </div>
+      {!!postImage && (
+        <div className="favorite-post__img-wrapper">
+          {isTrailer ? (
+            <img className="favorite-post__img" src={postImage} alt={title} width="640" title={title} />
+          ) : (
+            <img className="favorite-post__img" src={image?.replace(firebaseLink, imageKitLink)} alt={title} width="640" title={title} />
+          )}
+          <span className="post-badge">Eng so'nggi post</span>
+        </div>
+      )}
       <div className="favorite-post__content">
         <h3 className="secondary-title">{title}</h3>
         <div className="favorite-post__buttons crud-buttons">
