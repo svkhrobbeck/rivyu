@@ -1,15 +1,12 @@
 // style
 import "./Tabs.scss";
 
+import { FC } from "react";
 import usePostsStore from "../../store/posts.store";
+import { tabs } from "../../constants";
 
-const Tabs = () => {
+const Tabs: FC = (): JSX.Element => {
   const { type, setType } = usePostsStore();
-  const tabs = [
-    { text: "Maqolalar", type: "reviews" },
-    { text: "Yangiliklar", type: "news" },
-    { text: "Treylerlar", type: "trailers" },
-  ];
 
   return (
     <div className="tabs">

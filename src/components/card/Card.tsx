@@ -1,18 +1,24 @@
 // style
 import "./Card.scss";
 
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { firebaseLink, imageKitLink, imageNotShown } from "../../constants";
 import useUiStore from "../../store/ui.store";
 import getTime from "../../utils/getTime";
+import { IPost } from "../../interfaces/posts.interface";
 
-const Card = ({ image, title, createdAt, id, videoId, click, type }) => {
-  const { dispatch } = useUiStore();
-  const time = getTime(createdAt);
+interface ICard extends IPost {
+  click: (id: string) => void;
+}
 
-  const handleModalOpen = () => {
-    click();
-    dispatch({ type: "modal", payload: true });
+const Card: FC<ICard> = ({ image, title, createdAt, id, videoId, click, type }): JSX.Element => {
+  const { setModal } = useUiStore();
+  const time: string = getTime(createdAt);
+
+  const handleModalOpen = (): void => {
+    click(id);
+    setModal(true);
   };
 
   return (

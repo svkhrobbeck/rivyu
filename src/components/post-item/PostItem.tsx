@@ -1,15 +1,21 @@
 // style
 import "./PostItem.scss";
 
+import { FC } from "react";
 import { firebaseLink, imageKitLink } from "../../constants";
 import { Link } from "react-router-dom";
 import useUiStore from "../../store/ui.store";
 import getTime from "../../utils/getTime";
+import { IPost } from "../../interfaces/posts.interface";
 
-const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, setId }) => {
-  const { dispatch } = useUiStore();
-  const createdTime = getTime(createdAt);
-  const updatedTime = getTime(lastEdited);
+interface IPostItem extends IPost {
+  setId: (id: string) => void;
+}
+
+const PostItem: FC<IPostItem> = ({ id, lastEdited, image, title, shortDesc, createdAt, type, setId }): JSX.Element => {
+  const { setModal } = useUiStore();
+  const createdTime: string = getTime(createdAt);
+  const updatedTime: string = getTime(lastEdited);
 
   return (
     <li className="post-item">
@@ -36,7 +42,7 @@ const PostItem = ({ id, lastEdited, image, title, shortDesc, createdAt, type, se
             className="post-item__button"
             onClick={() => {
               setId(id);
-              dispatch({ type: "modal", payload: true });
+              setModal(true);
             }}
           >
             <img src="/images/icon-trash.svg" alt="icon trash" />

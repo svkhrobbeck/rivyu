@@ -1,12 +1,18 @@
 // style
 import "./ModalInner.scss";
 
+import { FC } from "react";
 import useUiStore from "../../store/ui.store";
 
-const ModalInner = ({ func, title = "" }) => {
-  const { dispatch } = useUiStore();
+interface IModalInner {
+  func: () => void;
+  title: string;
+}
 
-  const handleModalClose = () => dispatch({ type: "modal", payload: false });
+const ModalInner: FC<IModalInner> = ({ func, title = "" }): JSX.Element => {
+  const { setModal } = useUiStore();
+
+  const handleModalClose = (): void => setModal(false);
 
   return (
     <div className="modal-inner">
