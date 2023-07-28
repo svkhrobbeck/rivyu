@@ -17,6 +17,9 @@ const reducer = (state, { type, payload }) => {
     case "sitenav-mini-toggle":
       return { sitenavMini: !state.sitenavMini };
 
+    case "search":
+      return { search: payload };
+
     default:
       return state;
   }
@@ -26,6 +29,7 @@ const useUiStore = create(set => ({
   sitenav: false,
   modal: false,
   sitenavMini: false,
+  search: false,
   dispatch: args => set(state => reducer(state, args)),
 }));
 
