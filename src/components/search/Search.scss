@@ -1,8 +1,12 @@
 /* SEARCH */
 .search {
   display: flex;
-  width: 100%;
   max-width: 400px;
+  width: 100%;
+
+  @media only screen and (max-width: 840px) {
+    max-width: none;
+  }
 }
 
 .search__form {
@@ -11,16 +15,54 @@
   width: 100%;
 }
 
-.search__input {
-  border-radius: 5px 0 0 5px;
+.search__input-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 
-  @media only screen and (max-width: 576px) {
-    width: 100%;
+  &--close .search__input {
+    padding: 0;
+    max-width: 0;
+    transform: translateX(7px);
+    z-index: -1;
+  }
+
+  @media only screen and (max-width: 840px) {
+    margin-left: 14px;
+  }
+}
+
+.search__input {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 5px 0 0 5px;
+  transition: max-width 0.5s ease, padding 0.5s ease;
+}
+
+.search__inner-button {
+  display: none;
+  box-shadow: none;
+
+  @media only screen and (max-width: 840px) {
+    display: flex;
+    position: absolute;
+    border: none;
+    background-color: transparent;
+    padding: 3px;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+  }
+
+  @media only screen and (max-width: 600px) {
+    right: 29px;
   }
 }
 
 .search__button {
-  display: flex;
-  align-items: center;
-  border-radius: 0 5px 5px 0;
+  transition: border-radius 0.4s ease;
+
+  &--open {
+    border-radius: 0 5px 5px 0;
+  }
 }
