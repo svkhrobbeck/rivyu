@@ -17,7 +17,7 @@ const usePosts = () => {
       try {
         const data = await getDocs(dataRef);
         const posts = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-        const payload = sortData(posts, "time");
+        const payload = sortData(posts, "createdAt");
         dispatch({ type, payload });
       } catch (err) {
         setError(err);
