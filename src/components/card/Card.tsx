@@ -7,6 +7,8 @@ import { firebaseLink, imageKitLink, imageNotShown } from "../../helpers/constan
 import useUiStore from "../../store/ui.store";
 import getTime from "../../helpers/getTime";
 import { IPost } from "../../interfaces/posts.interface";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 interface ICard extends IPost {
   click: (id: string) => void;
@@ -16,6 +18,13 @@ const Card: FC<ICard> = ({ image, title, createdAt, id, videoId, click, type }):
   const { setModal } = useUiStore();
   const time: string = getTime(createdAt);
 
+  const img: string =
+    type === "trailers"
+      ? `https://i.ytimg.com/vi/${videoId}/hq720.jpg`
+      : image
+      ? image?.replace(firebaseLink, imageKitLink)
+      : imageNotShown;
+
   const handleModalOpen = (): void => {
     click(id);
     setModal(true);
@@ -23,11 +32,9 @@ const Card: FC<ICard> = ({ image, title, createdAt, id, videoId, click, type }):
 
   return (
     <div className="card">
-      {type === "trailers" ? (
-        <img className="card__img" src={`https://i.ytimg.com/vi/${videoId}/hq720.jpg`} alt={title} width={300} />
-      ) : (
-        <img className="card__img" src={image ? image?.replace(firebaseLink, imageKitLink) : imageNotShown} alt={title} width={300} />
-      )}
+      <div className="card__image-wrapper">
+        <LazyLoadImage className="card__image" alt={title} effect="blur" src={img} />
+      </div>
       <div className="card__content">
         <h3 className="card__heading">
           <Link className="card__link" to={`/${type}/${id}`}>

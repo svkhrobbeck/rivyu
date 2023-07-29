@@ -5,7 +5,7 @@ export { default as Posts } from "./posts/Posts";
 export { default as Post } from "./posts/Post";
 export { default as Create } from "./admin/Create";
 export { default as Edit } from "./admin/Edit";
-export { default as SearchResults } from "./search-results/SearchResults";
+export { default as Search } from "./search/Search";
 export { default as Home } from "./home/Home";
 export { default as Trailers } from "./trailers/Trailers";
 export { default as Users } from "./users/Users";

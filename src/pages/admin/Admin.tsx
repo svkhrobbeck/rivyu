@@ -17,7 +17,7 @@ const Admin: FC = (): JSX.Element => {
           <Link className="button button--green" to="/create">
             Yangi Post
           </Link>
-          <Link className="button button--green" to="/admin/users">
+          <Link className="button button--green" to="/users">
             Foydalanuvchilar
           </Link>
         </div>
