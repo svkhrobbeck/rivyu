@@ -37,7 +37,7 @@ const Edit: FC = (): JSX.Element => {
   const [title, setTitle] = useState<string>("");
   const [shortDesc, setShortDesc] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [myTags, setMyTags] = useState<ITags[]>([]);
+  const [myTags, setMyTags] = useState<ITags[]>([] as ITags[]);
   const [tags, setTags] = useState<string>("");
 
   const handleAddTags = (): void => {
@@ -60,7 +60,7 @@ const Edit: FC = (): JSX.Element => {
     setTitle(post.title);
     setShortDesc(post.shortDesc);
     setDescription(post.description);
-    setMyTags(post.tags?.map(item => ({ value: item, id: uuidv4() })));
+    setMyTags(post?.tags?.map(item => ({ value: item, id: uuidv4() })));
   };
 
   useEffect(() => getData(), [post]);
@@ -69,7 +69,7 @@ const Edit: FC = (): JSX.Element => {
     return {
       title,
       shortDesc,
-      tags,
+      tags: myTags?.map(item => item.value),
       description,
       lastEdited: Date.now(),
       image,
