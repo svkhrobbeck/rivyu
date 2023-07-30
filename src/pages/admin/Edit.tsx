@@ -41,7 +41,7 @@ const Edit: FC = (): JSX.Element => {
   const [tags, setTags] = useState<string>("");
 
   const handleAddTags = (): void => {
-    if (!tags.trim() || tags.length >= 6) return;
+    if (!tags.trim() || tags.length <= 3) return;
     const value = tags.split(" ").join("").trim();
     const newTags = [...myTags, { value, id: uuidv4() }];
     setMyTags(newTags);

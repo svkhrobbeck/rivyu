@@ -42,7 +42,7 @@ const Create: FC = (): JSX.Element => {
   });
 
   const handleAddTags = () => {
-    if (!tags.trim() || tags.length >= 6) return;
+    if (!tags.trim() || tags.length <= 3) return;
     const val = tags.split(" ").join("").trim();
 
     const newTags = [...myTags, { value: val, id: uuidv4() }];
