@@ -28,6 +28,7 @@
   padding: 0;
   box-shadow: none;
   display: inline-flex;
+  text-transform: lowercase;
 
   &:focus {
     outline: none;
