@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import filterUniqueObjects from "../../helpers/filterUniqueObjects";
 import { Helmet } from "react-helmet";
 import usePostsStore from "../../store/posts.store";
+import getTime from "../../helpers/getTime";
 
 const SearchResults: FC = (): JSX.Element => {
   const { query } = useParams() as { query: string };
@@ -39,7 +40,9 @@ const SearchResults: FC = (): JSX.Element => {
                 <Link className="tags__link" to={`/${type}/${id}`}>
                   {title}
                 </Link>
-                <span className="tags__item-time">{createdAt}</span>
+                <time className="main-time" dateTime={getTime(createdAt)}>
+                  {getTime(createdAt)}
+                </time>
               </li>
             ))
           ) : (
