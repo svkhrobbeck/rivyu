@@ -69,7 +69,7 @@ const Edit: FC = (): JSX.Element => {
     return {
       title,
       shortDesc,
-      tags: myTags?.map(item => item.value),
+      tags: myTags?.map(item => item.value.toLowerCase()),
       description,
       lastEdited: Date.now(),
       image,

@@ -36,7 +36,7 @@ const Create: FC = (): JSX.Element => {
     title,
     shortDesc,
     description,
-    tags: myTags.map(item => item.value),
+    tags: myTags.map(item => item.value.toLowerCase()),
     createdAt: Date.now(),
     type,
   });
