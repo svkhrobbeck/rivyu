@@ -1,5 +1,5 @@
 // styles
-import "./Posts.scss";
+import "./Post.scss";
 // components
 import { MiniSideBar, Toast } from "@components/index";
 import YouTube from "react-youtube";

@@ -9,6 +9,7 @@
 .tabs__item {
   padding: 7px 10px;
   font-size: 21px;
+  cursor: pointer;
   border-bottom: 1px solid var(--border-color);
 
   &:last-child {

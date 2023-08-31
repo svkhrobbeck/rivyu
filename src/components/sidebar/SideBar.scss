@@ -1,0 +1,134 @@
+.side-bar {
+  position: relative;
+  z-index: 120;
+}
+
+.side-bar__nav {
+  position: fixed;
+  width: 210px;
+  height: 100vh;
+  background-color: var(--component-color);
+  left: 0;
+  top: 0;
+  z-index: 100;
+  border-right: 1px solid var(--border-color);
+  transition: width 0.4s ease;
+
+  &.side-bar__nav--show {
+    transition: left 0.4s ease;
+    left: 0;
+  }
+
+  &.side-bar__nav--mini {
+    @media only screen and (min-width: 1140px) {
+      width: 83px;
+    }
+  }
+
+  @media only screen and (max-width: 1140px) {
+    display: flex;
+    left: -100%;
+    top: 59px;
+    transition: left 0.6s ease;
+  }
+
+  @media only screen and (max-width: 840px) {
+    top: 53.5px;
+  }
+}
+
+.side-bar__toggler {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  transform: translateX(50%);
+  z-index: 1000;
+  top: 10px;
+
+  @media only screen and (max-width: 1140px) {
+    display: none;
+  }
+}
+
+.side-bar__toggler-img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.4s ease;
+
+  &--open {
+    transform: rotate(180deg);
+    transition: transform 0.4s ease;
+  }
+}
+
+.side-bar__overlay.side-bar__overlay--show {
+  @media only screen and (max-width: 1140px) {
+    width: 100%;
+    position: fixed;
+    z-index: 80;
+    inset: 0;
+  }
+}
+
+.side-bar__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding: 50px 12px;
+  width: 100%;
+
+  @media only screen and (max-width: 1140px) {
+    padding: 24px 12px;
+  }
+}
+
+.side-bar__item {
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.side-bar__link {
+  cursor: pointer;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  color: var(--text-color);
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(30, 41, 65, 0.498);
+  }
+
+  &.active {
+    background-color: var(--primary-bg-color);
+  }
+
+  &--mini {
+    @media only screen and (min-width: 1140px) {
+      justify-content: center;
+
+      .side-bar__link-text {
+        display: none;
+      }
+    }
+  }
+}
+
+.side-bar__link-text {
+  white-space: nowrap;
+  margin-left: 5px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
