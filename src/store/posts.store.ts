@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IPost } from "../interfaces/posts.interface";
+import { IPost } from "@interfaces/posts.interface";
 
 interface State {
   isLoading: boolean;

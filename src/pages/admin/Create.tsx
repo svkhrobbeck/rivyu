@@ -1,17 +1,15 @@
-// style
+// styles
 import "./Admin.scss";
-
 // components
-import { TagBadge } from "../../components";
-
-import { useRef, useState, FC, ChangeEvent } from "react";
+import { TagBadge } from "@components/index";
+import { Helmet } from "react-helmet";
+// hooks/utils
+import { useRef, useState, FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { db, storage } from "../../firebase/firebase";
-import { Helmet } from "react-helmet";
-
+import { db, storage } from "../../firebase";
 interface ITags {
   value: string;
   id: string;
@@ -112,13 +110,23 @@ const Create: FC = (): JSX.Element => {
         </label>
 
         <label className="create-edit__label">
-          <input className="create-edit__checkbox visually-hidden" type="radio" name="is_news" onChange={() => setType("news")} />
+          <input
+            className="create-edit__checkbox visually-hidden"
+            type="radio"
+            name="is_news"
+            onChange={() => setType("news")}
+          />
           <span className="create-edit__fake-radio" />
           <span className="create-edit__label-inner">Yangilik</span>
         </label>
 
         <label className="create-edit__label">
-          <input className="create-edit__checkbox visually-hidden" type="radio" name="is_news" onChange={() => setType("trailers")} />
+          <input
+            className="create-edit__checkbox visually-hidden"
+            type="radio"
+            name="is_news"
+            onChange={() => setType("trailers")}
+          />
           <span className="create-edit__fake-radio" />
           <span className="create-edit__label-inner">Treyler</span>
         </label>
@@ -190,7 +198,10 @@ const Create: FC = (): JSX.Element => {
               placeholder="post rasmi"
               onChange={e => setMedia(e.target.files && e.target.files[0])}
             />
-            <label className="main-field create-edit__field create-edit__field--image-label" htmlFor="image-input-create">
+            <label
+              className="main-field create-edit__field create-edit__field--image-label"
+              htmlFor="image-input-create"
+            >
               {media ? "rasm tanlandi" : "rasmni tanlang"}
             </label>
           </div>
@@ -206,7 +217,11 @@ const Create: FC = (): JSX.Element => {
         />
 
         {type !== "trailers" && (
-          <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="" />
+          <img
+            className="create-edit__img"
+            src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
+            alt=""
+          />
         )}
       </div>
       <div className="create-edit__buttons">

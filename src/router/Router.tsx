@@ -1,8 +1,9 @@
+// fc
 import { FC } from "react";
+// routes
 import { Route, Routes } from "react-router-dom";
-
 // Pages
-import { Page404, About, Posts, Post, Admin, Create, Edit, Home, Trailers, Search, Users } from "../pages";
+import { About, Admin, Create, Edit, Home, Page404, Post, Posts, Search, Trailers, Users } from "@pages/index";
 
 const Router: FC = (): JSX.Element => {
   return (

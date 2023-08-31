@@ -1,14 +1,12 @@
 import { FC } from "react";
-import usePosts from "../hooks/usePosts";
-import usePostsStore from "../store/posts.store";
+import usePosts from "@hooks/usePosts";
+import usePostsStore from "@store/posts.store";
 
 // components
-import Router from "../router/Router";
-import { Header, Footer, SideBar } from "../components";
+import Router from "@router/Router";
+import { Footer, Header, SideBar } from "@components/index";
 
 const Layout: FC = (): JSX.Element => {
-  // const usersRef = doc(db, "users", "users");
-  // onSnapshot(usersRef, getData);
   const { getPosts } = usePosts();
   const { type } = usePostsStore();
 

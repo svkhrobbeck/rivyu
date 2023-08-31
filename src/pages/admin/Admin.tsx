@@ -1,7 +1,8 @@
-// style
+// styles
 import "./Admin.scss";
-
+// fc
 import { FC } from "react";
+// components
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 

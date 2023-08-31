@@ -1,7 +1,8 @@
-// style
-import { FC } from "react";
+// styles
 import "./404.scss";
-
+// fc
+import { FC } from "react";
+// components
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
@@ -16,8 +17,8 @@ const Page404: FC = (): JSX.Element => {
       <div className="page-404__content">
         <h2 className="page-404__title">Sahifa topilmadi</h2>
         <p className="page-404__desc">
-          "Uzr! Siz yaroqsiz sahifaga tashrif buyurgan ko'rinasiz. Agarda bu bizning xatoyimiz ekanligiga ishonchingiz komil bo'lsa, bizga
-          xabar bering."
+          "Uzr! Siz yaroqsiz sahifaga tashrif buyurgan ko'rinasiz. Agarda bu bizning xatoyimiz ekanligiga ishonchingiz
+          komil bo'lsa, bizga xabar bering."
         </p>
         <Link className="button button--green" to="/">
           Bosh sahifaga qaytish

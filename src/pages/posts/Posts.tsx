@@ -1,14 +1,14 @@
-// style
+// styles
 import "./Posts.scss";
-
+// components
+import { Modal, ModalInner, PostItem } from "@components/index";
+import { Helmet } from "react-helmet";
+// hooks
 import { useEffect, useState, FC } from "react";
 import { useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import usePostsStore from "../../store/posts.store";
-import usePosts from "../../hooks/usePosts";
-
-// components
-import { Modal, ModalInner, PostItem } from "../../components";
+import usePosts from "@hooks/usePosts";
+// store
+import usePostsStore from "@store/posts.store";
 
 const Posts: FC = (): JSX.Element => {
   const { posts } = usePostsStore();

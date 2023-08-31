@@ -1,19 +1,19 @@
-// style
+// styles
 import "./Admin.scss";
-
 // components
-import { TagBadge } from "../../components";
-
+import { TagBadge } from "@components/index";
+import { Helmet } from "react-helmet";
+// store
+import usePostsStore from "@store/posts.store";
+// hooks/utils
 import { FC, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { doc, updateDoc } from "firebase/firestore";
-import { db, storage } from "../../firebase/firebase";
+import { db, storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { firebaseLink, imageKitLink } from "../../helpers/constants";
-import { Helmet } from "react-helmet";
-import usePosts from "../../hooks/usePosts";
-import usePostsStore from "../../store/posts.store";
+import { firebaseLink, imageKitLink } from "@helpers/constants";
+import usePosts from "@hooks/usePosts";
 
 interface ITags {
   value: string;
@@ -204,7 +204,13 @@ const Edit: FC = (): JSX.Element => {
             alt="post image"
           />
         )}
-        {media && <img className="create-edit__img" src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"} alt="post image" />}
+        {media && (
+          <img
+            className="create-edit__img"
+            src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
+            alt="post image"
+          />
+        )}
       </div>
       <div className="create-edit__buttons">
         <Link className="button button--blue" to="/">

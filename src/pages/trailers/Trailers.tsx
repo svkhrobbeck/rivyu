@@ -1,12 +1,14 @@
 // style
 import "./Trailers.scss";
-
-import { useEffect, useState, FC } from "react";
-import { Card, Modal, ModalInner } from "../../components";
+// components
+import { Card, Modal, ModalInner } from "@components/index";
 import { Helmet } from "react-helmet";
-import usePostsStore from "../../store/posts.store";
-import useUiStore from "../../store/ui.store";
-import usePosts from "../../hooks/usePosts";
+// hooks
+import { useEffect, useState, FC } from "react";
+import usePosts from "@hooks/usePosts";
+// store
+import useUiStore from "@store/ui.store";
+import usePostsStore from "@store/posts.store";
 
 const Trailers: FC = (): JSX.Element => {
   const { deletePost } = usePosts();

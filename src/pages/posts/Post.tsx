@@ -1,20 +1,24 @@
-// style
+// styles
 import "./Posts.scss";
-
 // components
-import { MiniSideBar, Toast } from "../../components";
-import { useEffect, useState, FC } from "react";
-import { Link, useParams } from "react-router-dom";
-import { firebaseLink, imageKitLink } from "../../helpers/constants";
-import { copyLink } from "../../helpers/copyLink";
+import { MiniSideBar, Toast } from "@components/index";
 import YouTube from "react-youtube";
 import { Helmet } from "react-helmet";
+// hooks/utils
+import usePosts from "@hooks/usePosts";
+import { useEffect, useState, FC } from "react";
+import { Link, useParams } from "react-router-dom";
+import { firebaseLink, imageKitLink } from "@helpers/constants";
 import { v4 } from "uuid";
-import usePostsStore from "../../store/posts.store";
-import usePosts from "../../hooks/usePosts";
-import getTime from "../../helpers/getTime";
-import { IPost } from "../../interfaces/posts.interface";
+// interfaces
+import { IPost } from "@interfaces/posts.interface";
+// store
+import usePostsStore from "@store/posts.store";
+// helpers
+import getTime from "@helpers/getTime";
+import { copyLink } from "@helpers/copyLink";
 
+// prop type
 type IParams = {
   type: "reviews" | "trailers" | "news";
   id: string;
@@ -48,7 +52,15 @@ const Post: FC = (): JSX.Element => {
           <div className="article-post__inner">
             {!!image && <span className="post-badge">{stateText}</span>}
             {!isTrailer ? (
-              <>{!!image && <img className="article-post__image" src={image?.replace(firebaseLink, imageKitLink)} alt={data?.title} />}</>
+              <>
+                {!!image && (
+                  <img
+                    className="article-post__image"
+                    src={image?.replace(firebaseLink, imageKitLink)}
+                    alt={data?.title}
+                  />
+                )}
+              </>
             ) : (
               <YouTube videoId={data.videoId} className="article-post__iframe" />
             )}
@@ -59,7 +71,10 @@ const Post: FC = (): JSX.Element => {
                   {!!image ? getTime(data.createdAt) : "yuklanmoqda..."}
                 </time>
                 <div className="article-post__buttons-wrapper">
-                  <button onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)} className="article-post__button">
+                  <button
+                    onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)}
+                    className="article-post__button"
+                  >
                     <img src="/images/icon-link.svg" />
                   </button>
                 </div>

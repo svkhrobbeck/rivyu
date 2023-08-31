@@ -1,13 +1,16 @@
-// style
+// styles
 import "./Search.scss";
-
-import { useEffect, FC } from "react";
-import getZero from "../../helpers/getZero";
-import { Link, useParams } from "react-router-dom";
-import filterUniqueObjects from "../../helpers/filterUniqueObjects";
+// components
 import { Helmet } from "react-helmet";
-import usePostsStore from "../../store/posts.store";
-import getTime from "../../helpers/getTime";
+// helpers
+import getZero from "@helpers/getZero";
+import getTime from "@helpers/getTime";
+import filterUniqueObjects from "@helpers/filterUniqueObjects";
+// hooks
+import { useEffect, FC } from "react";
+import { Link, useParams } from "react-router-dom";
+// store
+import usePostsStore from "@store/posts.store";
 
 const SearchResults: FC = (): JSX.Element => {
   const { query } = useParams() as { query: string };

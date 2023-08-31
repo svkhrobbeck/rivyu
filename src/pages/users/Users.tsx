@@ -1,8 +1,9 @@
-// style
+// styles
 import "./Users.scss";
-
-import { FC } from "react";
+// components
 import { Helmet } from "react-helmet";
+// fc
+import { FC } from "react";
 
 const Users: FC = (): JSX.Element => {
   // const [err, setErr] = useState("");

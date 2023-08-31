@@ -1,15 +1,15 @@
-// style
+// styles
 import "./Home.scss";
-
 // components
-import { MiniSideBar, FavoritePost, Card, Modal, ModalInner, Tabs } from "../../components";
-
-import { FC, useEffect } from "react";
+import { MiniSideBar, FavoritePost, Card, Modal, ModalInner, Tabs } from "@components/index";
 import { Helmet } from "react-helmet";
-import usePostsStore from "../../store/posts.store";
-import usePosts from "../../hooks/usePosts";
+// store
+import useUiStore from "@store/ui.store";
+import usePostsStore from "@store/posts.store";
+// hooks
+import { FC, useEffect } from "react";
+import usePosts from "@hooks/usePosts";
 import { useState } from "react";
-import useUiStore from "../../store/ui.store";
 
 const Home: FC = (): JSX.Element => {
   const { posts, type } = usePostsStore();
@@ -48,7 +48,11 @@ const Home: FC = (): JSX.Element => {
         </div>
         <Tabs />
         <div className="posts-home">
-          {!!posts.length ? posts.map(item => <Card key={item.id} click={click} {...item} />) : <>Maqolalar topilmadi</>}
+          {!!posts.length ? (
+            posts.map(item => <Card key={item.id} click={click} {...item} />)
+          ) : (
+            <>Maqolalar topilmadi</>
+          )}
         </div>
       </div>
     </section>
