@@ -1,4 +1,4 @@
-import { ILinks, ISidebarLinks, ITabs } from "../interfaces/constants.interface";
+import { ILinks, ISidebarLinks, ITabs } from "@interfaces/constants.interface";
 
 export const imageNotShown: string = "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi";
 export const youtubeThumb: string = "https://www.youtube-nocookie.com/embed/";

@@ -1,4 +1,4 @@
-import { IPost } from "../interfaces/posts.interface";
+import { IPost } from "@interfaces/posts.interface";
 
 export const filterUniqueObjects = (arr: IPost[], key: keyof IPost) => {
   let seen = new Set();

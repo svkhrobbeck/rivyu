@@ -1,9 +1,13 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
+// hooks
 import { useCallback, useEffect } from "react";
-import { db, storage } from "../firebase/firebase";
+// firebase
+import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
-import usePostsStore from "../store/posts.store";
-import { IPost } from "../interfaces/posts.interface";
+import { db, storage } from "../firebase";
+// store
+import usePostsStore from "@store/posts.store";
+// interface
+import { IPost } from "@interfaces/posts.interface";
 
 const usePosts = () => {
   const { setError, setPosts, setIsLoading, setPost } = usePostsStore();
