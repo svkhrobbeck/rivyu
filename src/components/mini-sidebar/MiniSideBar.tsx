@@ -1,10 +1,13 @@
-// style
+// styles
 import "./MiniSideBar.scss";
-
+// fc
 import { FC } from "react";
-import getTime from "../../helpers/getTime";
+// helpers
+import getTime from "@helpers/getTime";
+// link
 import { Link } from "react-router-dom";
-import usePostsStore from "../../store/posts.store";
+// store
+import usePostsStore from "@store/posts.store";
 
 const MiniSideBar: FC<{ title: string }> = ({ title }): JSX.Element => {
   const { posts } = usePostsStore();

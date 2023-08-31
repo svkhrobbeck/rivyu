@@ -1,8 +1,9 @@
-// style
+// styles
 import "./TagBadge.scss";
-
+// types
 import { ReactNode, FC } from "react";
 
+// prop interface
 interface ITagBadge {
   children: ReactNode;
   id: string;

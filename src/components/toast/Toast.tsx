@@ -1,8 +1,9 @@
-// style
+// styles
 import "./Toast.scss";
-
+// types
 import { FC, ReactNode } from "react";
 
+// prop interface
 interface IToast {
   children: ReactNode;
   isSuccess?: boolean;

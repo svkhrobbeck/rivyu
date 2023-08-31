@@ -1,10 +1,13 @@
-// style
+// styles
 import "./SideBar.scss";
-
+// fc
 import { FC } from "react";
+// navlink
 import { NavLink } from "react-router-dom";
-import { sidebarLinks } from "../../helpers/constants";
-import useUiStore from "../../store/ui.store";
+// constant
+import { sidebarLinks } from "@helpers/constants";
+// store
+import useUiStore from "@store/ui.store";
 
 const SideBar: FC = (): JSX.Element => {
   const { sitenavMini, sitenav, setSitenav, setSitenavMini } = useUiStore();

@@ -1,8 +1,9 @@
+// fc
 import { FC } from "react";
-import useUiStore from "./store/ui.store";
-
+// store
+import useUiStore from "@store/ui.store";
 // layout
-import Layout from "./layout/Layout";
+import Layout from "@layout/Layout";
 
 const App: FC = (): JSX.Element => {
   const { sitenavMini } = useUiStore();

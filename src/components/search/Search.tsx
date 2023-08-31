@@ -1,9 +1,10 @@
-// style
+// styles
 import "./Search.scss";
-
+// hooks/utils
 import { FormEvent, useState, FC } from "react";
 import { useNavigate } from "react-router-dom";
-import useUiStore from "../../store/ui.store";
+// store
+import useUiStore from "@store/ui.store";
 
 const Search: FC = (): JSX.Element => {
   const { search, setSearch } = useUiStore();

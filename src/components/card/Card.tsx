@@ -1,15 +1,18 @@
-// style
+// styles
 import "./Card.scss";
-
+import "react-lazy-load-image-component/src/effects/blur.css";
+// components
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { firebaseLink, imageKitLink, imageNotShown } from "../../helpers/constants";
-import useUiStore from "../../store/ui.store";
-import getTime from "../../helpers/getTime";
-import { IPost } from "../../interfaces/posts.interface";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
-
+// helpers
+import { firebaseLink, imageKitLink, imageNotShown } from "@helpers/constants";
+import getTime from "@helpers/getTime";
+// stroe
+import useUiStore from "@store/ui.store";
+// interface
+import { IPost } from "@interfaces/posts.interface";
+// prop interface
 interface ICard extends IPost {
   click: (id: string) => void;
 }

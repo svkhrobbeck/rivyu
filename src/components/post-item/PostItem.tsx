@@ -1,13 +1,18 @@
-// style
+// styles
 import "./PostItem.scss";
-
+// fc
 import { FC } from "react";
-import { firebaseLink, imageKitLink } from "../../helpers/constants";
+// helpers
+import { firebaseLink, imageKitLink } from "@helpers/constants";
+import getTime from "@helpers/getTime";
+// link
 import { Link } from "react-router-dom";
-import useUiStore from "../../store/ui.store";
-import getTime from "../../helpers/getTime";
-import { IPost } from "../../interfaces/posts.interface";
+// store
+import useUiStore from "@store/ui.store";
+// interface
+import { IPost } from "@interfaces/posts.interface";
 
+// prop interface
 interface IPostItem extends IPost {
   setId: (id: string) => void;
 }

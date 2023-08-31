@@ -1,9 +1,11 @@
-// style
+// styles
 import "./ModalInner.scss";
-
+// fc
 import { FC } from "react";
-import useUiStore from "../../store/ui.store";
+// store
+import useUiStore from "@store/ui.store";
 
+// prop interface
 interface IModalInner {
   func: () => void;
   title: string;

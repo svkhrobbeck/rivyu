@@ -1,9 +1,10 @@
-// style
+// styles
 import "./Modal.scss";
-
+// components/utils
 import { FC, ReactNode } from "react";
 import { createPortal } from "react-dom";
-import useUiStore from "../../store/ui.store";
+// store
+import useUiStore from "@store/ui.store";
 
 const Modal: FC<{ children: ReactNode }> = ({ children }): JSX.Element => {
   const { modal, setModal } = useUiStore();

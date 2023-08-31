@@ -1,8 +1,9 @@
-// style
+// styles
 import "./Footer.scss";
-
+// fc
 import { FC } from "react";
-import { links } from "../../helpers/constants";
+// constants
+import { links } from "@helpers/constants";
 
 const Footer: FC = (): JSX.Element => {
   return (

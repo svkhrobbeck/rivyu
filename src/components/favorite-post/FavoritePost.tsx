@@ -1,18 +1,23 @@
-// style
+// styles
 import "./FavoritePost.scss";
-
+import "react-lazy-load-image-component/src/effects/blur.css";
+// components/hooks
 import { FC } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { firebaseLink, imageKitLink } from "../../helpers/constants";
-import usePostsStore from "../../store/posts.store";
-import { IPost } from "../../interfaces/posts.interface";
+import { Link, useNavigate } from "react-router-dom";
+// helpers
+import { firebaseLink, imageKitLink } from "@helpers/constants";
+// store
+import usePostsStore from "@store/posts.store";
+// interface
+import { IPost } from "@interfaces/posts.interface";
 
 const FavoritePost: FC = (): JSX.Element => {
   const { posts } = usePostsStore();
   const navigate = useNavigate();
   let { image, title, id, type, videoId } = (posts[0] || {}) as IPost;
-  const img: string = type === "trailers" ? `https://i.ytimg.com/vi/${videoId}/hq720.jpg` : image?.replace(firebaseLink, imageKitLink);
+  const img: string =
+    type === "trailers" ? `https://i.ytimg.com/vi/${videoId}/hq720.jpg` : image?.replace(firebaseLink, imageKitLink);
 
   return (
     <>
