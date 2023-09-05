@@ -11,6 +11,10 @@ const PostsService = {
     const { data } = await axios.get(`api/posts/${slug}`);
     return data;
   },
+  async getLatestPost() {
+    const { data } = await axios.get("api/posts/latest");
+    return data;
+  },
 };
 
 export default PostsService;
