@@ -1,9 +1,10 @@
 import { ILinks, ISidebarLinks, ITabs } from "@interfaces/constants.interface";
 
+export const baseApiUrl = "http://localhost:5000";
+export const limit = 6;
+
 export const imageNotShown = "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi";
 export const youtubeThumb = "https://www.youtube-nocookie.com/embed/";
-export const firebaseLink = "https://firebasestorage.googleapis.com/v0/b/kino-blog.appspot.com";
-export const imageKitLink = "https://ik.imagekit.io/fj0u394lay/images-kinoblog";
 
 export const links: ILinks[] = [
   { link: "https://tme.to/svkhrobbeck", imgPath: "/images/icon-telegram.svg", alt: "telegram" },
@@ -16,14 +17,8 @@ export const sidebarLinks: ISidebarLinks[] = [
   { name: "Admin", route: "/admin", image: "/images/icon-admin.svg" },
 ];
 
-export const aboutIcons: ILinks[] = [
-  { imgPath: "/rivyu.svg", alt: "logo rivyu" },
-  { imgPath: "/react.svg", alt: "logo react" },
-  { imgPath: "/firebase.svg", alt: "logo firebase" },
-];
-
 export const tabs: ITabs[] = [
-  { text: "Maqolalar", type: "reviews" },
-  { text: "Yangiliklar", type: "news" },
-  { text: "Treylerlar", type: "trailers" },
+  { text: "Maqolalar", category: "reviews" },
+  { text: "Yangiliklar", category: "news" },
+  { text: "Treylerlar", category: "trailers" },
 ];
