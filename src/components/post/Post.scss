@@ -1,5 +1,76 @@
-/* POST ITEM */
-.post-item {
+/* LATEST POST */
+.latest-post {
+  max-width: 100%;
+  flex-grow: 1;
+  background-color: var(--component-color);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.latest-post__img-wrapper {
+  position: relative;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.latest-post__img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+
+  @media only screen and (max-width: 1320px) {
+    height: 443px;
+  }
+
+  @media only screen and (max-width: 840px) {
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.latest-post__content {
+  padding: 15px;
+  padding-top: 0;
+
+  @media only screen and (max-width: 768px) {
+    padding: 12px;
+    padding-top: 0;
+  }
+
+  @media only screen and (max-width: 576px) {
+    padding: 10px;
+    padding-top: 0;
+  }
+}
+
+.latest-post__subtitle {
+  margin-top: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 12px;
+  font-size: inherit;
+
+  @media only screen and (max-width: 840px) {
+    font-weight: 400;
+  }
+}
+
+.latest-post__btn {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* ITEM POST */
+.item-post {
   display: flex;
   align-items: flex-start;
   padding: 15px 40px 15px 15px;
@@ -27,7 +98,7 @@
   }
 }
 
-.post-item__image {
+.item-post__image {
   max-width: 246px;
   width: 100%;
   height: auto;
@@ -45,7 +116,7 @@
   }
 }
 
-.post-item__content {
+.item-post__content {
   flex-grow: 1;
 
   @media only screen and (max-width: 680px) {
@@ -53,7 +124,7 @@
   }
 }
 
-.post-item__title {
+.item-post__title {
   margin-top: 0;
   margin-bottom: 14px;
   font-size: 22px;
@@ -80,7 +151,7 @@
   }
 }
 
-.post-item__link {
+.item-post__link {
   color: var(--text-color);
   display: inline-block;
   box-shadow: none;
@@ -97,7 +168,7 @@
   }
 }
 
-.post-item__desc {
+.item-post__desc {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 18px;
@@ -129,7 +200,7 @@
   }
 }
 
-.post-item__buttons {
+.item-post__buttons {
   position: absolute;
   top: 15px;
   right: 10px;
@@ -152,7 +223,7 @@
   }
 }
 
-.post-item__button {
+.item-post__button {
   border: none;
   background-color: transparent;
   cursor: pointer;

@@ -1,5 +1,5 @@
 // styles
-import "./PostItem.scss";
+import "./Post.scss";
 // fc
 import { FC } from "react";
 // helpers
@@ -22,15 +22,15 @@ const PostItem: FC<IPostItem> = ({ id, lastEdited, image, title, shortDesc, crea
   const updatedTime: string = getTime(lastEdited);
 
   return (
-    <li className="post-item">
-      <img className="post-item__image" src={image} alt={title} width="246" />
-      <div className="post-item__content">
-        <h3 className="post-item__title">
-          <Link className="post-item__link" to={`/${type}/${id}`}>
+    <li className="item-post">
+      <img className="item-post__image" src={image} alt={title} width="246" />
+      <div className="item-post__content">
+        <h3 className="item-post__title">
+          <Link className="item-post__link" to={`/${type}/${id}`}>
             {title}
           </Link>
         </h3>
-        <p className="post-item__desc">{shortDesc}</p>
+        <p className="item-post__desc">{shortDesc}</p>
         <div className="main-times">
           <time className="main-time" dateTime={createdTime}>
             {createdTime}
@@ -41,9 +41,9 @@ const PostItem: FC<IPostItem> = ({ id, lastEdited, image, title, shortDesc, crea
             </time>
           )}
         </div>
-        <div className="post-item__buttons">
+        <div className="item-post__buttons">
           <button
-            className="post-item__button"
+            className="item-post__button"
             onClick={() => {
               setId(id);
               setModal(true);
@@ -51,7 +51,7 @@ const PostItem: FC<IPostItem> = ({ id, lastEdited, image, title, shortDesc, crea
           >
             <img src="/images/icon-trash.svg" alt="icon trash" />
           </button>
-          <Link className="post-item__button" to={`/edit/${type}/${id}`}>
+          <Link className="item-post__button" to={`/edit/${type}/${id}`}>
             <img src="/images/icon-edit.svg" alt="icon edit" />
           </Link>
         </div>
