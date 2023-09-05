@@ -1,5 +1,5 @@
 // styles
-import "./latestPost.scss";
+import "./Post.scss";
 import "react-lazy-load-image-component/src/effects/blur.css";
 // components/hooks
 import { FC, useEffect, useState } from "react";
