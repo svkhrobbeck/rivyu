@@ -1,10 +1,9 @@
+import { IParams } from "@interfaces/posts.interface";
 import axios from "./ApiService";
 
 const PostsService = {
-  async getPosts(category: string) {
-    const { data } = await axios.get("api/posts", {
-      params: { category },
-    });
+  async getPosts(params: IParams) {
+    const { data } = await axios.get("api/posts", { params });
     return data;
   },
   async getPost(slug: string) {
