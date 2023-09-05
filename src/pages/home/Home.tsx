@@ -1,32 +1,29 @@
 // styles
 import "./Home.scss";
 // components
-import { MiniSideBar, FavoritePost, Card, Modal, ModalInner, Tabs } from "@components/index";
+import { MiniSideBar, LatestPost, Card, Modal, ModalInner, Tabs, Pagination } from "@components/index";
 import { Helmet } from "react-helmet";
 // store
 import useUiStore from "@store/ui.store";
 import usePostsStore from "@store/posts.store";
 // hooks
 import { FC, useEffect } from "react";
-import usePosts from "@hooks/usePosts";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Home: FC = (): JSX.Element => {
-  const { posts, type } = usePostsStore();
+  const { posts } = usePostsStore();
   const { setModal } = useUiStore();
-  const { deletePost } = usePosts();
   const title: string = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
   const [id, setId] = useState<string>("");
 
   const func = (): void => {
-    deletePost(type, id, "image");
     setModal(false);
   };
 
   const click = (id: string) => setId(id);
 
   useEffect(() => window.scrollTo(0, 0), []);
-
   return (
     <section className="home">
       <Helmet>
@@ -40,7 +37,7 @@ const Home: FC = (): JSX.Element => {
       <div className="container">
         <div className="home__inner">
           <div className="home__content">
-            <FavoritePost />
+            <LatestPost />
           </div>
           <div className="home__side-bar">
             <MiniSideBar title="So'nggi yangiliklar" />
@@ -49,11 +46,12 @@ const Home: FC = (): JSX.Element => {
         <Tabs />
         <div className="posts-home">
           {!!posts.length ? (
-            posts.map(item => <Card key={item.id} click={click} {...item} />)
+            posts.map(item => <Card key={item._id} click={click} {...item} />)
           ) : (
             <>Maqolalar topilmadi</>
           )}
         </div>
+        <Pagination />
       </div>
     </section>
   );
