@@ -10,6 +10,7 @@
   padding: 7px 10px;
   font-size: 21px;
   cursor: pointer;
+  user-select: none;
   border-bottom: 1px solid var(--border-color);
 
   &:last-child {

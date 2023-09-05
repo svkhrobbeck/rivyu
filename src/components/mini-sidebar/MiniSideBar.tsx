@@ -18,8 +18,8 @@ const MiniSideBar: FC<{ title: string }> = ({ title }): JSX.Element => {
       {posts.slice(0, 8) && (
         <ul className="mini-sidebar__list">
           {posts.slice(0, 8).map(item => (
-            <li key={item.id} className="mini-sidebar__item">
-              <Link className="mini-sidebar__link" to={`/${item.type}/${item.id}`}>
+            <li key={item._id} className="mini-sidebar__item">
+              <Link className="mini-sidebar__link" to={`/${item.category}/${item.slug}`}>
                 {item.title}
               </Link>
               <time className="main-time" dateTime={getTime(item.createdAt)}>

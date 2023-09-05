@@ -8,15 +8,15 @@ import usePostsStore from "@store/posts.store";
 import { tabs } from "@helpers/constants";
 
 const Tabs: FC = (): JSX.Element => {
-  const { type, setType } = usePostsStore();
+  const { category, setCategory } = usePostsStore();
 
   return (
     <div className="tabs">
       {tabs.map(tab => (
         <div
-          className={`tabs__item ${type === tab.type && "tabs__item--active"}`}
-          key={tab.type}
-          onClick={() => setType(tab.type)}
+          className={`tabs__item ${category === tab.category && "tabs__item--active"}`}
+          key={tab.category}
+          onClick={() => setCategory(tab.category)}
         >
           {tab.text}
         </div>

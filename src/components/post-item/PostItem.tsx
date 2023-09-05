@@ -3,7 +3,6 @@ import "./PostItem.scss";
 // fc
 import { FC } from "react";
 // helpers
-import { firebaseLink, imageKitLink } from "@helpers/constants";
 import getTime from "@helpers/getTime";
 // link
 import { Link } from "react-router-dom";
@@ -24,7 +23,7 @@ const PostItem: FC<IPostItem> = ({ id, lastEdited, image, title, shortDesc, crea
 
   return (
     <li className="post-item">
-      <img className="post-item__image" src={image?.replace(firebaseLink, imageKitLink)} alt={title} width="246" />
+      <img className="post-item__image" src={image} alt={title} width="246" />
       <div className="post-item__content">
         <h3 className="post-item__title">
           <Link className="post-item__link" to={`/${type}/${id}`}>

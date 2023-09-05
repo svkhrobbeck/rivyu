@@ -6,7 +6,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 // helpers
-import { firebaseLink, imageKitLink, imageNotShown } from "@helpers/constants";
+import { baseApiUrl } from "@helpers/constants";
 import getTime from "@helpers/getTime";
 // stroe
 import useUiStore from "@store/ui.store";
@@ -17,19 +17,14 @@ interface ICard extends IPost {
   click: (id: string) => void;
 }
 
-const Card: FC<ICard> = ({ image, title, createdAt, id, videoId, click, type }): JSX.Element => {
+const Card: FC<ICard> = ({ image, title, createdAt, _id, videoId, click, category, slug }): JSX.Element => {
   const { setModal } = useUiStore();
   const time: string = getTime(createdAt);
 
-  const img: string =
-    type === "trailers"
-      ? `https://i.ytimg.com/vi/${videoId}/hq720.jpg`
-      : image
-      ? image?.replace(firebaseLink, imageKitLink)
-      : imageNotShown;
+  const img: string = category === "trailers" ? `https://i.ytimg.com/vi/${videoId}/hq720.jpg` : baseApiUrl + image;
 
   const handleModalOpen = (): void => {
-    click(id);
+    click(_id);
     setModal(true);
   };
 
@@ -40,7 +35,7 @@ const Card: FC<ICard> = ({ image, title, createdAt, id, videoId, click, type }):
       </div>
       <div className="card__content">
         <h3 className="card__heading">
-          <Link className="card__link" to={`/${type}/${id}`}>
+          <Link className="card__link" to={`/${category}/${slug}`}>
             {title}
           </Link>
         </h3>
@@ -53,7 +48,7 @@ const Card: FC<ICard> = ({ image, title, createdAt, id, videoId, click, type }):
           <button className="crud-button" onClick={handleModalOpen}>
             <img src="/images/icon-trash.svg" />
           </button>
-          <Link className="crud-button" to={`/edit/${type}/${id}`}>
+          <Link className="crud-button" to={`/edit/${slug}`}>
             <img src="/images/icon-edit.svg" />
           </Link>
         </div>
