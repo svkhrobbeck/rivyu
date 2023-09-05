@@ -1,12 +1,19 @@
 export interface IPost {
-  createdAt: number;
-  lastEdited: number;
-  id: string;
+  createdAt: string;
+  lastEdited: string;
+  _id: string;
   title: string;
-  description: string;
+  desc: string;
   shortDesc: string;
+  slug: string;
   tags: string[];
-  type: string;
+  category: string;
   image: string;
   videoId: string;
+}
+
+export interface IParams {
+  category: string;
+  page: number;
+  limit: number;
 }
