@@ -5,29 +5,25 @@ interface State {
   isLoading: boolean;
   error: string | null;
   posts: IPost[];
-  post: IPost;
-  type: "reviews" | "trailers" | "news";
+  category: "reviews" | "trailers" | "news";
 }
 
 interface Actions {
   setIsLoading: (isLoading: State["isLoading"]) => void;
   setError: (error: State["error"]) => void;
   setPosts: (posts: State["posts"]) => void;
-  setPost: (post: State["post"]) => void;
-  setType: (type: State["type"]) => void;
+  setCategory: (category: State["category"]) => void;
 }
 
 const usePostsStore = create<State & Actions>(set => ({
   isLoading: false,
   error: null,
   posts: [] as IPost[],
-  post: {} as IPost,
-  type: "reviews",
+  category: "reviews",
   setIsLoading: isLoading => set(() => ({ isLoading })),
   setError: error => set(() => ({ error })),
   setPosts: posts => set(() => ({ posts })),
-  setPost: post => set(() => ({ post })),
-  setType: type => set(() => ({ type })),
+  setCategory: category => set(() => ({ category })),
 }));
 
 export default usePostsStore;
