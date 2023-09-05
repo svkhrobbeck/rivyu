@@ -9,5 +9,6 @@ export { default as Toast } from "./toast/Toast";
 export { default as Modal } from "./modal/Modal";
 export { default as Search } from "./search/Search";
 export { default as TagBadge } from "./tag-badge/TagBadge";
-export { default as PostItem } from "./post-item/PostItem";
+export { default as ItemPost } from "./post/ItemPost";
 export { default as Tabs } from "./tabs/Tabs";
+export { default as Pagination } from "./pagination/Pagination";
