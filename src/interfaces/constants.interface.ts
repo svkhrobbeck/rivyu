@@ -12,5 +12,5 @@ export interface ISidebarLinks {
 
 export interface ITabs {
   text: string;
-  type: "news" | "reviews" | "trailers";
+  category: "news" | "reviews" | "trailers";
 }
