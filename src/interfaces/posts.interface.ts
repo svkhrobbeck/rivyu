@@ -4,7 +4,6 @@ export interface IPost {
   _id: string;
   title: string;
   desc: string;
-  shortDesc: string;
   slug: string;
   tags: string[];
   category: string;
