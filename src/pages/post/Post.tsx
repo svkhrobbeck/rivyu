@@ -1,7 +1,10 @@
 // styles
 import "./Post.scss";
+import "react-toastify/dist/ReactToastify.css";
+// toast
+import { ToastContainer, toast } from "react-toastify";
 // components
-import { MiniSideBar, Toast } from "@components/index";
+import { MiniSidebar } from "@components/index";
 import YouTube from "react-youtube";
 import { Helmet } from "react-helmet";
 // hooks/utils
@@ -12,7 +15,6 @@ import { v4 as uuidv4 } from "uuid";
 import { IPost } from "@interfaces/posts.interface";
 // helpers
 import getTime from "@helpers/getTime";
-import { copyLink } from "@helpers/copyLink";
 import PostsService from "@service/PostsService";
 import { baseApiUrl } from "@helpers/constants";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -25,16 +27,32 @@ type IParams = {
 
 const Post: FC = (): JSX.Element => {
   const { slug } = useParams() as IParams;
-
-  const [isShowToast, setIsShowToast] = useState<boolean>(false);
-  const handleCloseSuccessToast = (): void => setIsShowToast(false);
-  const handleOpenSuccessToast = (): void => setIsShowToast(true);
   const [post, setPost] = useState<IPost>({} as IPost);
 
-  const isTrailer: boolean = post.category === "trailers";
-  const image = isTrailer ? `https://i.ytimg.com/vi/${post?.videoId}/hq720.jpg` : baseApiUrl + post?.image;
-  const stateText: string =
-    post.category === "reviews" ? "maqola" : post.category === "trailers" ? "treyler" : "yangilik";
+  const notify = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => toast("Havola nusxalandi!!", { theme: "dark", type: "success" }));
+  };
+
+  const isTrailer = post.category === "trailers";
+  const image = isTrailer ? post.image : baseApiUrl + post.image;
+
+  const getCategoryText = (category: string) => {
+    switch (category) {
+      case "reviews":
+        return "maqola";
+
+      case "news":
+        return "yangilik";
+
+      case "trailers":
+        return "treyler";
+
+      default:
+        return "maqola";
+    }
+  };
 
   const getPost = async (slug: string) => {
     const data = await PostsService.getPost(slug);
@@ -46,6 +64,7 @@ const Post: FC = (): JSX.Element => {
   useEffect(() => {
     getPost(slug);
   }, [slug]);
+
   return (
     <section className="post">
       <Helmet>
@@ -53,10 +72,12 @@ const Post: FC = (): JSX.Element => {
         <title>{`Rivyu | ${post?.title}`}</title>
       </Helmet>
 
+      <ToastContainer />
+
       <div className="post__wrapper container">
         <div className="post__article article-post">
           <div className="article-post__inner">
-            {!!image && <span className="post-badge">{stateText}</span>}
+            {!!image && <span className="post-badge">{getCategoryText(post.category)}</span>}
             {!isTrailer ? (
               <LazyLoadImage className="article-post__image" alt={post.title} effect="blur" src={image} />
             ) : (
@@ -69,10 +90,7 @@ const Post: FC = (): JSX.Element => {
                   {!!image ? getTime(post.createdAt) : "yuklanmoqda..."}
                 </time>
                 <div className="article-post__buttons-wrapper">
-                  <button
-                    onClick={() => copyLink(handleOpenSuccessToast, handleCloseSuccessToast)}
-                    className="article-post__button"
-                  >
+                  <button onClick={notify} className="article-post__button">
                     <img src="/images/icon-link.svg" />
                   </button>
                 </div>
@@ -105,12 +123,9 @@ const Post: FC = (): JSX.Element => {
           </div>
         </div>
         <div className="post__side-bar">
-          <MiniSideBar title={`So'nggi ${stateText}lar`} />
+          <MiniSidebar title={`So'nggi ${getCategoryText(post.category)}lar`} />
         </div>
       </div>
-      <Toast handleClose={handleCloseSuccessToast} isOpen={isShowToast}>
-        Havola nusxalandi!
-      </Toast>
     </section>
   );
 };
