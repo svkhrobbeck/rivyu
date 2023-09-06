@@ -1,10 +1,12 @@
 import { ILinks, ISidebarLinks, ITabs } from "@interfaces/constants.interface";
 
 export const baseApiUrl = "http://localhost:5000";
-export const limit = 6;
+export const limit = 9;
+export const imageNotShown = "https://via.placeholder.com/1280x720?text=Rasm+yuklanmadi";
+export const iframeEmbedLink = "https://www.youtube.com/embed/";
+export const youtubeVideoBaseUrl = "https://youtu.be/";
 
-export const imageNotShown = "https://via.placeholder.com/320x180?text=Rasm+yuklanmadi";
-export const youtubeThumb = "https://www.youtube-nocookie.com/embed/";
+export const videoIdRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|)([^"&?\/\s]{11})/gi;
 
 export const links: ILinks[] = [
   { link: "https://tme.to/svkhrobbeck", imgPath: "/images/icon-telegram.svg", alt: "telegram" },
