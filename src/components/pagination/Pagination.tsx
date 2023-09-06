@@ -26,8 +26,8 @@ const Paginations: FC = (): JSX.Element => {
       onPageChange={handlePageClick}
       pageRangeDisplayed={3}
       pageCount={pageCount}
-      previousLabel="< avvalgi"
-      nextLabel="keyingi >"
+      previousLabel=""
+      nextLabel=""
       renderOnZeroPageCount={null}
       className="pagination"
       activeClassName="pagination__item--active"
@@ -37,7 +37,7 @@ const Paginations: FC = (): JSX.Element => {
       previousClassName="pagination__previous"
       previousLinkClassName="pagination__previous-link"
       nextClassName="pagination__next"
-      nextLinkClassName="pagination__previous-link"
+      nextLinkClassName="pagination__next-link"
       pageClassName="pagination__item"
       pageLinkClassName="pagination__link"
       breakClassName="pagination__item pagination__item--break"
