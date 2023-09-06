@@ -1,5 +1,5 @@
 // styles
-// import "./Sidebar.scss";
+import "./Sidebar.scss";
 // fc
 import { FC } from "react";
 // navlink
