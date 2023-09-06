@@ -9,12 +9,12 @@ const Router: FC = (): JSX.Element => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/:type/:id" element={<Post />} />
-      <Route path={"/search/:query"} element={<Search />} />
+      <Route path="/:type/:slug" element={<Post />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/users" element={<Users />} />
       <Route path="/create" element={<Create />} />
-      <Route path="/edit/:type/:id" element={<Edit />} />
+      <Route path="/edit/:slug" element={<Edit />} />
+      <Route path={"/search/:query"} element={<Search />} />
+      <Route path="/users" element={<Users />} />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
