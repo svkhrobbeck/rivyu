@@ -1,9 +1,10 @@
 // styles
-import { IPost } from "@interfaces/posts.interface";
 import "./Create.scss";
+import "react-toastify/dist/ReactToastify.css";
 // constant
 import { baseApiUrl, iframeEmbedLink, imageNotShown, videoIdRegex, youtubeVideoBaseUrl } from "@helpers/constants";
 // interface
+import { IPost } from "@interfaces/posts.interface";
 interface INewPost {
   [key: string]: string | Blob | null;
 }
@@ -14,7 +15,10 @@ import { useState, useEffect, FC, ChangeEvent, FormEvent } from "react";
 import { Helmet } from "react-helmet";
 // component/hook
 import { Link, useNavigate, useParams } from "react-router-dom";
-import YouTube from "react-youtube";
+// toast
+import { toast, ToastContainer } from "react-toastify";
+// error type
+import { AxiosError } from "axios";
 
 const Edit: FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,10 +27,11 @@ const Edit: FC = (): JSX.Element => {
   const [media, setMedia] = useState<Blob | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const [desc, setDesc] = useState<string>("");
+  const [oldTrailer, setOldTrailer] = useState<string>("");
   const [trailer, setTrailer] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
   const isTrailer = category === "trailers";
-  const videoIdMatch = videoIdRegex.test(trailer) && trailer.match(videoIdRegex);
+  const videoIdMatch = trailer ? trailer.match(videoIdRegex) : oldTrailer.match(videoIdRegex);
   const videoId = videoIdMatch ? videoIdMatch[0] : null;
   const { slug: postSlug } = useParams();
 

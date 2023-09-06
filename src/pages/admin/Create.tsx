@@ -1,5 +1,8 @@
 // styles
 import "./Create.scss";
+import "react-toastify/dist/ReactToastify.css";
+// toast
+import { ToastContainer, toast } from "react-toastify";
 // constant
 import { iframeEmbedLink, imageNotShown, tabs, videoIdRegex } from "@helpers/constants";
 // interface
@@ -38,9 +41,9 @@ const Create: FC = (): JSX.Element => {
       await PostsService.createPost(formData);
       navigate("/");
     } catch (err) {
-      const axiosErrorSample = err as AxiosError<string>;
-      const error = axiosErrorSample as Error;
-      setError(error.message);
+      const axiosError = err as AxiosError;
+      const error = axiosError.response?.data as Error;
+      toast(error.message, { type: "error", theme: "dark" });
     }
   };
 
@@ -49,6 +52,7 @@ const Create: FC = (): JSX.Element => {
       <Helmet>
         <title>Rivyu | Yangi post</title>
       </Helmet>
+      <ToastContainer />
       <div className="admin-create__container container">
         <form className="admin-create__form admin-form" onSubmit={handleSubmit}>
           {/* categories */}
@@ -94,7 +98,7 @@ const Create: FC = (): JSX.Element => {
                 id="image"
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setImage(e.target.files && e.target.files[0])}
               />
-              <label className="admin-form__label admin-form__label--image admin-form__field" htmlFor="image">
+              <label className="admin-form__label admin-form__label--image admin-form__label--image-05 admin-form__field" htmlFor="image">
                 <span className="admin-form__label-inner">{image ? image.name : "Rasm"}</span>
               </label>
             </div>
@@ -128,7 +132,7 @@ const Create: FC = (): JSX.Element => {
               type="text"
               placeholder="Slug"
               id="slug"
-              onChange={e => setSlug(e.target.value.replace(" ", "-"))}
+              onChange={e => setSlug(e.target.value.split(" ").join("-"))}
               value={slug}
             />
           </div>
