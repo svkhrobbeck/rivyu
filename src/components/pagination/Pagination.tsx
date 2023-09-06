@@ -8,12 +8,9 @@ import useParams from "@helpers/useParams";
 import ReactPaginate from "react-paginate";
 import { useSearchParams } from "react-router-dom";
 import { limit } from "@helpers/constants";
-// store
-import usePostsStore from "@store/posts.store";
 
-const Paginations: FC = (): JSX.Element => {
+const Paginations: FC<{ total: number }> = ({ total }): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { total } = usePostsStore();
   const pageCount = Math.ceil(total / limit);
   const currentPage = +(searchParams.get("page") || 1) - 1;
 

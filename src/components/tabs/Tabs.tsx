@@ -1,9 +1,7 @@
 // styles
 import "./Tabs.scss";
 // fc
-import { FC } from "react";
-// store
-import usePostsStore from "@store/posts.store";
+import { FC, useState } from "react";
 // constant
 import { tabs } from "@helpers/constants";
 

@@ -7,17 +7,13 @@ import { Helmet } from "react-helmet";
 import { useEffect, useState, FC } from "react";
 // store
 import useUiStore from "@store/ui.store";
-import usePostsStore from "@store/posts.store";
 
 const Trailers: FC = (): JSX.Element => {
-  const { deletePost } = usePosts();
-  const { posts } = usePostsStore();
   const { setModal } = useUiStore();
   const [id, setId] = useState<string>("");
   const title = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
 
   const handleDelete = () => {
-    deletePost("trailers", id);
     setModal(false);
   };
 
@@ -31,7 +27,7 @@ const Trailers: FC = (): JSX.Element => {
       </Helmet>
 
       <h2 className="trailers__title main-title">Treylerlar</h2>
-      <ul className="trailers__list">
+      {/* <ul className="trailers__list">
         {!!posts.length ? (
           posts.map(item => (
             <li className="trailers__item" key={item.id}>
@@ -41,7 +37,7 @@ const Trailers: FC = (): JSX.Element => {
         ) : (
           <li style={{ textAlign: "center" }}>Treylerlar topilmadi</li>
         )}
-      </ul>
+      </ul> */}
       <Modal>
         <ModalInner title={title} func={handleDelete} />
       </Modal>

@@ -5,14 +5,12 @@ import { MiniSideBar, LatestPost, Card, Modal, ModalInner, Tabs, Pagination } fr
 import { Helmet } from "react-helmet";
 // store
 import useUiStore from "@store/ui.store";
-import usePostsStore from "@store/posts.store";
 // hooks
 import { FC, useEffect } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Home: FC = (): JSX.Element => {
-  const { posts } = usePostsStore();
   const { setModal } = useUiStore();
   const title: string = "Rostdan ham ushbu maqolani o'chirishni xohlaysizmi?";
   const [id, setId] = useState<string>("");

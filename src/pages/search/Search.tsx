@@ -9,12 +9,9 @@ import filterUniqueObjects from "@helpers/filterUniqueObjects";
 // hooks
 import { useEffect, FC } from "react";
 import { Link, useParams } from "react-router-dom";
-// store
-import usePostsStore from "@store/posts.store";
 
 const SearchResults: FC = (): JSX.Element => {
   const { query } = useParams() as { query: string };
-  const { posts } = usePostsStore();
 
   const data =
     [

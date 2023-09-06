@@ -4,8 +4,6 @@ import { FC, useEffect } from "react";
 import Router from "@router/Router";
 import { Footer, Header, SideBar } from "@components/index";
 // store
-import usePostsStore from "@store/posts.store";
-// service
 import PostsService from "@service/PostsService";
 // interface
 import { IParams } from "@interfaces/posts.interface";
@@ -14,7 +12,6 @@ import { useSearchParams } from "react-router-dom";
 import { limit } from "@helpers/constants";
 
 const Layout: FC = (): JSX.Element => {
-  const { setPosts, setIsLoading, setError, setTotal } = usePostsStore();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category") || "reviews";
   const page = +(searchParams.get("page") || 1);
