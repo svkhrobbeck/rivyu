@@ -4,16 +4,13 @@ import "./Admin.scss";
 import { TagBadge } from "@components/index";
 import { Helmet } from "react-helmet";
 // store
-import usePostsStore from "@store/posts.store";
 // hooks/utils
 import { FC, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { doc, updateDoc } from "firebase/firestore";
-import { db, storage } from "../../firebase";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { firebaseLink, imageKitLink } from "@helpers/constants";
-import usePosts from "@hooks/usePosts";
+import { IPost } from "@interfaces/posts.interface";
+import PostsService from "@service/PostsService";
+import { baseApiUrl } from "@helpers/constants";
 
 interface ITags {
   value: string;
@@ -21,22 +18,19 @@ interface ITags {
 }
 
 type IParams = {
-  type: "reviews" | "trailers" | "news";
-  id: string;
+  slug: string;
 };
 
 const Edit: FC = (): JSX.Element => {
-  const { post } = usePostsStore();
-  const { getPost } = usePosts();
   const navigate = useNavigate();
-  const { type, id } = useParams() as IParams;
-  const dataRef = doc(db, type, id);
+  const { slug } = useParams() as IParams;
 
   const [media, setMedia] = useState<Blob | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const [title, setTitle] = useState<string>("");
   const [shortDesc, setShortDesc] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
   const [myTags, setMyTags] = useState<ITags[]>([] as ITags[]);
   const [tags, setTags] = useState<string>("");
 
@@ -53,74 +47,20 @@ const Edit: FC = (): JSX.Element => {
     setMyTags(tags);
   };
 
-  getPost(type, id);
-
-  const getData = () => {
-    setImage(post.image);
+  const getPost = async (slug: string) => {
+    const { post }: { post: IPost } = await PostsService.getPost(slug);
     setTitle(post.title);
+    setDesc(post.desc);
     setShortDesc(post.shortDesc);
-    setDescription(post.description);
-    setMyTags(post?.tags?.map(item => ({ value: item, id: uuidv4() })));
+    setCategory(post.category);
+    setImage(baseApiUrl + post.image);
   };
 
-  useEffect(() => getData(), [post]);
+  useEffect(() => window.scrollTo(0, 0), []);
 
-  const updatePostObj = () => {
-    return {
-      title,
-      shortDesc,
-      tags: myTags?.map(item => item.value.toLowerCase()),
-      description,
-      lastEdited: Date.now(),
-      image,
-    };
-  };
-
-  const updatePost = async () => {
-    if (media !== null) {
-      const mediaRef = ref(storage, `images/${media.name + uuidv4()}`);
-      try {
-        const uploadTask = uploadBytesResumable(mediaRef, media);
-        uploadTask.on(
-          "state_changed",
-          snapshot => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
-          },
-          error => {
-            console.log(error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-              updateDoc(dataRef, {
-                lastEdited: Date.now(),
-                title,
-                shortDesc,
-                tags,
-                description,
-                image: downloadURL,
-              });
-            });
-          }
-        );
-      } catch {
-        console.log("error");
-      } finally {
-        console.log("image uploaded");
-      }
-    } else {
-      await updateDoc(dataRef, updatePostObj());
-    }
-    navigate("/");
-  };
+  useEffect(() => {
+    getPost(slug);
+  }, [slug]);
 
   return (
     <div className="create-edit container">
@@ -170,7 +110,7 @@ const Edit: FC = (): JSX.Element => {
           Teg qo'shish
         </button>
       </div>
-      {type !== "trailers" && (
+      {category !== "trailers" && (
         <>
           <input
             className="create-edit__field create-edit__field--image visually-hidden"
@@ -194,16 +134,10 @@ const Edit: FC = (): JSX.Element => {
           className="main-field create-edit__textarea"
           name="description"
           placeholder="izoh"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
+          value={desc}
+          onChange={e => setDesc(e.target.value)}
         />
-        {!media && (
-          <img
-            className="create-edit__img"
-            src={image ? image?.replace(firebaseLink, imageKitLink) : "/images/temp-image.svg"}
-            alt="post image"
-          />
-        )}
+        {!media && <img className="create-edit__img" src={image ? image : "/images/temp-image.svg"} alt="post image" />}
         {media && (
           <img
             className="create-edit__img"
@@ -216,7 +150,7 @@ const Edit: FC = (): JSX.Element => {
         <Link className="button button--blue" to="/">
           Bekor Qilish
         </Link>
-        <button className="button button--green" type="button" onClick={updatePost}>
+        <button className="button button--green" type="button">
           Yangilash
         </button>
       </div>
