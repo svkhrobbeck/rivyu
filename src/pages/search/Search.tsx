@@ -9,16 +9,20 @@ import filterUniqueObjects from "@helpers/filterUniqueObjects";
 // hooks
 import { useEffect, FC } from "react";
 import { Link, useParams } from "react-router-dom";
+// interface
+import { IPost } from "@interfaces/posts.interface";
 
 const SearchResults: FC = (): JSX.Element => {
   const { query } = useParams() as { query: string };
 
-  const data =
-    [
-      ...posts.filter(i => i.title.toLowerCase().includes(query)),
-      ...posts.filter(i => i.desc.toLowerCase().includes(query)),
-      ...posts.filter(i => i.tags.find(c => c === query)),
-    ] || [];
+  const data: IPost[] = [];
+
+  // const data =
+  //   [
+  //     ...posts.filter(i => i.title.toLowerCase().includes(query)),
+  //     ...posts.filter(i => i.desc.toLowerCase().includes(query)),
+  //     ...posts.filter(i => i.tags.find(c => c === query)),
+  //   ] || [];
 
   useEffect(() => window.scrollTo(0, 0), []);
 
