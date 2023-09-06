@@ -2,7 +2,7 @@ export { default as Card } from "./card/Card";
 export { default as Header } from "./header/Header";
 export { default as LatestPost } from "./post/LatestPost";
 export { default as Footer } from "./footer/Footer";
-export { default as Sidebar } from "./sidebar/Sidebar.tsx";
+export { default as Sidebar } from "./sidebar/MainSidebar";
 export { default as MiniSidebar } from "./sidebar/MiniSidebar";
 export { default as ModalInner } from "./modal-inner/ModalInner";
 export { default as Modal } from "./modal/Modal";
