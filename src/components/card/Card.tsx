@@ -21,10 +21,10 @@ const Card: FC<ICard> = ({ image, title, createdAt, _id, videoId, click, categor
   const { setModal } = useUiStore();
   const time: string = getTime(createdAt);
 
-  const img: string = category === "trailers" ? `https://i.ytimg.com/vi/${videoId}/hq720.jpg` : baseApiUrl + image;
+  const img: string = !!videoId ? image : baseApiUrl + image;
 
   const handleModalOpen = (): void => {
-    click(_id);
+    click(slug);
     setModal(true);
   };
 
