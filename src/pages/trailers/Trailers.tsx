@@ -5,7 +5,6 @@ import { Card, Modal, ModalInner } from "@components/index";
 import { Helmet } from "react-helmet";
 // hooks
 import { useEffect, useState, FC } from "react";
-import usePosts from "@hooks/usePosts";
 // store
 import useUiStore from "@store/ui.store";
 import usePostsStore from "@store/posts.store";
