@@ -4,17 +4,23 @@ import "./Tabs.scss";
 import { FC, useState } from "react";
 // constant
 import { tabs } from "@helpers/constants";
+import { useSearchParams } from "react-router-dom";
+import useParams from "@helpers/useParams";
 
 const Tabs: FC = (): JSX.Element => {
-  const { category, setCategory } = usePostsStore();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedCategory, setSelectedCategory] = useState<string>(searchParams.get("category") || "reviews");
 
   return (
     <div className="tabs">
       {tabs.map(tab => (
         <div
-          className={`tabs__item ${category === tab.category && "tabs__item--active"}`}
+          className={`tabs__item ${selectedCategory === tab.category && "tabs__item--active"}`}
           key={tab.category}
-          onClick={() => setCategory(tab.category)}
+          onClick={() => {
+            setSearchParams(useParams(searchParams, "category", tab.category));
+            setSelectedCategory(tab.category);
+          }}
         >
           {tab.text}
         </div>
