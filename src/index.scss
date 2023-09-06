@@ -9,8 +9,7 @@
   --text-color: #fff;
   --accent-color: #38a169;
   --accent-color-50: rgba(56, 161, 105, 0.5);
-  --border-color: #38a169;
-  // --border-color: #ff9900;
+  --border-color: var(--accent-color);
 }
 
 /* GENERAL */
@@ -127,6 +126,11 @@ body {
   &--green {
     color: var(--text-color);
     background-color: var(--accent-color);
+  }
+
+  &--component {
+    background-color: var(--component-color);
+    border: 1px solid var(--border-color);
   }
 
   &--blue {
