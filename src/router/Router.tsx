@@ -11,7 +11,7 @@ const Router: FC = (): JSX.Element => {
       <Route path="/" element={<Home />} />
       <Route path="/:type/:slug" element={<Post />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/create" element={<Create />} />
+      <Route path="/admin/create" element={<Create />} />
       <Route path="/edit/:slug" element={<Edit />} />
       <Route path={"/search/:query"} element={<Search />} />
       <Route path="/users" element={<Users />} />
