@@ -1,5 +1,5 @@
 // styles
-import "./Sidebar.scss";
+import "./SideBar.scss";
 // fc
 import { FC, useState, useEffect } from "react";
 // helpers
