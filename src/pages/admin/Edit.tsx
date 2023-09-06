@@ -41,7 +41,7 @@ const Edit: FC = (): JSX.Element => {
     setDesc(post.desc);
     setSlug(post.slug);
     setCategory(post.category);
-    setTrailer(youtubeVideoBaseUrl + post.videoId);
+    setOldTrailer(youtubeVideoBaseUrl + post.videoId);
     setImage(baseApiUrl + post.image);
   };
 
