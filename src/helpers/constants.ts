@@ -1,6 +1,6 @@
 import { ILinks, ISidebarLinks, ITabs } from "@interfaces/constants.interface";
 
-export const baseApiUrl = "http://localhost:5000";
+export const baseApiUrl = import.meta.env.VITE_APP_BASE_API_URL;
 export const limit = 9;
 export const imageNotShown = "https://via.placeholder.com/1280x720?text=Rasm+yuklanmadi";
 export const iframeEmbedLink = "https://www.youtube.com/embed/";
