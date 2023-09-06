@@ -14,7 +14,7 @@ import PostsService from "@service/PostsService";
 const FavoritePost: FC = (): JSX.Element => {
   const [latestPost, setLatestPost] = useState<IPost>({} as IPost);
   const navigate = useNavigate();
-  const img = latestPost.image ? baseApiUrl + latestPost.image : imageNotShown;
+  const img = !!latestPost.videoId ? latestPost.image : baseApiUrl + latestPost.image;
 
   const getLatestPost = async () => {
     const { post } = await PostsService.getLatestPost();
@@ -30,7 +30,7 @@ const FavoritePost: FC = (): JSX.Element => {
       <div className="latest-post__img-wrapper">
         <LazyLoadImage
           className="latest-post__img"
-          src={img}
+          src={latestPost.image ? img : imageNotShown}
           alt={latestPost.title}
           effect="blur"
           width="100%"
