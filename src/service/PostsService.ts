@@ -16,6 +16,15 @@ const PostsService = {
   },
   async createPost(payload: FormData) {
     const { data } = await axios.post("api/posts", payload);
+    return data;
+  },
+  async updatePost(slug: string, payload: FormData) {
+    const { data } = await axios.put(`api/posts/${slug}`, payload);
+    return data;
+  },
+  async deletePost(slug: string) {
+    const { data } = await axios.delete(`api/posts/${slug}`);
+    return data;
   },
 };
 
