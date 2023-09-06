@@ -54,19 +54,26 @@ const Edit: FC = (): JSX.Element => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const payload: INewPost = { title, desc, slug, category, ...(isTrailer ? { videoId } : {}), image: media };
-    const formData: FormData = new FormData();
-    for (const key in payload) formData.append(key, payload[key] as Blob);
-    await PostsService.updatePost(postSlug as string, formData);
-    navigate("/");
+    try {
+      const payload: INewPost = { title, desc, slug, category, ...(isTrailer ? { videoId } : {}), image: media };
+      const formData: FormData = new FormData();
+      for (const key in payload) formData.append(key, payload[key] as Blob);
+      await PostsService.updatePost(postSlug as string, formData);
+      navigate("/");
+    } catch (err) {
+      const axiosError = err as AxiosError;
+      const error = axiosError.response?.data as Error;
+      toast(error.message, { theme: "dark", type: "error" });
+    }
   };
 
   return (
-    <section className="admin-create">
+    <section className="admin-edit">
       <Helmet>
         <title>Rivyu | Yangi post</title>
       </Helmet>
-      <div className="admin-create__container container">
+      <ToastContainer />
+      <div className="admin-edit__container container">
         <form className="admin-create__form admin-form" onSubmit={handleSubmit}>
           {/* title */}
           <div className="admin-form__field-wrapper">
@@ -107,7 +114,7 @@ const Edit: FC = (): JSX.Element => {
           {isTrailer && (
             <div className="admin-form__field-wrapper">
               <label className="admin-form__label" htmlFor="slug">
-                Youtube Video havolasi
+                Yangi video uchun havola
               </label>
               <input
                 className="admin-form__field"
@@ -131,7 +138,7 @@ const Edit: FC = (): JSX.Element => {
               type="text"
               placeholder="Slug"
               id="slug"
-              onChange={e => setSlug(e.target.value.replace(" ", "-"))}
+              onChange={e => setSlug(e.target.value.split(" ").join("-"))}
               value={slug}
             />
           </div>
@@ -155,7 +162,7 @@ const Edit: FC = (): JSX.Element => {
               Bosh sahifa
             </Link>
             <button className="button button--component" type="submit">
-              Yaratish
+              Yangilash
             </button>
           </div>
         </form>
