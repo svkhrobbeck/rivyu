@@ -19,7 +19,7 @@ const SearchResults: FC = (): JSX.Element => {
   const data =
     [
       ...posts.filter(i => i.title.toLowerCase().includes(query)),
-      ...posts.filter(i => i.description.toLowerCase().includes(query)),
+      ...posts.filter(i => i.desc.toLowerCase().includes(query)),
       ...posts.filter(i => i.tags.find(c => c === query)),
     ] || [];
 
@@ -37,10 +37,10 @@ const SearchResults: FC = (): JSX.Element => {
         </h2>
         <ul className="tags__list">
           {!!data.length ? (
-            filterUniqueObjects(data, "id").map(({ id, type, title, createdAt }, i) => (
-              <li className="tags__item" key={id}>
+            filterUniqueObjects(data, "_id").map(({ _id, category, slug, title, createdAt }, i) => (
+              <li className="tags__item" key={_id}>
                 <span className="tags__item-badge">{getZero(++i)}</span>
-                <Link className="tags__link" to={`/${type}/${id}`}>
+                <Link className="tags__link" to={`/${category}/${slug}`}>
                   {title}
                 </Link>
                 <time className="main-time" dateTime={getTime(createdAt)}>
