@@ -13,8 +13,7 @@ import { useState, FC, ChangeEvent, FormEvent } from "react";
 import { Helmet } from "react-helmet";
 // component/hook
 import { Link, useNavigate } from "react-router-dom";
-// store
-import usePostsStore from "@store/posts.store";
+// error type
 import { AxiosError } from "axios";
 
 const Create: FC = (): JSX.Element => {
@@ -28,7 +27,6 @@ const Create: FC = (): JSX.Element => {
   const isTrailer = category === "trailers";
   const videoIdMatch = videoIdRegex.test(trailer) && trailer.match(videoIdRegex);
   const videoId = videoIdMatch ? videoIdMatch[0] : "";
-  const { setError } = usePostsStore();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
