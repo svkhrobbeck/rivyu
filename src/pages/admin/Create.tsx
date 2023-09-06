@@ -1,172 +1,179 @@
 // styles
-import "./Admin.scss";
-// components
-import { TagBadge } from "@components/index";
-import { Helmet } from "react-helmet";
-// hooks/utils
-import { useState, FC, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { tabs } from "@helpers/constants";
-import PostsService from "@service/PostsService";
-interface ITags {
-  value: string;
-  id: string;
-}
-
+import "./Create.scss";
+// constant
+import { iframeEmbedLink, imageNotShown, tabs, videoIdRegex } from "@helpers/constants";
+// interface
 interface INewPost {
-  [key: string]: string | null | Blob;
+  [key: string]: string | Blob | null;
 }
+// service
+import PostsService from "@service/PostsService";
+// hook
+import { useState, FC, ChangeEvent, FormEvent } from "react";
+import { Helmet } from "react-helmet";
+// component/hook
+import { Link, useNavigate } from "react-router-dom";
+// store
+import usePostsStore from "@store/posts.store";
+import { AxiosError } from "axios";
 
 const Create: FC = (): JSX.Element => {
   const navigate = useNavigate();
-  const [image, setImage] = useState<Blob | null>(null);
+  const [category, setCategory] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [shortDesc, setShortDesc] = useState<string>("");
-  const [linkTrailer, setLinkTrailer] = useState<string>("");
+  const [image, setImage] = useState<Blob | null>(null);
   const [desc, setDesc] = useState<string>("");
-  const [tags, setTags] = useState<string>("");
-  const videoId = linkTrailer.slice(-11);
-  const [category, setCategory] = useState("reviews");
+  const [trailer, setTrailer] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
+  const isTrailer = category === "trailers";
+  const videoIdMatch = videoIdRegex.test(trailer) && trailer.match(videoIdRegex);
+  const videoId = videoIdMatch ? videoIdMatch[0] : "";
+  const { setError } = usePostsStore();
 
-  const handleCreatePost = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const payload: INewPost = { title, desc, slug: "slug-random-3", category, shortDesc, image };
-    const formData: FormData = new FormData();
-    for (const key in payload) formData.append(key, payload[key] as Blob);
-    await PostsService.createPost(formData);
-    navigate("/");
+    try {
+      const payload: INewPost = { title, desc, slug, category, videoId, image };
+      const formData: FormData = new FormData();
+      for (const key in payload) formData.append(key, payload[key] as Blob);
+      await PostsService.createPost(formData);
+      navigate("/");
+    } catch (err) {
+      const axiosErrorSample = err as AxiosError<string>;
+      const error = axiosErrorSample as Error;
+      setError(error.message);
+    }
   };
 
   return (
-    <div className="create-edit container">
+    <section className="admin-create">
       <Helmet>
-        <meta charSet="utf-8" />
-        <title>Rivyu | Maqola yaratish</title>
+        <title>Rivyu | Yangi post</title>
       </Helmet>
+      <div className="admin-create__container container">
+        <form className="admin-create__form admin-form" onSubmit={handleSubmit}>
+          {/* categories */}
+          <div className="admin-form__field-wrapper">
+            <select className="admin-form__select" defaultValue={""} onChange={e => setCategory(e.target.value)}>
+              <option value="" hidden>
+                Kategoriyani tanlang
+              </option>
+              {tabs.map(tab => (
+                <option className="admin-form__option" value={tab.category} key={tab.text}>
+                  {tab.text}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <h2 className="create-edit__title">Yangi Post Yaratish</h2>
-      <form className="create-edit__form" onSubmit={handleCreatePost}>
-        <div className="create-edit__fields">
-          {tabs.map(tab => (
-            <label className="create-edit__label" key={tab.category}>
-              <input
-                className="create-edit__checkbox visually-hidden"
-                type="radio"
-                checked={category === tab.category}
-                onChange={() => setCategory(tab.category)}
-              />
-              <span className="create-edit__fake-radio" />
-              <span className="create-edit__label-inner">{tab.text}</span>
+          {/* title */}
+          <div className="admin-form__field-wrapper">
+            <label className="admin-form__label" htmlFor="title">
+              Sarlavha
             </label>
-          ))}
-        </div>
-        {/* {!!myTags.length && (
-        <ul className="create-edit__tags">
-        {myTags.map(item => (
-          <li key={item.id} className="create-edit__tag">
-              <TagBadge id={item.id} handleDeleteTags={handleDeleteTags}>
-              {item.value}
-              </TagBadge>
-            </li>
-            ))}
-        </ul>
-      )} */}
-        <div className="create-edit__fields">
-          <label htmlFor="titleCreate">Sarlavha</label>
-          <input
-            className="main-field create-edit__field create-edit__field--title"
-            type="text"
-            name="title"
-            placeholder="sarlavha"
-            value={title}
-            id="titleCreate"
-            onChange={e => setTitle(e.target.value)}
-          />
-          <input
-            className="main-field create-edit__field create-edit__field--short-desc"
-            type="text"
-            name="short_description"
-            placeholder="qisqa izoh"
-            value={shortDesc}
-            onChange={e => setShortDesc(e.target.value)}
-          />
-        </div>
-        {category === "trailers" && (
-          <div className="create-edit__fields">
             <input
-              className="main-field create-edit__field create-edit__field--short-desc"
+              className="admin-form__field"
               type="text"
-              name="link_trailer"
-              placeholder="Treylerga havola: https://youtu.be/identifikator"
-              value={linkTrailer}
-              onChange={e => setLinkTrailer(e.target.value)}
+              placeholder="Sarlavha"
+              id="title"
+              onChange={e => setTitle(e.target.value)}
+              value={title}
             />
           </div>
-        )}
-        <div className="create-edit__fields">
-          <div className="create-edit__field-wrapper">
-            <input
-              className="main-field create-edit__field create-edit__field--tag"
-              type="text"
-              name="tags"
-              placeholder="teglar"
-              onChange={e => setTags(e.target.value)}
-              value={tags}
-            />
-            <button className="admin-form__tag-button" type="button">
-              Teg qo'shish
-            </button>
-          </div>
+
+          {/* image */}
           {category !== "trailers" && (
-            <div className="create-edit__fields">
+            <div className="admin-form__field-wrapper">
+              <label className="admin-form__label" htmlFor="image">
+                Rasm
+              </label>
               <input
-                className="create-edit__field create-edit__field--image visually-hidden"
+                className="admin-form__field admin-form__field--image visually-hidden"
                 type="file"
-                name="image"
                 accept="image/*"
-                id="image-input-create"
-                placeholder="post rasmi"
-                onChange={e => setImage(e.target.files && e.target.files[0])}
+                placeholder="Sarlavha"
+                id="image"
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setImage(e.target.files && e.target.files[0])}
               />
-              <label
-                className="main-field create-edit__field create-edit__field--image-label"
-                htmlFor="image-input-create"
-              >
-                {image ? "rasm tanlandi" : "rasmni tanlang"}
+              <label className="admin-form__label admin-form__label--image admin-form__field" htmlFor="image">
+                <span className="admin-form__label-inner">{image ? image.name : "Rasm"}</span>
               </label>
             </div>
           )}
-        </div>
-        <div className="create-edit__fields">
-          <textarea
-            className="main-field create-edit__textarea"
-            name="description"
-            placeholder="izoh"
-            value={desc}
-            onChange={e => setDesc(e.target.value)}
-          />
 
-          {category !== "trailers" && (
+          {/* trailer link */}
+          {isTrailer && (
+            <div className="admin-form__field-wrapper">
+              <label className="admin-form__label" htmlFor="slug">
+                Youtube Video havolasi
+              </label>
+              <input
+                className="admin-form__field"
+                type="text"
+                placeholder="havola (video identifikator)"
+                id="link"
+                onChange={e => setTrailer(e.target.value)}
+                value={trailer}
+                autoComplete="off"
+              />
+            </div>
+          )}
+
+          {/* slug */}
+          <div className="admin-form__field-wrapper">
+            <label className="admin-form__label" htmlFor="slug">
+              Slug (post havolasi)
+            </label>
+            <input
+              className="admin-form__field"
+              type="text"
+              placeholder="Slug"
+              id="slug"
+              onChange={e => setSlug(e.target.value.replace(" ", "-"))}
+              value={slug}
+            />
+          </div>
+
+          {/* description */}
+          <div className="admin-form__field-wrapper">
+            <label className="admin-form__label" htmlFor="descr">
+              Izoh
+            </label>
+            <textarea
+              className="admin-form__field admin-form__field--textarea"
+              placeholder="Izoh"
+              id="descr"
+              onChange={e => setDesc(e.target.value)}
+              value={desc}
+            />
+          </div>
+
+          <div className="admin-form__buttons">
+            <Link className="button button--green" to="/">
+              Bosh sahifa
+            </Link>
+            <button className="button button--component" type="submit">
+              Yaratish
+            </button>
+          </div>
+        </form>
+
+        {/* image iframe wrapper */}
+        <div className="admin__image-iframe-wrapper">
+          {isTrailer ? (
+            <iframe className="admin__iframe" src={iframeEmbedLink + videoId} width={400} />
+          ) : (
             <img
-              className="create-edit__img"
-              src={image ? URL.createObjectURL(image) : "/images/temp-image.svg"}
-              alt={image?.name}
+              className="admin__image"
+              src={image ? URL.createObjectURL(image) : imageNotShown}
+              alt={image ? image.name : "rasm"}
+              width={400}
             />
           )}
         </div>
-        <div className="create-edit__buttons">
-          <Link className="button button--green" to={"/admin"}>
-            Bekor Qilish
-          </Link>
-          <button className="create-edit__button button button--blue" type="submit">
-            {/* <span>{isLoading && <img src="/images/rolling-spinner.svg" />}</span>
-          {isLoading ? "Yaratish" : "Yaratilmoqda..."} */}
-            Yaratish
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+    </section>
   );
 };
 

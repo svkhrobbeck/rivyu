@@ -1,160 +1,181 @@
 // styles
-import "./Admin.scss";
-// components
-import { TagBadge } from "@components/index";
-import { Helmet } from "react-helmet";
-// store
-// hooks/utils
-import { FC, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import { IPost } from "@interfaces/posts.interface";
-import PostsService from "@service/PostsService";
-import { baseApiUrl } from "@helpers/constants";
-
-interface ITags {
-  value: string;
-  id: string;
+import "./Create.scss";
+// constant
+import { baseApiUrl, iframeEmbedLink, imageNotShown, videoIdRegex, youtubeVideoBaseUrl } from "@helpers/constants";
+// interface
+interface INewPost {
+  [key: string]: string | Blob | null;
 }
-
-type IParams = {
-  slug: string;
-};
+// service
+import PostsService from "@service/PostsService";
+// hook
+import { useState, useEffect, FC, ChangeEvent, FormEvent } from "react";
+import { Helmet } from "react-helmet";
+// component/hook
+import { Link, useNavigate, useParams } from "react-router-dom";
+import YouTube from "react-youtube";
 
 const Edit: FC = (): JSX.Element => {
   const navigate = useNavigate();
-  const { slug } = useParams() as IParams;
-
+  const [category, setCategory] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [media, setMedia] = useState<Blob | null>(null);
   const [image, setImage] = useState<string | null>(null);
-  const [title, setTitle] = useState<string>("");
-  const [shortDesc, setShortDesc] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [myTags, setMyTags] = useState<ITags[]>([] as ITags[]);
-  const [tags, setTags] = useState<string>("");
-
-  const handleAddTags = (): void => {
-    if (!tags.trim() || tags.length <= 3) return;
-    const value = tags.split(" ").join("").trim();
-    const newTags = [...myTags, { value, id: uuidv4() }];
-    setMyTags(newTags);
-    setTags("");
-  };
-
-  const handleDelTags = (id: string) => {
-    const tags = myTags.filter(item => item.id !== id);
-    setMyTags(tags);
-  };
+  const [trailer, setTrailer] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
+  const isTrailer = category === "trailers";
+  const videoIdMatch = videoIdRegex.test(trailer) && trailer.match(videoIdRegex);
+  const videoId = videoIdMatch ? videoIdMatch[0] : null;
+  const { slug: postSlug } = useParams();
 
   const getPost = async (slug: string) => {
     const { post }: { post: IPost } = await PostsService.getPost(slug);
     setTitle(post.title);
     setDesc(post.desc);
-    setShortDesc(post.shortDesc);
+    setSlug(post.slug);
     setCategory(post.category);
+    setTrailer(youtubeVideoBaseUrl + post.videoId);
     setImage(baseApiUrl + post.image);
   };
 
   useEffect(() => window.scrollTo(0, 0), []);
 
   useEffect(() => {
-    getPost(slug);
-  }, [slug]);
+    getPost(postSlug as string);
+  }, [postSlug]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const payload: INewPost = { title, desc, slug, category, ...(isTrailer ? { videoId } : {}), image: media };
+    const formData: FormData = new FormData();
+    for (const key in payload) formData.append(key, payload[key] as Blob);
+    await PostsService.updatePost(postSlug as string, formData);
+    navigate("/");
+  };
 
   return (
-    <div className="create-edit container">
+    <section className="admin-create">
       <Helmet>
-        <meta charSet="utf-8" />
-        <title>{`Rivyu | ${title}`}</title>
+        <title>Rivyu | Yangi post</title>
       </Helmet>
-      <h2 className="create-edit__title">Postni Yangilash</h2>
-      {!!myTags?.length && (
-        <ul className="create-edit__tags">
-          {myTags.map(item => (
-            <li key={item.id} className="create-edit__tag">
-              <TagBadge id={item.id} handleDeleteTags={handleDelTags}>
-                {item.value}
-              </TagBadge>
-            </li>
-          ))}
-        </ul>
-      )}
-      <input
-        className="main-field create-edit__field create-edit__field--title"
-        type="text"
-        name="title"
-        placeholder="sarlavha"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-      <input
-        className="main-field create-edit__field create-edit__field--short-desc"
-        type="text"
-        name="short_description"
-        placeholder="qisqa izoh"
-        value={shortDesc}
-        onChange={e => setShortDesc(e.target.value)}
-      />
+      <div className="admin-create__container container">
+        <form className="admin-create__form admin-form" onSubmit={handleSubmit}>
+          {/* title */}
+          <div className="admin-form__field-wrapper">
+            <label className="admin-form__label" htmlFor="title">
+              Sarlavha
+            </label>
+            <input
+              className="admin-form__field"
+              type="text"
+              placeholder="Sarlavha"
+              id="title"
+              onChange={e => setTitle(e.target.value)}
+              value={title}
+            />
+          </div>
 
-      <div className="create-edit__field-wrapper">
-        <input
-          className="main-field create-edit__field create-edit__field--tag"
-          type="text"
-          name="tags"
-          placeholder="teglar"
-          value={tags}
-          onChange={e => setTags(e.target.value)}
-        />
-        <button onClick={handleAddTags} className="admin-form__tag-button" type="button">
-          Teg qo'shish
-        </button>
+          {/* image */}
+          {category !== "trailers" && (
+            <div className="admin-form__field-wrapper">
+              <label className="admin-form__label" htmlFor="image">
+                Rasm
+              </label>
+              <input
+                className="admin-form__field admin-form__field--image visually-hidden"
+                type="file"
+                accept="image/*"
+                placeholder="Sarlavha"
+                id="image"
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setMedia(e.target.files && e.target.files[0])}
+              />
+              <label className="admin-form__label admin-form__label--image admin-form__field" htmlFor="image">
+                <span className="admin-form__label-inner">{media ? media.name : image}</span>
+              </label>
+            </div>
+          )}
+
+          {/* trailer link */}
+          {isTrailer && (
+            <div className="admin-form__field-wrapper">
+              <label className="admin-form__label" htmlFor="slug">
+                Youtube Video havolasi
+              </label>
+              <input
+                className="admin-form__field"
+                type="text"
+                placeholder="havola (video identifikator)"
+                id="link"
+                onChange={e => setTrailer(e.target.value)}
+                value={trailer}
+                autoComplete="off"
+              />
+            </div>
+          )}
+
+          {/* slug */}
+          <div className="admin-form__field-wrapper">
+            <label className="admin-form__label" htmlFor="slug">
+              Slug (post havolasi)
+            </label>
+            <input
+              className="admin-form__field"
+              type="text"
+              placeholder="Slug"
+              id="slug"
+              onChange={e => setSlug(e.target.value.replace(" ", "-"))}
+              value={slug}
+            />
+          </div>
+
+          {/* description */}
+          <div className="admin-form__field-wrapper">
+            <label className="admin-form__label" htmlFor="descr">
+              Izoh
+            </label>
+            <textarea
+              className="admin-form__field admin-form__field--textarea"
+              placeholder="Izoh"
+              id="descr"
+              onChange={e => setDesc(e.target.value)}
+              value={desc}
+            />
+          </div>
+
+          <div className="admin-form__buttons">
+            <Link className="button button--green" to="/">
+              Bosh sahifa
+            </Link>
+            <button className="button button--component" type="submit">
+              Yaratish
+            </button>
+          </div>
+        </form>
+
+        {/* image iframe wrapper */}
+        <div className="admin__image-iframe-wrapper">
+          {isTrailer ? (
+            <iframe src={iframeEmbedLink + videoId} className="admin__iframe" />
+          ) : (
+            <>
+              {!!media ? (
+                <img
+                  className="admin__image"
+                  src={URL.createObjectURL(media) || imageNotShown}
+                  alt={media.name}
+                  width={400}
+                />
+              ) : (
+                <img className="admin__image" src={image as string} alt={title} width={400} />
+              )}
+            </>
+          )}
+        </div>
       </div>
-      {category !== "trailers" && (
-        <>
-          <input
-            className="create-edit__field create-edit__field--image visually-hidden"
-            type="file"
-            name="image"
-            accept="image/*"
-            placeholder="post rasmi"
-            id="image-input-edit"
-            onChange={e => setMedia(e.target.files && e.target.files[0])}
-          />
-          <label
-            className="main-field create-edit__field create-edit__field--image-label create-edit__field--image-label-block"
-            htmlFor="image-input-edit"
-          >
-            {media ? "rasm tanlandi" : "rasmni tanlang"}
-          </label>
-        </>
-      )}
-      <div className="create-edit__fields">
-        <textarea
-          className="main-field create-edit__textarea"
-          name="description"
-          placeholder="izoh"
-          value={desc}
-          onChange={e => setDesc(e.target.value)}
-        />
-        {!media && <img className="create-edit__img" src={image ? image : "/images/temp-image.svg"} alt="post image" />}
-        {media && (
-          <img
-            className="create-edit__img"
-            src={media ? URL.createObjectURL(media) : "/images/temp-image.svg"}
-            alt="post image"
-          />
-        )}
-      </div>
-      <div className="create-edit__buttons">
-        <Link className="button button--blue" to="/">
-          Bekor Qilish
-        </Link>
-        <button className="button button--green" type="button">
-          Yangilash
-        </button>
-      </div>
-    </div>
+    </section>
   );
 };
 
