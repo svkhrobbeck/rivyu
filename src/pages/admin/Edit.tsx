@@ -1,5 +1,5 @@
 // styles
-import "./Create.scss";
+import "./Admin.scss";
 import "react-toastify/dist/ReactToastify.css";
 // constant
 import { baseApiUrl, iframeEmbedLink, imageNotShown, videoIdRegex, youtubeVideoBaseUrl } from "@helpers/constants";

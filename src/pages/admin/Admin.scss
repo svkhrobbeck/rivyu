@@ -137,3 +137,81 @@
   aspect-ratio: 16 / 9;
   border-radius: 8px;
 }
+
+// USERS
+/* USERS */
+.admin-users__table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-users__title {
+  text-align: center;
+}
+
+.admin-users__table,
+.admin-users__table-row,
+.admin-users__table-heading,
+.admin-users__table-desc {
+  border: 1px solid var(--text-color);
+  border-collapse: collapse;
+}
+
+.admin-users__table {
+  width: 100%;
+}
+
+.admin-users__table-heading {
+  text-align: left;
+  font-weight: 600;
+}
+
+.admin-users__table-desc--error {
+  color: red;
+}
+
+.admin-users__table-heading,
+.admin-users__table-desc {
+  padding: 5px 10px;
+}
+
+.admin-users__table-delete {
+  padding: 0px;
+  border-radius: 2px;
+  display: flex;
+}
+
+/* USERS FIELD */
+.admin-users__table-fields {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-users__table-field {
+  flex-grow: 1;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  color: var(--text-color);
+  font-size: inherit;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.admin-users__table-select {
+  background-color: var(--border-color);
+  border-radius: 5px;
+  padding: 4px 0;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  color: var(--text-color);
+  flex-grow: 1;
+}
+
+.admin-users__table-add {
+  padding: 7px;
+  background-color: var(--border-color);
+}

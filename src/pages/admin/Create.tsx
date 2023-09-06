@@ -1,5 +1,5 @@
 // styles
-import "./Create.scss";
+import "./Admin.scss";
 import "react-toastify/dist/ReactToastify.css";
 // toast
 import { ToastContainer, toast } from "react-toastify";
@@ -98,7 +98,10 @@ const Create: FC = (): JSX.Element => {
                 id="image"
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setImage(e.target.files && e.target.files[0])}
               />
-              <label className="admin-form__label admin-form__label--image admin-form__label--image-05 admin-form__field" htmlFor="image">
+              <label
+                className="admin-form__label admin-form__label--image admin-form__label--image-05 admin-form__field"
+                htmlFor="image"
+              >
                 <span className="admin-form__label-inner">{image ? image.name : "Rasm"}</span>
               </label>
             </div>
