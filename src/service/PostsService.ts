@@ -14,6 +14,9 @@ const PostsService = {
     const { data } = await axios.get("api/posts/latest");
     return data;
   },
+  async createPost(payload: FormData) {
+    const { data } = await axios.post("api/posts", payload);
+  },
 };
 
 export default PostsService;
