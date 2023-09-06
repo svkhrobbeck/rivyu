@@ -14,14 +14,12 @@ import { useSearchParams } from "react-router-dom";
 import { limit } from "@helpers/constants";
 
 const Layout: FC = (): JSX.Element => {
-  const { setPosts, setIsLoading, category, setError, setTotal } = usePostsStore();
+  const { setPosts, setIsLoading, setError, setTotal } = usePostsStore();
   const [searchParams] = useSearchParams();
+  const category = searchParams.get("category") || "reviews";
+  const page = +(searchParams.get("page") || 1);
 
-  const params = {
-    category,
-    page: +(searchParams.get("page") || 1),
-    limit,
-  };
+  const params = { page, limit, category };
 
   const getPosts = async (params: IParams) => {
     setIsLoading(true);
@@ -39,7 +37,7 @@ const Layout: FC = (): JSX.Element => {
 
   useEffect(() => {
     getPosts(params);
-  }, [category, params.limit, params.page]);
+  }, [category, limit, page]);
 
   return (
     <>
