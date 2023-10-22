@@ -5,6 +5,8 @@ import cors from "cors";
 import "dotenv/config";
 // configs
 import { connectDB } from "./configs";
+// routers
+import { authRouter } from "./routers";
 // initial
 const app: Express = express();
 const { PORT } = process.env;
