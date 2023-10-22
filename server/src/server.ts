@@ -21,7 +21,7 @@ app.use(cors());
 
 // endpoints
 app.use("/api/v1/auth", authRouter);
-app.use("*", (req, res) => res.status(401).json({ msg: "invalid endpoint" }));
+app.use("*", (req, res) => res.status(401).json({ messages: ["invalid endpoint"] }));
 
 // handlers
 app.use(errorHandlerMiddleware);
