@@ -7,6 +7,9 @@ import "dotenv/config";
 import { connectDB } from "./configs";
 // routers
 import { authRouter } from "./routers";
+// middlewares
+import { errorHandlerMiddleware } from "./middlewares";
+
 // initial
 const app: Express = express();
 const { PORT } = process.env;
@@ -15,6 +18,12 @@ const { PORT } = process.env;
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
+
+// endpoints
+app.use("/api/v1/auth", authRouter);
 app.use("*", (req, res) => res.status(401).json({ msg: "invalid endpoint" }));
+
+// handlers
+app.use(errorHandlerMiddleware);
 connectDB();
 app.listen(PORT || 3016, () => console.log(`Server is running on port ${PORT}`));
