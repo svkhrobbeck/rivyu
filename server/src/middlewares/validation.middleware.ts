@@ -17,3 +17,22 @@ const withValidationErrors = (validateValues: ValidationChain[]) => {
     },
   ];
 };
+
+const register = withValidationErrors([
+  body("email")
+    .isEmail()
+    .withMessage("invalid email format")
+    .custom(async email => {
+      const user = await User.findOne({ email });
+      if (user) throw new Error("email already exists");
+    }),
+  body("password")
+    .notEmpty()
+    .withMessage("password is required")
+    .isLength({ min: 8 })
+    .withMessage("password must be least 8 characters long"),
+  body("firstName").notEmpty().withMessage("first name is required"),
+  body("lastName").notEmpty().withMessage("last name is required"),
+]);
+
+export default { register };
