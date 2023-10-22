@@ -2,9 +2,10 @@ import "express-async-errors";
 import express, { Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
-import "dotenv/config";
+import dotEnv from "dotenv";
 // configs
 import { connectDB } from "./configs";
+dotEnv.config({ path: ".env.local" });
 // routers
 import { authRouter } from "./routers";
 // middlewares
@@ -14,7 +15,7 @@ import { errorHandlerMiddleware } from "./middlewares";
 const app: Express = express();
 const { PORT } = process.env;
 
-// called middlewares
+// use
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
