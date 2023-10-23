@@ -1,16 +1,12 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "dist/server.js",
-      "use": "@vercel/node",
-      "config": { "includeFiles": ["dist/**"] }
-    }
+    { "src": "package.json", "use": "@vercel/node" },
+    { "src": "tsconfig.json", "use": "@vercel/static-build" }
   ],
   "routes": [
-    {
-      "src": "/dist/(.*)",
-      "dest": "dist/server.js"
-    }
+    { "handle": "filesystem" },
+    { "src": "/src/.*", "dest": "src/server.ts" },
+    { "src": "/(.*)", "dest": "server.ts" }
   ]
 }
