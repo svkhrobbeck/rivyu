@@ -12,6 +12,9 @@
     "node": ">=18",
     "npm": ">=9"
   },
+  "_moduleAliases": {
+    "@config": "dist/config"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -25,6 +28,7 @@
     "express-validator": "^7.0.1",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "mongoose": "^7.6.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
@@ -33,10 +37,11 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
-    "@types/express-validator": "^3.0.0",
+    "@types/bcryptjs": "^2.4.5",
     "@types/cors": "^2.8.15",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.20",
+    "@types/express-validator": "^3.0.0",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.7",

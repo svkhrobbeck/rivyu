@@ -13,7 +13,7 @@
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "baseUrl": "."
+    "typeRoots": ["./src/types"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
