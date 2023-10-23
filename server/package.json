@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "start": "npm run build && node dist/server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon",
-    "build": "rimraf dist && npx tsc"
+    "build": "rimraf dist && npx tsc && npm run start"
   },
   "keywords": [],
   "author": "",
