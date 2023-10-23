@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "start": "tsc && node  dist/server.js",
+    "start": "npm run build && node dist/server.js",
     "dev": "nodemon",
     "build": "rimraf dist && npx tsc"
   },
