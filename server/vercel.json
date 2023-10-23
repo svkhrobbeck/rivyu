@@ -1,4 +1,10 @@
 {
   "version": 2,
-  "routes": [{ "src": "/api/v1/(.*)", "dest": "src/server.ts" }]
+  "routes": [{ "src": "/api/v1/(.*)", "dest": "src/server.ts" }],
+  "functions": {
+    "api/*": {
+      "runtime": "nodejs14.x",
+      "memory": 1024
+    }
+  }
 }
