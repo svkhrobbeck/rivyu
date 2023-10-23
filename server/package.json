@@ -4,10 +4,16 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon",
-    "build": "rimraf dist && npx tsc"
+    "start": "nodemon src/server.ts",
+    "dev": "nodemon src/server.ts",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -39,6 +45,7 @@
     "@types/swagger-jsdoc": "^6.0.2",
     "@types/swagger-ui-express": "^4.1.5",
     "nodemon": "^3.0.1",
+    "pre-commit": "^1.2.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
