@@ -12,3 +12,8 @@ export const createNewPost = async (req: Request, res: Response) => {
   const newPost = await Post.create(req.body);
   res.status(StatusCodes.CREATED).json({ post: newPost });
 };
+
+export const getSinglePost = async (req: Request, res: Response) => {
+  const post = await Post.findOne({ slug: req.params.slug });
+  res.status(StatusCodes.OK).json({ post });
+};
