@@ -12,9 +12,6 @@
     "node": ">=18",
     "npm": ">=9"
   },
-  "_moduleAliases": {
-    "@config": "dist/config"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
