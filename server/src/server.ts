@@ -8,7 +8,7 @@ import { join } from "path";
 import { connectDB } from "./configs";
 dotEnv.config({ path: ".env.local" });
 // routers
-import { authRouter } from "./routers";
+import { authRouter, notFoundRouter } from "./routers";
 // middlewares
 import { errorHandlerMiddleware } from "./middlewares";
 
@@ -24,9 +24,11 @@ app.use(cors());
 
 // endpoints
 app.use("/api/v1/auth", authRouter);
-app.use("*", (req, res) => res.status(401).json({ messages: ["invalid endpoint"] }));
+app.use("*", notFoundRouter);
 
 // handlers
 app.use(errorHandlerMiddleware);
 connectDB();
-app.listen(PORT || 3016, () => console.log(`Server is running on port ${PORT}`));
+app.listen(PORT || 3016, () =>
+  console.log(`Server is running on port ${PORT}`)
+);
