@@ -12,8 +12,7 @@ import specs from "./specs/swagger.spec";
 // routers
 import { authRouter, notFoundRouter, postsRouter } from "./routers";
 // middlewares
-import { errorHandlerMiddleware } from "./middlewares";
-import { authCheck } from "./middlewares/auth.middleware";
+import { errorHandlerMiddleware, authMiddleware } from "./middlewares";
 
 // initial
 const app: Express = express();
@@ -28,7 +27,7 @@ app.use(cors());
 // endpoints
 app.use("/docs/swagger", SwaggerUI.serve, SwaggerUI.setup(specs));
 app.use("/api/auth", authRouter);
-app.use("/api/posts", authCheck, postsRouter);
+app.use("/api/posts", authMiddleware.authCheck, postsRouter);
 app.use("*", notFoundRouter);
 
 // handlers

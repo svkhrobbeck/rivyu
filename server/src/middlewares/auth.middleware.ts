@@ -3,7 +3,7 @@ import { UnauthenticatedError } from "../errors/custom.errors";
 import { tokenUtil } from "../utils";
 import * as global from "../types";
 
-export const authCheck = (req: Request, res: Response, next: NextFunction) => {
+const authCheck = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   if (!authorization) throw new UnauthenticatedError("invalid authentication");
 
@@ -21,3 +21,5 @@ export const authCheck = (req: Request, res: Response, next: NextFunction) => {
     throw new UnauthenticatedError("invalid authentication");
   }
 };
+
+export default { authCheck };
