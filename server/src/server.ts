@@ -3,6 +3,7 @@ import express, { Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import dotEnv from "dotenv";
+import { join } from "path";
 // configs
 import { connectDB } from "./configs";
 dotEnv.config({ path: ".env.local" });
@@ -16,6 +17,7 @@ const app: Express = express();
 const { PORT } = process.env;
 
 // use
+app.use(express.static(join(__dirname, "../public")));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
