@@ -20,6 +20,9 @@ const withValidationErrors = (validateValues: ValidationChain[]) => {
 
 const register = withValidationErrors([
   body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("email is required")
     .isEmail()
     .withMessage("invalid email format")
     .custom(async email => {
@@ -37,6 +40,9 @@ const register = withValidationErrors([
 
 const login = withValidationErrors([
   body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("email is required")
     .isEmail()
     .withMessage("invalid email format")
     .custom(async email => {
@@ -44,10 +50,7 @@ const login = withValidationErrors([
       console.log(user);
       if (!user) throw new Error("email doesn't exist");
     }),
-  body("password")
-    .notEmpty()
-    .withMessage("password is required")
-    .custom(async password => {}),
+  body("password").trim().notEmpty().withMessage("password is required"),
 ]);
 
 export default { register, login };
