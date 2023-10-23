@@ -1,5 +1,4 @@
 {
   "version": 2,
-  "builds": [{ "src": "tsconfig.json", "use": "@vercel/static-build" }],
-  "routes": [{ "src": "/(.*)", "dest": "src/server.ts" }]
+  "routes": [{ "src": "/api/v1/(.*)", "dest": "src/server.ts" }]
 }
