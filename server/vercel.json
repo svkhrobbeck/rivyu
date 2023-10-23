@@ -3,5 +3,9 @@
   "builds": [
     { "src": "package.json", "use": "@vercel/node" },
     { "src": "tsconfig.json", "use": "@vercel/static-build" }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/src/.*", "dest": "src/server.ts" }
   ]
 }
