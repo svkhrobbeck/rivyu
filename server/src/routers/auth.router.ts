@@ -4,7 +4,7 @@ import { validation } from "../middlewares";
 
 const router = Router();
 
-router.post("/register", ...validation.register, register);
-router.post("/login", login);
+router.post("/register", validation.register, register);
+router.post("/login", validation.login, login);
 
 export default router;

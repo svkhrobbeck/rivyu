@@ -5,7 +5,7 @@ import { User } from "../models";
 
 const withValidationErrors = (validateValues: ValidationChain[]) => {
   return [
-    validateValues,
+    ...validateValues,
     (req: Request, res: Response, next: NextFunction) => {
       const errors = validationResult(req);
 
@@ -35,4 +35,19 @@ const register = withValidationErrors([
   body("lastName").notEmpty().withMessage("last name is required"),
 ]);
 
-export default { register };
+const login = withValidationErrors([
+  body("email")
+    .isEmail()
+    .withMessage("invalid email format")
+    .custom(async email => {
+      const user = await User.findOne({ email });
+      console.log(user);
+      if (!user) throw new Error("email doesn't exist");
+    }),
+  body("password")
+    .notEmpty()
+    .withMessage("password is required")
+    .custom(async password => {}),
+]);
+
+export default { register, login };
