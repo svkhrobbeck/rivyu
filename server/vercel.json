@@ -1,11 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "package.json", "use": "@vercel/node" },
-    { "src": "tsconfig.json", "use": "@vercel/static-build" }
+    { "src": "./package.json", "use": "@vercel/static-build" },
+    { "src": "./tsconfig.json", "use": "@vercel/static-build" }
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/src/.*", "dest": "src/server.ts" }
+    { "src": "./src/.*", "dest": "./src/server.ts" }
   ]
 }
