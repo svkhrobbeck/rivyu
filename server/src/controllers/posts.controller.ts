@@ -2,18 +2,20 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { Post } from "../models";
 
-export const getAllPosts = async (req: Request, res: Response) => {
+const getAllPosts = async (req: Request, res: Response) => {
   const posts = await Post.find();
   res.status(StatusCodes.OK).json({ posts });
 };
 
-export const createNewPost = async (req: Request, res: Response) => {
+const createNewPost = async (req: Request, res: Response) => {
   req.body.author = req.user.userId;
   const newPost = await Post.create(req.body);
   res.status(StatusCodes.CREATED).json({ post: newPost });
 };
 
-export const getSinglePost = async (req: Request, res: Response) => {
+const getSinglePost = async (req: Request, res: Response) => {
   const post = await Post.findOne({ slug: req.params.slug });
   res.status(StatusCodes.OK).json({ post });
 };
+
+export default { getAllPosts, createNewPost, getSinglePost };

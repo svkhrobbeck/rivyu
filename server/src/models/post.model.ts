@@ -5,6 +5,7 @@ export interface IPost {
   title: string;
   description: string;
   image: string;
+  imagePublicId: string;
   slug: string;
   category: string;
   author: typeof Types.ObjectId;
@@ -15,6 +16,8 @@ const reqString = { type: String, required: true };
 const PostSchema = new Schema<IPost>({
   title: reqString,
   description: reqString,
+  image: String,
+  imagePublicId: String,
   author: Types.ObjectId,
   slug: { ...reqString, unique: true },
   category: {
@@ -24,4 +27,4 @@ const PostSchema = new Schema<IPost>({
   },
 });
 
-export default model("Post", PostSchema);
+export default model<IPost>("Post", PostSchema);

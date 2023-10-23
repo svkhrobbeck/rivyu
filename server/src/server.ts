@@ -5,16 +5,21 @@ import cors from "cors";
 import dotEnv from "dotenv";
 import { join } from "path";
 import SwaggerUI from "swagger-ui-express";
+import { v2 as cloudinary } from "cloudinary";
+
 // configs
-import { connectDB } from "./configs";
-dotEnv.config({ path: ".env.local" });
+import { cloudinaryConfig, connectDB } from "./configs";
 import specs from "./specs/swagger.spec";
+dotEnv.config({ path: ".env.local" });
+cloudinary.config(cloudinaryConfig);
+
 // routers
 import { authRouter, notFoundRouter, postsRouter } from "./routers";
-// middlewares
-import { errorHandlerMiddleware, authMiddleware } from "./middlewares";
 
-// initial
+// middlewares
+import { errorMiddleware, authMiddleware } from "./middlewares";
+
+//* initial
 const app: Express = express();
 const { PORT } = process.env;
 
@@ -31,7 +36,7 @@ app.use("/api/posts", authMiddleware.authCheck, postsRouter);
 app.use("*", notFoundRouter);
 
 // handlers
-app.use(errorHandlerMiddleware);
+app.use(errorMiddleware);
 connectDB();
 app.listen(PORT || 3016, () =>
   console.log(`Server is running on port ${PORT}`)

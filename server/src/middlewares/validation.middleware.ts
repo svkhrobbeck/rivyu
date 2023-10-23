@@ -1,7 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { body, ValidationChain, validationResult } from "express-validator";
-import { BadRequestError } from "../errors/custom.errors";
-import { User } from "../models";
+import {
+  body,
+  param,
+  ValidationChain,
+  validationResult,
+} from "express-validator";
+import { BadRequestError, NotFoundError } from "../errors/custom.errors";
+import { Post, User } from "../models";
 
 const withValidationErrors = (validateValues: ValidationChain[]) => {
   return [
@@ -10,7 +15,11 @@ const withValidationErrors = (validateValues: ValidationChain[]) => {
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
-        const errorMessages = errors.array().map(err => err.msg);
+        const errorMessages: string[] = errors.array().map(err => err.msg);
+
+        if (errorMessages[0].includes("not found")) {
+          throw new NotFoundError(errorMessages.join(","));
+        }
         throw new BadRequestError(errorMessages.join(","));
       }
       next();
@@ -53,4 +62,28 @@ const login = withValidationErrors([
   body("password").trim().notEmpty().withMessage("password is required"),
 ]);
 
-export default { register, login };
+const createPost = withValidationErrors([
+  body("title").trim().notEmpty().withMessage("title is required"),
+  body("description").trim().notEmpty().withMessage("description is required"),
+  body("slug")
+    .trim()
+    .notEmpty()
+    .withMessage("slug is required")
+    .custom(async slug => {
+      const post = await Post.findOne({ slug });
+      if (post) throw new Error("slug already exists");
+    }),
+  body("image").trim().notEmpty().withMessage("image is required"),
+]);
+
+const getPost = withValidationErrors([
+  param("slug")
+    .isSlug()
+    .withMessage("invalid slug")
+    .custom(async slug => {
+      const post = await Post.findOne({ slug });
+      if (!post) throw new Error("post not found");
+    }),
+]);
+
+export default { register, login, createPost, getPost };
