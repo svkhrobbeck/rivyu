@@ -5,13 +5,13 @@ import cors from "cors";
 import dotEnv from "dotenv";
 import { join } from "path";
 import SwaggerUI from "swagger-ui-express";
-import { v2 as cloudinary } from "cloudinary";
+// import { v2 as cloudinary } from "cloudinary";
 
 // configs
 import { cloudinaryConfig, connectDB } from "./configs";
 import specs from "./specs/swagger.spec";
 dotEnv.config({ path: ".env.local" });
-cloudinary.config(cloudinaryConfig);
+// cloudinary.config(cloudinaryConfig);
 
 // routers
 import { authRouter, notFoundRouter, postsRouter } from "./routers";

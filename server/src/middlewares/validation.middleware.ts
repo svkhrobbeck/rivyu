@@ -56,7 +56,6 @@ const login = withValidationErrors([
     .withMessage("invalid email format")
     .custom(async email => {
       const user = await User.findOne({ email });
-      console.log(user);
       if (!user) throw new Error("email doesn't exist");
     }),
   body("password").trim().notEmpty().withMessage("password is required"),
@@ -73,7 +72,6 @@ const createPost = withValidationErrors([
       const post = await Post.findOne({ slug });
       if (post) throw new Error("slug already exists");
     }),
-  body("image").trim().notEmpty().withMessage("image is required"),
 ]);
 
 const getPost = withValidationErrors([
