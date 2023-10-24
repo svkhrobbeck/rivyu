@@ -31,8 +31,8 @@ app.use(cors());
 
 // endpoints
 app.use("/docs/swagger", SwaggerUI.serve, SwaggerUI.setup(specs));
-// app.use("/api/auth", authRouter);
-// app.use("/api/posts", authMiddleware.authCheck, postsRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/posts", authMiddleware.authCheck, postsRouter);
 app.use("*", notFoundRouter);
 
 // handlers
