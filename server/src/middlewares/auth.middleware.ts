@@ -1,16 +1,18 @@
 import { NextFunction, Request, Response } from "express";
-import { UnauthenticatedError } from "../errors/custom.errors";
+import * as errs from "../errors/custom.errors";
 import { tokenUtil } from "../utils";
-import * as global from "../types";
 
 const authCheck = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
-  if (!authorization) throw new UnauthenticatedError("invalid authentication");
+
+  if (!authorization) {
+    throw new errs.UnauthenticatedError("invalid authentication");
+  }
 
   const [access, token] = (authorization || "").split(" ");
 
   if ((access !== "Token" && access !== "Bearer") || !token) {
-    throw new UnauthenticatedError("invalid authentication");
+    throw new errs.UnauthenticatedError("invalid authentication");
   }
 
   try {
@@ -18,8 +20,16 @@ const authCheck = (req: Request, res: Response, next: NextFunction) => {
     req.user = { userId, role };
     next();
   } catch (err) {
-    throw new UnauthenticatedError("invalid authentication");
+    throw new errs.UnauthenticatedError("invalid authentication");
   }
 };
 
-export default { authCheck };
+const checkIsAdmin = (req: Request, res: Response, next: NextFunction) => {
+  const isAdmin = req.user.role === "admin";
+
+  if (!isAdmin) {
+    throw new errs.UnauthorizedError("not authorized to access this route");
+  }
+};
+
+export default { authCheck, checkIsAdmin };

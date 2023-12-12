@@ -18,7 +18,7 @@ const PostSchema = new Schema<IPost>({
   description: reqString,
   image: String,
   imagePublicId: String,
-  author: Types.ObjectId,
+  author: { type: Types.ObjectId, ref: "User" },
   slug: { ...reqString, unique: true },
   category: {
     type: String,
