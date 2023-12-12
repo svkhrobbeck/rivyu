@@ -74,7 +74,16 @@ const createPost = withValidationErrors([
     }),
 ]);
 
-const getPost = withValidationErrors([
+const updatePost = withValidationErrors([
+  body("slug")
+    .optional()
+    .custom(async slug => {
+      const post = await Post.findOne({ slug });
+      if (post) throw new Error("slug already exists");
+    }),
+]);
+
+const valSlug = withValidationErrors([
   param("slug")
     .isSlug()
     .withMessage("invalid slug")
@@ -84,4 +93,4 @@ const getPost = withValidationErrors([
     }),
 ]);
 
-export default { register, login, createPost, getPost };
+export default { register, login, createPost, updatePost, valSlug };

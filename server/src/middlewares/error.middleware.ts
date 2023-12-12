@@ -19,4 +19,7 @@ const errorHandler = (
   next();
 };
 
-export default errorHandler;
+const notFoundRouter = (req: Request, res: Response) =>
+  res.status(401).json({ messages: ["invalid endpoint"] });
+
+export default { errorHandler, notFoundRouter };

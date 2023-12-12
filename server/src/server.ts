@@ -14,10 +14,10 @@ import specs from "./specs/swagger.spec";
 cld.config(cldConfig);
 
 // routers
-import { authRouter, notFoundRouter, postsRouter } from "./routers";
+import { authRouter, postsRouter } from "./routers";
 
 // middlewares
-import { errorMiddleware, authMiddleware } from "./middlewares";
+import { errorMiddleware } from "./middlewares";
 
 const app = express();
 app.use(express.static(join(__dirname, "../public")));
@@ -26,13 +26,13 @@ app.use(morgan("dev"));
 app.use(cors());
 
 // endpoints
-app.use("/api/docs/swagger", SwaggerUI.serve, SwaggerUI.setup(specs));
-app.use("/api/auth", authRouter);
-app.use("/api/posts", authMiddleware.authCheck, postsRouter);
-app.use("*", notFoundRouter);
+app.use("/api/v1/docs/swagger", SwaggerUI.serve, SwaggerUI.setup(specs));
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/posts", postsRouter);
+app.use("*", errorMiddleware.notFoundRouter);
 
 // handlers
-app.use(errorMiddleware);
+app.use(errorMiddleware.errorHandler);
 
 // start application
 startApp(app);

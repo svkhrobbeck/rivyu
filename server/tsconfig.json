@@ -12,7 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "skipLibCheck": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "typeRoots": ["src"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]
