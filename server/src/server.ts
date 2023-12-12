@@ -7,6 +7,7 @@ import { join } from "path";
 import SwaggerUI from "swagger-ui-express";
 import { v2 as cld } from "cloudinary";
 import startApp from "./app";
+import * as typeCustom from "./types/custom";
 
 // configs
 import { cldConfig } from "./configs";

@@ -13,7 +13,7 @@
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "typeRoots": ["src"]
+    "typeRoots": ["src/*"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]
